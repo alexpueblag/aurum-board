@@ -117,7 +117,7 @@
     por_estado:[{estado:"NUEVO",n:28},{estado:"SESIÓN AGENDADA",n:11},{estado:"CLIENTE",n:3},{estado:"DESCARTADO",n:5}],
     por_fuente:[{fuente:"meta",leads:31,citas:8},{fuente:"(directo)",leads:12,citas:2},{fuente:"instagram",leads:4,citas:1}],
     por_dia:[{dia:"lunes",leads:9,citas:3},{dia:"martes",leads:6,citas:1},{dia:"miércoles",leads:8,citas:2},{dia:"jueves",leads:5,citas:1},{dia:"viernes",leads:7,citas:2},{dia:"sábado",leads:8,citas:2},{dia:"domingo",leads:4,citas:0}],
-    embudo_cuestionario:{visitas:240, pasos:[{paso:"p0",etiqueta:"Inicio",n:240},{paso:"p1",etiqueta:"Estilo",n:188},{paso:"p2",etiqueta:"Sensación",n:150},{paso:"p3",etiqueta:"Momentos",n:128},{paso:"p4",etiqueta:"Carácter",n:104},{paso:"p5",etiqueta:"Esencial",n:79},{paso:"p6",etiqueta:"Sueños",n:61},{paso:"p7",etiqueta:"Formulario",n:47},{paso:"p8",etiqueta:"Cierre",n:18},{paso:"lead",etiqueta:"Dejó datos",n:18},{paso:"agenda",etiqueta:"Agendó",n:5}]},
+    embudo_cuestionario:{visitas:240, pasos:[{paso:"p0",etiqueta:"Inicio",n:240},{paso:"p1",etiqueta:"Estilo",n:188},{paso:"p2",etiqueta:"Sensación",n:150},{paso:"p3",etiqueta:"Momentos",n:128},{paso:"p4",etiqueta:"Carácter",n:104},{paso:"p5",etiqueta:"Esencial",n:79},{paso:"p6",etiqueta:"Sueños",n:61},{paso:"p7",etiqueta:"Formulario",n:47},{paso:"p8",etiqueta:"Cierre",n:18},{paso:"lead",etiqueta:"Dejó datos",n:18},{paso:"agenda",etiqueta:"Agendó",n:5}], ab:{A:{visita:120,lead:8,agenda:2},B:{visita:120,lead:11,agenda:4}}, canal:{whatsapp:3,calendario:2}},
     alertas:[{tipo:"amar",texto:"Esto es un EJEMPLO. El board cobra vida cuando el Apps Script sirva recurso=board y entre tráfico real."}],
     recientes:[]
   };
@@ -235,6 +235,30 @@
       html+='<p class="nota" style="margin-top:8px;">De TU Sheet (pestaña <code style="background:var(--arena);padding:1px 5px;border-radius:3px;">ACTIVIDAD</code>). El mayor escalón en rojo es la pantalla a mejorar. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     } else {
       html+='<p class="nota" style="margin-top:10px;">El embudo de las <b>9 pantallas</b> aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
+    }
+
+    /* --- experimento A/B de portada (del Sheet/ACTIVIDAD) --- */
+    var ab=ec&&ec.ab, can=ec&&ec.canal;
+    if(ab && (num(ab.A.visita)||num(ab.B.visita))){
+      html+='<h2 class="sec">Experimento A/B · portada</h2><div class="nums">';
+      ['A','B'].forEach(function(v){
+        var o=ab[v]||{visita:0,lead:0,agenda:0};
+        var etq=(v==='A'?'A · actual':'B · atemporal');
+        var det='<div class="d flat">visitas · '+esc(o.lead)+' datos ('+pct(o.lead,o.visita)+'%) · '+esc(o.agenda)+' agendas ('+pct(o.agenda,o.visita)+'%)</div>';
+        html+=numHTML(etq, o.visita, det, v==='B');
+      });
+      html+='</div>';
+      var apA=pct(ab.A.agenda,ab.A.visita), apB=pct(ab.B.agenda,ab.B.visita);
+      var ver=(apA===apB)?'Empate por ahora.':(apB>apA?'Va ganando B (atemporal): '+apB+'% vs '+apA+'% en agendas/visita.':'Va ganando A (actual): '+apA+'% vs '+apB+'% en agendas/visita.');
+      html+='<p class="nota" style="margin-top:8px;">'+esc(ver)+' Medido sobre visitas por brazo (la portada se reparte 50/50). Para fijar la ganadora se cierra el experimento en el código del cuestionario.</p>';
+    }
+    /* --- canal de agenda (whatsapp vs calendario) --- */
+    if(can && (num(can.whatsapp)||num(can.calendario))){
+      var tc=num(can.whatsapp)+num(can.calendario);
+      html+='<h2 class="sec">Canal de agenda</h2><div class="funnel">';
+      html+='<div class="fstep"><div class="fn">'+esc(can.whatsapp)+'</div><div class="fl">WhatsApp</div><div class="fr">'+pct(can.whatsapp,tc)+'%</div></div>';
+      html+='<div class="fstep"><div class="fn">'+esc(can.calendario)+'</div><div class="fl">Calendario</div><div class="fr">'+pct(can.calendario,tc)+'%</div></div>';
+      html+='</div>';
     }
 
     /* --- por fuente --- */
