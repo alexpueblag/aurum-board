@@ -237,22 +237,8 @@
       html+='<p class="nota" style="margin-top:10px;">El embudo de las <b>9 pantallas</b> aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
-    /* --- experimento A/B de portada (del Sheet/ACTIVIDAD) --- */
-    var ab=ec&&ec.ab, can=ec&&ec.canal;
-    if(ab && (num(ab.A.visita)||num(ab.B.visita))){
-      html+='<h2 class="sec">Experimento A/B · portada</h2><div class="nums">';
-      ['A','B'].forEach(function(v){
-        var o=ab[v]||{visita:0,lead:0,agenda:0};
-        var etq=(v==='A'?'A · actual':'B · atemporal');
-        var det='<div class="d flat">visitas · '+esc(o.lead)+' datos ('+pct(o.lead,o.visita)+'%) · '+esc(o.agenda)+' agendas ('+pct(o.agenda,o.visita)+'%)</div>';
-        html+=numHTML(etq, o.visita, det, v==='B');
-      });
-      html+='</div>';
-      var apA=pct(ab.A.agenda,ab.A.visita), apB=pct(ab.B.agenda,ab.B.visita);
-      var ver=(apA===apB)?'Empate por ahora.':(apB>apA?'Va ganando B (atemporal): '+apB+'% vs '+apA+'% en agendas/visita.':'Va ganando A (actual): '+apA+'% vs '+apB+'% en agendas/visita.');
-      html+='<p class="nota" style="margin-top:8px;">'+esc(ver)+' Medido sobre visitas por brazo (la portada se reparte 50/50). Para fijar la ganadora se cierra el experimento en el código del cuestionario.</p>';
-    }
-    /* --- canal de agenda (whatsapp vs calendario) --- */
+    /* --- canal de agenda (whatsapp vs calendario) — el A/B de portada se retiró (portada única) --- */
+    var can=ec&&ec.canal;
     if(can && (num(can.whatsapp)||num(can.calendario))){
       var tc=num(can.whatsapp)+num(can.calendario);
       html+='<h2 class="sec">Canal de agenda</h2><div class="funnel">';
