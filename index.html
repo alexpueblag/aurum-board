@@ -101,10 +101,11 @@
     VIEW_KEY: "aurum2026",              /* clave para VER el board (seguridad suave, como tus otros boards) */
     META_EVENTS_URL: "https://business.facebook.com/events_manager2/list/dataset/1563269895817275/overview",
     FETCH_TIMEOUT: 12000,
-    REFRESH_MS: 600000
+    REFRESH_MS: 600000,
+    METRICS_URL: "metrics.json"   /* metricas de publicaciones (lo genera pull_metrics.py) */
   };
-  var CACHE_KEY="aurum_board_cache_v1", QKEY="aurum_board_q_v1";
-  var DATA=null, LAST=null;
+  var CACHE_KEY="aurum_board_cache_v1", QKEY="aurum_board_q_v1", MCACHE="aurum_metrics_cache_v1";
+  var DATA=null, LAST=null, METRICS=null;
 
   /* ============ SNAPSHOT EMBEBIDO (se ve aunque el .gs aún no esté desplegado) ============
      Mismos campos que devuelve GET ?recurso=board. Se reemplaza por datos en vivo al cargar. */
@@ -165,6 +166,15 @@
     var c=null; try{c=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(e){}
     if(c && c.kpis){ DATA=c; render(); setBadge("cache"); }
     else if(!DATA){ DATA=SNAP; render(); setBadge("snapshot"); }
+  }
+  /* --- metricas de publicaciones (archivo del propio board, mismo origen) --- */
+  function fetchMetrics(){
+    var url=CONFIG.METRICS_URL+(CONFIG.METRICS_URL.indexOf("?")<0?"?":"&")+"cb="+Date.now();
+    fetch(url).then(function(r){return r.json();}).then(function(j){
+      if(j && j.posts){ METRICS=j; try{localStorage.setItem(MCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }
+    }).catch(function(){
+      try{var c=JSON.parse(localStorage.getItem(MCACHE)); if(c&&c.posts&&!METRICS){METRICS=c; if(DATA) render();}}catch(e){}
+    });
   }
 
   /* ============ ESCRITURA (POST GASTO con cola offline, igual que tu patrón) ============ */
@@ -264,6 +274,9 @@
       html+='</div>';
     }
 
+    /* --- publicaciones (redes) --- */
+    html+=pubSection();
+
     /* --- alertas --- */
     if((d.alertas||[]).length){
       html+='<h2 class="sec">Algo que revisar</h2>';
@@ -289,6 +302,60 @@
     var gb=$("gGuardar"); if(gb) gb.addEventListener("click",guardarGasto);
   }
   function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
+
+  /* ============ PUBLICACIONES (redes) ============ */
+  function fmtN(n){ n=num(n); return n>=1000 ? (n/1000).toFixed(n>=10000?0:1)+"k" : String(Math.round(n)); }
+  function pubSection(){
+    var h='<h2 class="sec">Rendimiento de publicaciones (redes)</h2>';
+    if(!METRICS || !(METRICS.posts||[]).length){
+      return h+'<p class="nota">Aún sin métricas. Corre <code>pull_metrics.py</code> (saca reach / interacciones / guardados de FB e IG por la Graph API) y sube <code>metrics.json</code> al board.</p>';
+    }
+    var posts=METRICS.posts.slice(), now=Date.now(), DAY=86400000;
+    function ageD(p){ var t=Date.parse((p.fecha||"")+"T12:00:00"); return isNaN(t)?99999:(now-t)/DAY; }
+    var rec=posts.filter(function(p){return ageD(p)<=30;});
+    var igRec=rec.filter(function(p){return p.red==="IG";});
+    var reach30=igRec.reduce(function(s,p){return s+num(p.reach);},0);
+    var saves30=igRec.reduce(function(s,p){return s+num(p.saves);},0);
+    var inter30=rec.reduce(function(s,p){return s+num(p.interacciones);},0);
+    /* solo posts recientes y con muestra suficiente cuentan para ranking/aprendizaje (ER en reach chico es ruido) */
+    function scoreable(p){ return p.red==="IG" && p.er!=null && num(p.reach)>=20 && ageD(p)<=120; }
+    var cand=posts.filter(scoreable);
+    cand.sort(function(a,b){return b.er-a.er;});
+    var best=cand[0];
+    /* KPIs de contenido */
+    h+='<div class="nums">';
+    h+=numHTML("Reach IG · 30 días", fmtN(reach30), igRec.length+" publicaciones", false);
+    h+=numHTML("Interacciones · 30 días", fmtN(inter30), "", false);
+    h+=numHTML("Guardados IG · 30 días", fmtN(saves30), "señal de “me sirve”", true);
+    if(best) h+=numHTML("Mejor ER (IG)", best.er+"%", esc((best.titulo||"").slice(0,26)), true);
+    h+='</div>';
+    /* aprendizaje por formato (qué tipo rinde más) */
+    var fmts={};
+    posts.filter(scoreable).forEach(function(p){ (fmts[p.tipo]=fmts[p.tipo]||[]).push(p.er); });
+    var fl=Object.keys(fmts).map(function(k){var a=fmts[k];return {k:k,avg:a.reduce(function(s,x){return s+x;},0)/a.length,n:a.length};});
+    fl.sort(function(a,b){return b.avg-a.avg;});
+    if(fl.length){
+      var top=fl[0];
+      h+='<div class="alert verde"><span class="ai">📈</span><span>Tu formato más fuerte (últimos meses): <b>'+esc(top.k)+'</b> · '+top.avg.toFixed(1)+'% ER promedio en '+top.n+'. '+(fl[1]?'Le sigue '+esc(fl[1].k)+' ('+fl[1].avg.toFixed(1)+'%). Prioriza '+esc(top.k)+'.':'')+(top.n<3?' <i>(muestra chica, tómalo como pista, no ley)</i>':'')+'</span></div>';
+    }
+    /* tabla de publicaciones (más recientes) */
+    h+='<table><tr><th>Red</th><th>Tipo</th><th>Fecha</th><th class="r">Reach</th><th class="r">Inter</th><th class="r">ER%</th><th class="r">Guard</th><th></th></tr>';
+    posts.slice(0,15).forEach(function(p){
+      var hi=(best && p.id===best.id)?' style="background:#fbf7ee;"':'';
+      var link=p.permalink?'<a href="'+esc(p.permalink)+'" target="_blank" rel="noopener" style="color:var(--oro);text-decoration:none;">ver →</a>':'';
+      h+='<tr'+hi+'><td>'+esc(p.red)+'</td><td>'+esc(p.tipo)+'</td><td>'+esc(p.fecha)+'</td>'+
+         '<td class="r">'+(p.reach==null?'n/d':fmtN(p.reach))+'</td>'+
+         '<td class="r">'+(p.interacciones==null?'-':esc(p.interacciones))+'</td>'+
+         '<td class="r">'+(p.er==null?'-':esc(p.er))+'</td>'+
+         '<td class="r">'+(p.saves==null?'-':esc(p.saves))+'</td>'+
+         '<td>'+link+'</td></tr>';
+    });
+    h+='</table>';
+    h+='<p class="hint">FB ya no entrega <i>reach</i> por post en la nueva API de Páginas → ahí va <code>n/d</code> (sí contamos reacciones/comentarios/compartidos). '+
+       'Para saber qué post trae <b>leads</b>, usa enlaces con UTM al Plan de Potencial: aparecerán arriba en «Por fuente». '+
+       'Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    return h;
+  }
 
   function semaforo(d){
     var k=d.kpis||{}, g=d.gasto||{};
@@ -342,6 +409,7 @@
     setInterval(function(){if(document.visibilityState==="visible")fetchData(false);},CONFIG.REFRESH_MS);
     usarCacheOSnap();   /* pinta cache/snapshot al instante */
     fetchData(false);   /* y busca datos en vivo */
+    fetchMetrics();     /* y las métricas de publicaciones */
   }
   if(desbloqueado()) iniciar(); else renderGate();
 })();
