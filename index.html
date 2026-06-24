@@ -78,6 +78,39 @@
   #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--negro);color:#f4f1ec;padding:12px 20px;border-radius:6px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:90;max-width:90%;}
   #toast.on{opacity:1;} #toast.warn{background:var(--rojo);}
   .muted{color:var(--piedra);font-size:12px;}
+  /* galeria de publicaciones */
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .pcard{background:#fff;border:1px solid var(--linea);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;}
+  .pcard:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.10);border-color:var(--oro);}
+  .pcard .cov{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--arena);}
+  .pcard .ph{padding:8px 10px;}
+  .pcard .pt{font-size:11px;color:var(--carbon);display:flex;justify-content:space-between;align-items:center;}
+  .pcard .pmain{font-family:Georgia,serif;font-size:17px;color:var(--negro);margin-top:2px;}
+  .pcard .pmain small{font-size:11px;color:var(--piedra);font-family:inherit;}
+  .pbadge{position:absolute;top:8px;left:8px;background:var(--oro);color:#1a1a1a;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:20px;text-transform:uppercase;}
+  .pnet{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;font-family:Georgia,serif;}
+  .pnet.ig{background:#c13584;} .pnet.fb{background:#1877f2;}
+  .pcov-ph{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;background:linear-gradient(135deg,var(--arena),#dccfb8);color:var(--carbon);font-size:11px;line-height:1.35;}
+  /* ficha modal */
+  .pov{position:fixed;inset:0;background:rgba(26,26,26,.55);z-index:80;display:flex;align-items:flex-start;justify-content:center;padding:24px 14px;overflow-y:auto;}
+  .pficha{background:var(--crema);border-radius:10px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+  .pfhead{display:flex;gap:14px;padding:16px;background:#fff;border-bottom:1px solid var(--linea);align-items:flex-start;}
+  .pfhead img{width:96px;height:120px;border-radius:6px;flex:none;object-fit:cover;background:var(--arena);}
+  .pfhead .pcov-ph{width:96px;height:120px;border-radius:6px;flex:none;aspect-ratio:auto;}
+  .pfhead .pfx{flex:1;min-width:0;}
+  .pfx .pftipo{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--piedra);}
+  .pfx .pftit{font-family:Georgia,serif;font-size:15px;margin:3px 0;line-height:1.3;}
+  .pfclose{cursor:pointer;font-size:22px;color:var(--piedra);background:none;border:none;line-height:1;padding:0 2px;flex:none;}
+  .fmgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linea);}
+  .fm{background:#fff;padding:11px 12px;}
+  .fm .fk{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);}
+  .fm .fv{font-family:Georgia,serif;font-size:22px;color:var(--negro);line-height:1.1;margin-top:2px;}
+  .fm .fv small{font-size:11px;color:var(--piedra);}
+  .fm .fsub{font-size:10px;color:var(--oro);margin-top:2px;line-height:1.2;}
+  .fm.nd .fv{color:var(--piedra);font-size:15px;}
+  .pfrow{padding:11px 16px;border-top:1px solid var(--linea);font-size:12px;color:var(--carbon);}
+  .pfrow b{color:var(--negro);}
+  .spark{display:block;margin-top:6px;}
 </style>
 </head>
 <body>
@@ -303,25 +336,39 @@
   }
   function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
 
-  /* ============ PUBLICACIONES (redes) ============ */
+  /* ============ PUBLICACIONES (redes) — galería de portadas + ficha ============ */
   function fmtN(n){ n=num(n); return n>=1000 ? (n/1000).toFixed(n>=10000?0:1)+"k" : String(Math.round(n)); }
+  function ageDays(p){ var t=Date.parse((p.fecha||"")+"T12:00:00"); return isNaN(t)?99999:(Date.now()-t)/86400000; }
+  function covHTML(p){ return p.cover ? '<img class="cov" src="'+esc(p.cover)+'" alt="" loading="lazy">' : '<div class="pcov-ph">'+esc((p.titulo||p.tipo||'').slice(0,60))+'</div>'; }
+  function mergePosts(posts){
+    var map={}, order=[];
+    posts.forEach(function(p){
+      var vid=/reel|video/i.test(p.tipo||'')?'v':'p';   /* separa video/reel de foto/carrusel */
+      var key=p.fecha+'|'+vid+'|'+((p.titulo||'').slice(0,24));
+      if(!map[key]){ map[key]={ig:null,fb:null}; order.push(key); }
+      var slot=p.red==='IG'?'ig':'fb'; if(!map[key][slot]) map[key][slot]=p;
+    });
+    return order.map(function(k){ var g=map[k], base=g.ig||g.fb; base._fb=(g.ig&&g.fb)?g.fb:null; return base; });
+  }
   function pubSection(){
-    var h='<h2 class="sec">Rendimiento de publicaciones (redes)</h2>';
+    var h='<h2 class="sec">Publicaciones · toca una portada para ver sus métricas</h2>';
     if(!METRICS || !(METRICS.posts||[]).length){
-      return h+'<p class="nota">Aún sin métricas. Corre <code>pull_metrics.py</code> (saca reach / interacciones / guardados de FB e IG por la Graph API) y sube <code>metrics.json</code> al board.</p>';
+      return h+'<p class="nota">Aún sin métricas. Corre <code>pull_metrics.py</code> y sube <code>metrics.json</code> + la carpeta <code>covers/</code> al board.</p>';
     }
-    var posts=METRICS.posts.slice(), now=Date.now(), DAY=86400000;
-    function ageD(p){ var t=Date.parse((p.fecha||"")+"T12:00:00"); return isNaN(t)?99999:(now-t)/DAY; }
-    var rec=posts.filter(function(p){return ageD(p)<=30;});
+    var posts=METRICS.posts.slice();
+    var rec=posts.filter(function(p){return ageDays(p)<=30;});
     var igRec=rec.filter(function(p){return p.red==="IG";});
     var reach30=igRec.reduce(function(s,p){return s+num(p.reach);},0);
     var saves30=igRec.reduce(function(s,p){return s+num(p.saves);},0);
     var inter30=rec.reduce(function(s,p){return s+num(p.interacciones);},0);
-    /* solo posts recientes y con muestra suficiente cuentan para ranking/aprendizaje (ER en reach chico es ruido) */
-    function scoreable(p){ return p.red==="IG" && p.er!=null && num(p.reach)>=20 && ageD(p)<=120; }
-    var cand=posts.filter(scoreable);
-    cand.sort(function(a,b){return b.er-a.er;});
+    function scoreable(p){ return p.red==="IG" && p.er!=null && num(p.reach)>=20 && ageDays(p)<=120; }
+    var cand=posts.filter(scoreable); cand.sort(function(a,b){return b.er-a.er;});
     var best=cand[0];
+    var avgER = cand.length? cand.reduce(function(s,p){return s+p.er;},0)/cand.length : 0;
+    var avgReach = cand.length? cand.reduce(function(s,p){return s+num(p.reach);},0)/cand.length : 0;
+    /* contexto para la ficha (accesible desde el onclick global) */
+    window.__PUB={ byId:{}, avgER:avgER, avgReach:avgReach, bestId: best?best.id:null };
+    posts.forEach(function(p){ window.__PUB.byId[p.id]=p; });
     /* KPIs de contenido */
     h+='<div class="nums">';
     h+=numHTML("Reach IG · 30 días", fmtN(reach30), igRec.length+" publicaciones", false);
@@ -329,32 +376,81 @@
     h+=numHTML("Guardados IG · 30 días", fmtN(saves30), "señal de “me sirve”", true);
     if(best) h+=numHTML("Mejor ER (IG)", best.er+"%", esc((best.titulo||"").slice(0,26)), true);
     h+='</div>';
-    /* aprendizaje por formato (qué tipo rinde más) */
-    var fmts={};
-    posts.filter(scoreable).forEach(function(p){ (fmts[p.tipo]=fmts[p.tipo]||[]).push(p.er); });
+    /* aprendizaje por formato */
+    var fmts={}; posts.filter(scoreable).forEach(function(p){ (fmts[p.tipo]=fmts[p.tipo]||[]).push(p.er); });
     var fl=Object.keys(fmts).map(function(k){var a=fmts[k];return {k:k,avg:a.reduce(function(s,x){return s+x;},0)/a.length,n:a.length};});
     fl.sort(function(a,b){return b.avg-a.avg;});
-    if(fl.length){
-      var top=fl[0];
-      h+='<div class="alert verde"><span class="ai">📈</span><span>Tu formato más fuerte (últimos meses): <b>'+esc(top.k)+'</b> · '+top.avg.toFixed(1)+'% ER promedio en '+top.n+'. '+(fl[1]?'Le sigue '+esc(fl[1].k)+' ('+fl[1].avg.toFixed(1)+'%). Prioriza '+esc(top.k)+'.':'')+(top.n<3?' <i>(muestra chica, tómalo como pista, no ley)</i>':'')+'</span></div>';
+    if(fl.length){ var top=fl[0];
+      h+='<div class="alert verde"><span class="ai">📈</span><span>Tu formato más fuerte (últimos meses): <b>'+esc(top.k)+'</b> · '+top.avg.toFixed(1)+'% ER promedio'+(fl[1]?'. Le sigue '+esc(fl[1].k)+' ('+fl[1].avg.toFixed(1)+'%). Prioriza '+esc(top.k)+'.':'.')+(top.n<3?' <i>(muestra chica)</i>':'')+'</span></div>';
     }
-    /* tabla de publicaciones (más recientes) */
-    h+='<table><tr><th>Red</th><th>Tipo</th><th>Fecha</th><th class="r">Reach</th><th class="r">Inter</th><th class="r">ER%</th><th class="r">Guard</th><th></th></tr>';
-    posts.slice(0,15).forEach(function(p){
-      var hi=(best && p.id===best.id)?' style="background:#fbf7ee;"':'';
-      var link=p.permalink?'<a href="'+esc(p.permalink)+'" target="_blank" rel="noopener" style="color:var(--oro);text-decoration:none;">ver →</a>':'';
-      h+='<tr'+hi+'><td>'+esc(p.red)+'</td><td>'+esc(p.tipo)+'</td><td>'+esc(p.fecha)+'</td>'+
-         '<td class="r">'+(p.reach==null?'n/d':fmtN(p.reach))+'</td>'+
-         '<td class="r">'+(p.interacciones==null?'-':esc(p.interacciones))+'</td>'+
-         '<td class="r">'+(p.er==null?'-':esc(p.er))+'</td>'+
-         '<td class="r">'+(p.saves==null?'-':esc(p.saves))+'</td>'+
-         '<td>'+link+'</td></tr>';
+    /* galería de portadas */
+    var merged=mergePosts(posts).slice(0,18);
+    h+='<div class="pgrid">';
+    merged.forEach(function(p){
+      var nuevo=ageDays(p)<=10?'<span class="pbadge">Nuevo</span>':'';
+      var net='<span class="pnet '+(p.red==="IG"?"ig":"fb")+'">'+(p.red==="IG"?"IG":"f")+'</span>';
+      var main = p.red==="IG" ? (p.reach==null?'—':fmtN(p.reach)+' <small>alcance</small>') : ((p.interacciones||0)+' <small>interac.</small>');
+      h+='<div class="pcard" onclick="abrirFicha(&#39;'+p.id+'&#39;)">'+nuevo+net+covHTML(p)+
+         '<div class="ph"><div class="pt"><span>'+esc(p.tipo)+'</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
+         '<div class="pmain">'+main+'</div></div></div>';
     });
-    h+='</table>';
-    h+='<p class="hint">FB ya no entrega <i>reach</i> por post en la nueva API de Páginas → ahí va <code>n/d</code> (sí contamos reacciones/comentarios/compartidos). '+
-       'Para saber qué post trae <b>leads</b>, usa enlaces con UTM al Plan de Potencial: aparecerán arriba en «Por fuente». '+
-       'Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='</div>';
+    h+='<p class="hint">Toca una portada para ver TODAS sus métricas. FB no da <i>reach</i> por post (API nueva) → n/d. «Clics → leads» se llena cuando pongamos UTM. Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
+  }
+  /* ---- ficha (modal) ---- */
+  function tile(k,v,sub,nd){ return '<div class="fm'+(nd?' nd':'')+'"><div class="fk">'+k+'</div><div class="fv">'+v+'</div>'+(sub?'<div class="fsub">'+sub+'</div>':'')+'</div>'; }
+  function vOr(x){ return (x==null)?'n/d':fmtN(x); }
+  function sparkline(serie){
+    var vals=(serie||[]).map(function(s){return num(s.reach);});
+    if(vals.length<2) return '';
+    var mx=Math.max.apply(null,vals), mn=Math.min.apply(null,vals);
+    if(mx===mn) return '';
+    var w=220,hh=38;
+    var pts=vals.map(function(v,i){var x=i/(vals.length-1)*w; var y=hh-((v-mn)/(mx-mn))*(hh-6)-3; return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
+    return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'"><polyline points="'+pts+'" fill="none" stroke="#b8975a" stroke-width="2"/></svg>';
+  }
+  function cmp(val,avg,label){ val=num(val); if(!avg) return ''; var d=Math.round((val-avg)/avg*100); var col=d>=0?'var(--verde)':'var(--rojo)'; return '<b style="color:'+col+'">'+(d>=0?'+':'')+d+'%</b> '+label; }
+  function fichaHTML(p,ctx){
+    var isIG=p.red==="IG", reel=(p.tipo==="Reel"||num(p.views)>0);
+    var cov = p.cover ? '<img src="'+esc(p.cover)+'" alt="">' : '<div class="pcov-ph">'+esc((p.titulo||"").slice(0,40))+'</div>';
+    var net = isIG?"Instagram":"Facebook";
+    var h='<div class="pficha">';
+    h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+p.tipo+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:var(--oro)">NUEVO</span>':'')+'</div>'+
+       '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
+       (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
+       '<button class="pfclose" onclick="cerrarFicha()">×</button></div>';
+    h+='<div class="fmgrid">';
+    h+=tile("Alcance", isIG?vOr(p.reach):'n/d', (isIG&&p.reach_nonfollower!=null&&p.reach)?(Math.round(p.reach_nonfollower/p.reach*100)+'% gente nueva'):'', !isIG);
+    h+=tile("Guardados", vOr(p.saves), p.save_rate!=null?(p.save_rate+'% del alcance'):'', p.saves==null);
+    h+=tile("Compartidos", vOr(p.shares), '', p.shares==null);
+    h+=tile("Interacciones", vOr(p.interacciones), p.er!=null?(p.er+'% ER'):'', p.interacciones==null);
+    h+=tile("Comentarios", vOr(p.comments), '', p.comments==null);
+    h+=tile("Me gusta", vOr(p.likes), '', p.likes==null);
+    if(reel) h+=tile("Reproducciones", vOr(p.views), p.watch_avg!=null?(p.watch_avg.toFixed(1)+'s vistos'):'', p.views==null);
+    h+=tile("Visitas al perfil", vOr(p.profile_visits), '', p.profile_visits==null);
+    h+=tile("Clics → leads", 'n/d', 'requiere UTM', true);
+    h+='</div>';
+    var c=[]; if(isIG && p.reach!=null) c.push(cmp(p.reach,ctx.avgReach,'alcance')); if(p.er!=null) c.push(cmp(p.er,ctx.avgER,'ER'));
+    c=c.filter(Boolean);
+    if(c.length) h+='<div class="pfrow">Vs. tu promedio: '+c.join(' · ')+(p.id===ctx.bestId?' · 🏆 tu mejor post':'')+'</div>';
+    var sp=sparkline(p.serie);
+    h+='<div class="pfrow">Crecimiento del alcance '+(sp?'':'<span class="muted">— se grafica con más mediciones (corre el refresco varios días)</span>')+sp+'</div>';
+    if(p._fb){ var f=p._fb; h+='<div class="pfrow">También en <b>Facebook</b>: '+(f.likes||0)+' reacciones · '+(f.comments||0)+' comentarios · '+(f.shares||0)+' compartidos'+(f.clicks!=null?' · '+f.clicks+' clics':'')+((f.views!=null&&f.views>0)?' · '+fmtN(f.views)+' reprod.':'')+'</div>'; }
+    h+='</div>';
+    return h;
+  }
+  if(!window.abrirFicha){
+    window.cerrarFicha=function(){ var o=document.getElementById('pov'); if(o&&o.parentNode) o.parentNode.removeChild(o); };
+    window.abrirFicha=function(id){
+      var ctx=window.__PUB||{byId:{}}; var p=ctx.byId[id]; if(!p) return;
+      window.cerrarFicha();
+      var o=document.createElement('div'); o.id='pov'; o.className='pov';
+      o.addEventListener('click',function(e){ if(e.target===o) window.cerrarFicha(); });
+      o.innerHTML=fichaHTML(p,ctx);
+      document.body.appendChild(o);
+    };
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.cerrarFicha(); });
   }
 
   function semaforo(d){

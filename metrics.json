@@ -19,7 +19,20 @@
       "views": 45,
       "interacciones": 1,
       "er": 3.57,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18119686516773535.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 0,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 28,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "IG",
@@ -37,7 +50,20 @@
       "views": null,
       "interacciones": 1,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18133908502570382.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 0,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 0,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "FB",
@@ -56,7 +82,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18133908502570382.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -75,7 +114,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18133908502570382.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -93,7 +145,20 @@
       "views": 128,
       "interacciones": 3,
       "er": 3.12,
-      "save_rate": 1.04
+      "save_rate": 1.04,
+      "cover": "covers/18116567470831363.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 96,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 96,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "FB",
@@ -112,7 +177,20 @@
       "views": 0,
       "interacciones": 1,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18116567470831363.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "IG",
@@ -130,7 +208,20 @@
       "views": null,
       "interacciones": 2,
       "er": 4.26,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17891387412494707.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 47,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 47,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "IG",
@@ -148,7 +239,20 @@
       "views": 59,
       "interacciones": 4,
       "er": 9.76,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18109704826912272.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 41,
+          "inter": 4
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 41,
+          "inter": 4
+        }
+      ]
     },
     {
       "red": "IG",
@@ -166,7 +270,20 @@
       "views": 226,
       "interacciones": 3,
       "er": 6.82,
-      "save_rate": 2.27
+      "save_rate": 2.27,
+      "cover": "covers/18005575561706906.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 44,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 44,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "IG",
@@ -184,7 +301,20 @@
       "views": null,
       "interacciones": 2,
       "er": 5.41,
-      "save_rate": 2.7
+      "save_rate": 2.7,
+      "cover": "covers/18000086173829206.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 37,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 37,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -203,7 +333,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18000086173829206.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -221,7 +364,20 @@
       "views": null,
       "interacciones": 4,
       "er": 13.33,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17985709319092382.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 30,
+          "inter": 4
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 30,
+          "inter": 4
+        }
+      ]
     },
     {
       "red": "FB",
@@ -240,7 +396,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17985709319092382.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -258,7 +427,20 @@
       "views": null,
       "interacciones": 3,
       "er": 11.11,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17963899997300321.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 27,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "FB",
@@ -277,7 +459,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17963899997300321.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -295,7 +490,20 @@
       "views": null,
       "interacciones": 1,
       "er": 4.35,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18342595030071143.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 23,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 23,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "FB",
@@ -314,7 +522,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18342595030071143.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -332,7 +553,20 @@
       "views": null,
       "interacciones": 2,
       "er": 9.09,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17910021566750291.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 22,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 22,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -351,7 +585,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17910021566750291.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -369,7 +616,20 @@
       "views": null,
       "interacciones": 4,
       "er": 16.0,
-      "save_rate": 4.0
+      "save_rate": 4.0,
+      "cover": "covers/18244280176094105.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 25,
+          "inter": 4
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 25,
+          "inter": 4
+        }
+      ]
     },
     {
       "red": "FB",
@@ -388,7 +648,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18244280176094105.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -406,7 +679,20 @@
       "views": null,
       "interacciones": 4,
       "er": 19.05,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17974944602483514.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 21,
+          "inter": 4
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 21,
+          "inter": 4
+        }
+      ]
     },
     {
       "red": "FB",
@@ -425,7 +711,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17974944602483514.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -444,7 +743,19 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -462,7 +773,20 @@
       "views": null,
       "interacciones": 2,
       "er": 12.5,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17998670608827066.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 16,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 16,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -481,7 +805,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17998670608827066.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -500,7 +837,19 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -518,7 +867,20 @@
       "views": null,
       "interacciones": 2,
       "er": 15.38,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18215599024224476.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 13,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 13,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -537,7 +899,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18215599024224476.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -555,7 +930,20 @@
       "views": null,
       "interacciones": 2,
       "er": 15.38,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17984341025066266.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 13,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 13,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -574,7 +962,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17984341025066266.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -592,7 +993,20 @@
       "views": null,
       "interacciones": 2,
       "er": 18.18,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17932843610536698.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 11,
+          "inter": 2
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 11,
+          "inter": 2
+        }
+      ]
     },
     {
       "red": "FB",
@@ -611,7 +1025,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17932843610536698.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -629,7 +1056,20 @@
       "views": null,
       "interacciones": 1,
       "er": 10.0,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17965429844166982.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 10,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 10,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "IG",
@@ -647,7 +1087,20 @@
       "views": 212,
       "interacciones": 5,
       "er": 29.41,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17973244649042395.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 17,
+          "inter": 5
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 17,
+          "inter": 5
+        }
+      ]
     },
     {
       "red": "FB",
@@ -666,7 +1119,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17965429844166982.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -684,7 +1150,20 @@
       "views": null,
       "interacciones": 0,
       "er": 0.0,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17998067737738152.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 8,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 8,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -703,7 +1182,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17998067737738152.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -721,7 +1213,20 @@
       "views": null,
       "interacciones": 1,
       "er": 11.11,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18020707498507775.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 9,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 9,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "FB",
@@ -740,7 +1245,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18020707498507775.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -758,7 +1276,20 @@
       "views": null,
       "interacciones": 0,
       "er": 0.0,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/18351732379043995.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 8,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 8,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -777,7 +1308,20 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/18351732379043995.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "IG",
@@ -795,7 +1339,20 @@
       "views": 44,
       "interacciones": 3,
       "er": 23.08,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17969566040077595.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 13,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 13,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "IG",
@@ -813,7 +1370,20 @@
       "views": null,
       "interacciones": 3,
       "er": 30.0,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17998260187668992.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 10,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 10,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "FB",
@@ -832,7 +1402,20 @@
       "views": 0,
       "interacciones": 3,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17998260187668992.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 3
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 3
+        }
+      ]
     },
     {
       "red": "IG",
@@ -850,7 +1433,20 @@
       "views": null,
       "interacciones": 0,
       "er": 0.0,
-      "save_rate": 0.0
+      "save_rate": 0.0,
+      "cover": "covers/17984384314898052.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": 9,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": 9,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -869,7 +1465,20 @@
       "views": 0,
       "interacciones": 1,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "cover": "covers/17984384314898052.jpg",
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "FB",
@@ -888,7 +1497,19 @@
       "views": 0,
       "interacciones": 1,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 1
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 1
+        }
+      ]
     },
     {
       "red": "FB",
@@ -907,7 +1528,19 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     },
     {
       "red": "FB",
@@ -926,7 +1559,19 @@
       "views": 0,
       "interacciones": 0,
       "er": null,
-      "save_rate": null
+      "save_rate": null,
+      "serie": [
+        {
+          "t": "2026-06-20 12:51",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-06-20 12:54",
+          "reach": null,
+          "inter": 0
+        }
+      ]
     }
   ]
 }
