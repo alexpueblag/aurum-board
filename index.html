@@ -338,6 +338,9 @@
       html+='<h2 class="sec">Embudo del cuestionario</h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
+    /* --- comportamiento en el tiempo (serie por día del Apps Script) --- */
+    html+=serieTiempoHTML(d.actividad_por_dia);
+
     /* --- canal de agenda (whatsapp vs calendario) — el A/B de portada se retiró (portada única) --- */
     var can=ec&&ec.canal;
     if(can && (num(can.whatsapp)||num(can.calendario))){
@@ -393,6 +396,46 @@
     var gb=$("gGuardar"); if(gb) gb.addEventListener("click",guardarGasto);
   }
   function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
+
+  /* ============ COMPORTAMIENTO EN EL TIEMPO (serie por día del Apps Script) ============ */
+  function serieTiempoHTML(serie){
+    var h='<h2 class="sec">Comportamiento en el tiempo</h2>';
+    if(!serie || !serie.length){
+      return h+'<p class="nota">Se enciende al actualizar tu Apps Script (expone <code>actividad_por_dia</code> — te paso el código de 2 pasos). Mientras, el embudo de arriba es el <b>acumulado</b> de todos los días.</p>';
+    }
+    var s=serie.slice(-30);
+    var maxV=Math.max.apply(null,s.map(function(x){return num(x.visitas);}).concat([1]));
+    var peak=s.reduce(function(a,b){return num(b.visitas)>num(a.visitas)?b:a;},s[0]);
+    var totV=s.reduce(function(a,b){return a+num(b.visitas);},0), totL=s.reduce(function(a,b){return a+num(b.lead);},0), totA=s.reduce(function(a,b){return a+num(b.agenda);},0);
+    h+='<div class="kref"><span class="kt">Últimos '+s.length+' días</span><span>Visitas <b>'+totV+'</b></span><span>Leads <b>'+totL+'</b></span><span>Citas <b>'+totA+'</b></span><span>Día pico <b>'+esc(peak.fecha.slice(5))+'</b> ('+peak.visitas+')</span></div>';
+    /* barras por día */
+    h+='<div style="overflow-x:auto;padding-bottom:4px;"><div style="display:flex;align-items:flex-end;gap:3px;height:130px;min-width:100%;">';
+    s.forEach(function(x){
+      var hv=Math.round(num(x.visitas)/maxV*108), esLead=num(x.lead)>0, esPico=(x.fecha===peak.fecha);
+      var col=esPico?'var(--oro)':(esLead?'var(--verde)':'var(--piedra)');
+      h+='<div title="'+esc(x.fecha)+' · '+x.visitas+' visitas · '+x.empezaron+' empezaron · '+x.lead+' leads · '+x.agenda+' citas" style="flex:1 0 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;">'+
+        (esLead?'<span style="font-size:9px;color:var(--verde);font-weight:bold;">'+x.lead+'</span>':'')+
+        '<div style="width:100%;max-width:24px;height:'+Math.max(hv,3)+'px;background:'+col+';border-radius:3px 3px 0 0;"></div>'+
+        '<span style="font-size:9px;color:var(--piedra);">'+esc(x.fecha.slice(8,10))+'</span>'+
+      '</div>';
+    });
+    h+='</div></div>';
+    h+='<p class="hint">Cada barra = un día (alto = más visitas). <span style="color:#8a6d34;font-weight:600">Oro</span> = día pico · <span style="color:var(--verde);font-weight:600">verde</span> = día con lead (con el número arriba). Pasa el dedo/mouse para ver el detalle. El número es el día del mes.</p>';
+    /* horas del día */
+    var hrs={}; s.forEach(function(x){ var H=x.horas||{}; Object.keys(H).forEach(function(k){ var hk=String(parseInt(k,10)); if(hk!=="NaN") hrs[hk]=(hrs[hk]||0)+num(H[k]); }); });
+    if(Object.keys(hrs).length){
+      var arrH=[]; for(var i=0;i<24;i++) arrH.push(hrs[String(i)]||0);
+      var maxH=Math.max.apply(null,arrH.concat([1])), peakH=arrH.indexOf(Math.max.apply(null,arrH));
+      h+='<h2 class="sec" style="margin-top:18px;">¿A qué hora llegan?</h2>';
+      h+='<div style="display:flex;align-items:flex-end;gap:2px;height:64px;">';
+      arrH.forEach(function(c,H){
+        var hh=Math.round(c/maxH*52);
+        h+='<div title="'+H+':00 — '+c+' visitas" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;"><div style="width:100%;height:'+Math.max(hh,2)+'px;background:'+(H===peakH&&c>0?'var(--oro)':'var(--arena)')+';border-radius:2px 2px 0 0;"></div><span style="font-size:8px;color:var(--piedra);">'+(H%3===0?H:'')+'</span></div>';
+      });
+      h+='</div><p class="hint">Hora del día (0–23 h) en que entran tus visitas. Pico: <b>'+peakH+':00</b>. Úsalo para programar publicaciones y dar seguimiento cuando están activos.</p>';
+    }
+    return h;
+  }
 
   /* ============ PUBLICACIONES (redes) — decisión + galería + ficha ============ */
   function fmtN(n){ n=num(n); return n>=1000 ? (n/1000).toFixed(n>=10000?0:1)+"k" : String(Math.round(n)); }
