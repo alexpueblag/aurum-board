@@ -292,26 +292,53 @@
     html+='</div>';
     /* --- embudo del cuestionario (9 pantallas) leído del Sheet/ACTIVIDAD --- */
     var ec=d.embudo_cuestionario;
-    if(ec && ec.pasos && ec.pasos.length){
-      var base0=(ec.pasos[0]||{}).n||0;
-      var mc={i:-1,d:0}, pv=base0;
-      ec.pasos.forEach(function(p,i){ var c=(i>0&&pv>0)?Math.round((pv-p.n)/pv*100):0; if(c>mc.d){mc={i:i,d:c};} pv=p.n; });
+    if(ec && ec.pasos && ec.pasos.length>=2){
+      var pasos=ec.pasos, inicio=pasos[0], started=pasos[1];
+      var base0=num(inicio.n), base2=num(started.n)||1, empezaron=num(started.n);
+      var agendaStep=pasos[pasos.length-1];
+      var pctEmpez=base0>0?Math.round(empezaron/base0*100):0, dropPortada=base0>0?Math.round((base0-empezaron)/base0*100):0;
       html+='<h2 class="sec">Embudo del cuestionario · '+esc(ec.visitas||base0)+' visitas (del Sheet)</h2>';
-      pv=base0;
-      ec.pasos.forEach(function(p,i){
-        var w=base0>0?Math.round(p.n/base0*100):0;
-        var c=(i>0&&pv>0)?Math.round((pv-p.n)/pv*100):0;
-        var rojo=(i===mc.i&&mc.d>0);
-        html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">'+
-          '<div style="width:92px;font-size:11px;color:var(--carbon);text-align:right;flex:none;">'+esc(p.etiqueta)+'</div>'+
-          '<div style="flex:1;height:20px;background:var(--arena);border-radius:4px;overflow:hidden;"><div style="height:100%;width:'+Math.max(w,2)+'%;background:'+(rojo?"var(--rojo)":"var(--oro)")+';"></div></div>'+
-          '<div style="width:128px;font-family:Georgia,serif;font-size:14px;flex:none;">'+esc(p.n)+' <small style="color:var(--piedra);font-size:11px;">'+w+'%</small>'+(i>0&&c>0?' <span style="color:'+(rojo?"var(--rojo)":"var(--piedra)")+';font-size:11px;">−'+c+'%</span>':'')+'</div>'+
+      /* --- tarjetas resumen --- */
+      html+='<div class="nums" style="margin-bottom:12px;">';
+      html+=numHTML("Llegaron a la portada", base0, "", false);
+      html+='<div class="num" style="border-color:var(--rojo);box-shadow:0 0 0 1px var(--rojo);"><div class="k">Empezaron el cuestionario</div><div class="v" style="color:var(--rojo);">'+empezaron+' <small>· '+pctEmpez+'%</small></div><div class="d down">▼ '+dropPortada+'% se va en la portada</div></div>';
+      html+=numHTML("Agendaron cita", num(agendaStep.n), "la meta", true);
+      html+='</div>';
+      /* --- ACTO 1: la puerta --- */
+      html+='<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);margin:4px 0 8px;">Acto 1 · la puerta</div>';
+      html+='<div class="card" style="padding:14px 16px;margin-bottom:16px;">'+
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:90px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">Llegaron</div><div style="flex:1;height:24px;background:var(--arena);border-radius:4px;position:relative;"><div style="height:100%;width:100%;background:var(--piedra);border-radius:4px;"></div><span style="position:absolute;right:8px;top:3px;font-family:Georgia,serif;font-size:14px;color:#fff;">'+base0+'</span></div></div>'+
+        '<div style="display:flex;align-items:center;gap:10px;"><div style="width:90px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">Empezaron</div><div style="flex:1;height:24px;background:var(--arena);border-radius:4px;position:relative;"><div style="height:100%;width:'+Math.max(pctEmpez,2)+'%;background:var(--rojo);border-radius:4px;"></div><span style="position:absolute;left:calc('+Math.max(pctEmpez,2)+'% + 8px);top:3px;font-family:Georgia,serif;font-size:14px;color:var(--rojo);">'+empezaron+'</span></div></div>'+
+        '<div style="margin-top:11px;padding-top:9px;border-top:1px solid var(--linea);font-size:13px;color:var(--rojo);">⚠️ '+dropPortada+'% se va sin tocar una pregunta. <span style="color:var(--piedra);">Tu fuga #1 está en la portada del cuestionario.</span></div>'+
+      '</div>';
+      /* --- ACTO 2: el cuestionario, rebasado a quienes empiezan --- */
+      var act2=pasos.slice(1), mc={i:-1,d:0}, pv=base2;
+      act2.forEach(function(p,i){ var c=(i>0&&pv>0)?Math.round((pv-num(p.n))/pv*100):0; if(c>mc.d){mc={i:i,d:c};} pv=num(p.n); });
+      html+='<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);margin:4px 0 8px;">Acto 2 · el cuestionario <span style="text-transform:none;letter-spacing:0;">(de los '+empezaron+' que empezaron)</span></div>';
+      html+='<div class="card" style="padding:14px 16px;">'; pv=base2;
+      act2.forEach(function(p,i){
+        var w=base2>0?Math.round(num(p.n)/base2*100):0, c=(i>0&&pv>0)?Math.round((pv-num(p.n))/pv*100):0, rojo=(i===mc.i&&mc.d>0);
+        html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:'+(i<act2.length-1?'7px':'0')+';">'+
+          '<div style="width:92px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">'+esc(p.etiqueta)+'</div>'+
+          '<div style="flex:1;height:22px;background:var(--arena);border-radius:4px;position:relative;overflow:hidden;"><div style="height:100%;width:'+Math.max(w,2)+'%;background:'+(rojo?"var(--rojo)":"var(--verde)")+';border-radius:4px;"></div></div>'+
+          '<div style="width:118px;font-family:Georgia,serif;font-size:14px;flex:none;">'+esc(p.n)+' <small style="color:var(--piedra);font-size:11px;">'+w+'%</small>'+(i>0&&c>0?' <span style="color:'+(rojo?"var(--rojo)":"var(--piedra)")+';font-size:11px;">−'+c+'%</span>':'')+'</div>'+
         '</div>';
-        pv=p.n;
+        pv=num(p.n);
       });
-      html+='<p class="nota" style="margin-top:8px;">De TU Sheet (pestaña <code style="background:var(--arena);padding:1px 5px;border-radius:3px;">ACTIVIDAD</code>). El mayor escalón en rojo es la pantalla a mejorar. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+      html+='</div>';
+      /* --- A/B de portada --- */
+      if(ec.ab && (ec.ab.A||ec.ab.B)){
+        var A=ec.ab.A||{}, B=ec.ab.B||{};
+        function convP(x){ return num(x.visita)>0?Math.round(num(x.lead)/num(x.visita)*100):0; }
+        var aC=convP(A), bC=convP(B), bWin=bC>=aC;
+        html+='<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);margin:16px 0 8px;">Prueba A/B de portada</div><div class="funnel">'+
+          '<div class="fstep"'+(!bWin&&aC>0?' style="border-color:var(--verde);box-shadow:0 0 0 1px var(--verde);"':'')+'><div class="fl">Versión A'+(!bWin&&aC>0?' 🏆':'')+'</div><div style="font-family:Georgia,serif;font-size:20px;margin-top:3px;">'+num(A.visita)+'</div><div class="fr">visitas · '+num(A.lead)+' leads · '+aC+'%</div></div>'+
+          '<div class="fstep"'+(bWin&&bC>0?' style="border-color:var(--verde);box-shadow:0 0 0 1px var(--verde);"':'')+'><div class="fl">Versión B'+(bWin&&bC>0?' 🏆':'')+'</div><div style="font-family:Georgia,serif;font-size:20px;margin-top:3px;">'+num(B.visita)+'</div><div class="fr">visitas · '+num(B.lead)+' leads · '+bC+'%</div></div>'+
+        '</div>';
+      }
+      html+='<p class="nota" style="margin-top:10px;">De TU Sheet (pestaña <code style="background:var(--arena);padding:1px 5px;border-radius:3px;">ACTIVIDAD</code>). El embudo se parte en dos: la <b>portada</b> (donde pierdes el '+dropPortada+'%) y el <b>cuestionario</b> rebasado a quienes sí empiezan. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     } else {
-      html+='<p class="nota" style="margin-top:10px;">El embudo de las <b>9 pantallas</b> aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
+      html+='<h2 class="sec">Embudo del cuestionario</h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
     /* --- canal de agenda (whatsapp vs calendario) — el A/B de portada se retiró (portada única) --- */
