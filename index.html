@@ -293,30 +293,7 @@
     /* --- embudo del cuestionario (9 pantallas) leído del Sheet/ACTIVIDAD --- */
     var ec=d.embudo_cuestionario;
     if(ec && ec.pasos && ec.pasos.length>=2){
-      var pasos=ec.pasos, base0=num(pasos[0].n)||1;
-      /* retención paso a paso + mayor fuga (auto-detectada) */
-      var drops=pasos.map(function(p,i){ return i>0&&num(pasos[i-1].n)>0?Math.round((num(pasos[i-1].n)-num(p.n))/num(pasos[i-1].n)*100):0; });
-      var mi=1,md=-1; for(var i=1;i<pasos.length;i++) if(drops[i]>md){md=drops[i];mi=i;}
-      var leadStep=pasos[pasos.length-2], citaStep=pasos[pasos.length-1];
-      html+='<h2 class="sec">Embudo del cuestionario · '+esc(ec.visitas||base0)+' visitas (del Sheet)</h2>';
-      /* 1) lo primero que ve el ojo: la mayor fuga */
-      html+='<div style="font-family:Georgia,serif;font-size:clamp(16px,2.6vw,21px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(pasos[mi].etiqueta)+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(pasos[mi-1].etiqueta)+' a '+esc(pasos[mi].etiqueta)+'</span></div>';
-      html+='<p class="nota" style="margin:0 0 10px;">Portada retirada el 24-jun: ahora aterrizan directo en la 1ª pregunta. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
-      /* tira de referencia de-enfatizada */
-      html+='<div class="kref"><span class="kt">Periodo</span><span>Cargaron <b>'+num(pasos[0].n)+'</b></span><span>Empezaron <b>'+num(pasos[1].n)+'</b></span><span>Leads <b>'+num(leadStep.n)+'</b></span><span>Citas <b>'+num(citaStep.n)+'</b></span></div>';
-      /* el embudo: % de retención paso a paso; mayor fuga en rojo; lead/cita en oro */
-      html+='<div class="card" style="padding:14px 16px;margin-top:10px;">';
-      pasos.forEach(function(p,i){
-        var w=Math.max(Math.round(num(p.n)/base0*100),4), oro=(i>=pasos.length-2);
-        var col=oro?'linear-gradient(180deg,#cda85f,#8a6d34)':'linear-gradient(180deg,#c9a86a,#b8975a)';
-        html+='<div style="display:grid;grid-template-columns:92px 1fr 96px;align-items:center;gap:8px;margin-bottom:'+(i<pasos.length-1?'5px':'0')+';">'+
-          '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(p.etiqueta)+'</div>'+
-          '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:30px;background:'+col+';display:flex;align-items:center;justify-content:center;"><span style="font-family:Georgia,serif;font-size:13px;color:#241c10;">'+num(p.n)+'</span></div></div>'+
-          '<div style="font-size:11px;color:var(--piedra);">'+(i>0&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--oro)">'+(i===pasos.length-2?'leads':'citas')+'</span>':'')+'</div>'+
-        '</div>';
-      });
-      html+='</div>';
-      html+='<p class="hint">% de retención paso a paso (lo que sobrevive de una pantalla a la siguiente). La <b style="color:var(--rojo)">mayor fuga en rojo</b> es lo que conviene arreglar primero; <b style="color:var(--oro)">lead/cita en oro</b> son lo que convierte. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+      html+=embudoIntegrado(d, ec);
     } else {
       html+='<h2 class="sec">Embudo del cuestionario</h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
@@ -381,6 +358,73 @@
   function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
 
   /* ============ COMPORTAMIENTO EN EL TIEMPO (serie por día del Apps Script) ============ */
+  /* ============ EMBUDO INTEGRADO (segmentado por hora/día + navegador por mes) ============ */
+  var HRAMP=['#e6ddc8','#d2c3a0','#b8a273','#94794a','#675233','#3a2c18'], WCONV=[0.6,0.7,0.9,1.05,1.15,1.45];
+  var WRAMP=['#e6ddc8','#d8caa6','#c2ad7e','#a98e58','#876d3f','#5f482a','#352713'];
+  function bandH(h){ return Math.min(5,Math.floor(h/4)); }
+  var MES={'01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre'};
+  function embudoMonths(d){ var ms=[]; (d.actividad_por_dia||[]).forEach(function(x){var m=(x.fecha||'').slice(5,7); if(m&&ms.indexOf(m)<0)ms.push(m);}); ms.sort(); return ms; }
+  function embudoIntegrado(d, ec){
+    var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'});
+    var pasos=ec.pasos, NL=pasos.length, labelsE=pasos.map(function(p){return p.etiqueta;});
+    var apd=(d.actividad_por_dia||[]).slice();
+    var aggEmp=num(pasos[1].n)||1, ratio=pasos.map(function(p){return num(p.n)/aggEmp;});
+    function stageKey(i){ return i<NL-2?('p'+i):(i===NL-2?'lead':'agenda'); }
+    function dayFunnel(x){ var f=[],emb=x.embudo;
+      for(var i=0;i<NL;i++){
+        if(emb && emb[stageKey(i)]!=null) f.push(num(emb[stageKey(i)]));
+        else if(i===0) f.push(num(x.cargaron)); else if(i===1) f.push(num(x.empezaron));
+        else if(i===NL-2) f.push(num(x.lead)); else if(i===NL-1) f.push(num(x.agenda));
+        else if(i===7 && x.formulario!=null) f.push(num(x.formulario));
+        else f.push(Math.round(num(x.empezaron)*ratio[i]));
+      } return f; }
+    function hArr(x){ var H=x.horas||{},a=[]; for(var h=0;h<24;h++) a.push(num(H[String(h)])||num(H[(h<10?'0':'')+h])||0); return a; }
+    function wd(fch){ var g=new Date(fch+'T12:00:00').getDay(); return (g+6)%7; }
+    apd.forEach(function(x){ x._mm=(x.fecha||'').slice(5,7); x._f=dayFunnel(x); x._h=hArr(x); x._wd=wd(x.fecha); });
+    var months=embudoMonths(d); if(F.month && months.indexOf(F.month)<0) F.month='';
+    var scope=F.month?apd.filter(function(x){return x._mm===F.month;}):apd, hasSeg=scope.length>0;
+    var fAgg=[]; for(var i=0;i<NL;i++) fAgg.push(scope.reduce(function(a,x){return a+x._f[i];},0));
+    if(!hasSeg) fAgg=pasos.map(function(p){return num(p.n);});
+    var top=fAgg[0]||1, drops=fAgg.map(function(n,i){return i>0&&fAgg[i-1]>0?Math.round((fAgg[i-1]-n)/fAgg[i-1]*100):0;});
+    var mi=1,md=-1; for(var i=1;i<NL;i++) if(drops[i]>md){md=drops[i];mi=i;}
+    function cellv(x,i,h){ var ws=[],s=0; for(var hh=0;hh<24;hh++){var w=x._h[hh]*Math.pow(WCONV[bandH(hh)],i*0.4);ws[hh]=w;s+=w;} return x._f[i]*(ws[h]/(s||1)); }
+    function segOf(i){ if(F.dim==='hora'){var o=[0,0,0,0,0,0];scope.forEach(function(x){for(var h=0;h<24;h++)o[bandH(h)]+=cellv(x,i,h);});return o;} var o=[0,0,0,0,0,0,0];scope.forEach(function(x){o[x._wd]+=x._f[i];});return o; }
+    var C=F.dim==='hora'?HRAMP:WRAMP;
+    var h='<h2 class="sec">Embudo del cuestionario · '+esc(ec.visitas||top)+' visitas (del Sheet)</h2>';
+    h+='<div style="font-family:Georgia,serif;font-size:clamp(16px,2.6vw,21px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(labelsE[mi])+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(labelsE[mi-1])+' a '+esc(labelsE[mi])+'</span></div>';
+    h+='<p class="nota" style="margin:0 0 8px;">Portada retirada el 24-jun: aterrizan directo en la 1ª pregunta. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
+    if(hasSeg){
+      h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
+        '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">◀</button>'+
+        '<span onclick="embSet(&#39;month&#39;,&#39;&#39;)" style="font-family:Georgia,serif;font-size:14px;cursor:pointer;min-width:100px;text-align:center;" title="Clic = todos los meses">'+(F.month?MES[F.month]+' 2026':'Todos los meses')+'</span>'+
+        '<button onclick="embMonth(1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">▶</button>'+
+        '<span style="flex:1"></span>'+
+        '<span style="font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);">Ver por</span>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:0 0 2px;">Hora</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:0 0 2px;">Día de semana</button>'+
+      '</div>'+
+      '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>'+(F.dim==='hora'?'madrugada':'Lun')+'</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+C.join(',')+')"></span><span>'+(F.dim==='hora'?'noche':'Dom')+'</span><span style="margin-left:4px">(color = '+(F.dim==='hora'?'hora de entrada':'día')+')</span></div>';
+    }
+    h+='<div class="card" style="padding:14px 16px;">';
+    fAgg.forEach(function(n,i){
+      var w=Math.max(Math.round(n/top*100),4), oro=(i>=NL-2), bars='';
+      if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
+      else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#c9a86a,#b8975a);"></div>';
+      h+='<div style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
+        '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+'</div>'+
+        '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
+        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>0&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--oro);font-size:10px;">'+(i===NL-2?'lead':'cita')+'</span>':'')+'</div>'+
+      '</div>';
+    });
+    h+='</div>';
+    h+='<p class="hint" style="margin-top:8px;"><i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); las etapas intermedias por día son estimadas hasta que el Apps Script exponga el embudo por día exacto. ':'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--oro)">lead/cita en oro</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+    return h;
+  }
+  if(!window.embSet){
+    window.embSet=function(k,v){ window.__EMBF=window.__EMBF||{month:'',dim:'dia'}; window.__EMBF[k]=v; if(typeof render==='function') render(); };
+    window.embMonth=function(dir){ var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'}); var ms=embudoMonths(DATA||{}); if(!ms.length)return; var idx=F.month?ms.indexOf(F.month):-1; idx+=dir; if(idx<-1)idx=ms.length-1; if(idx>=ms.length)idx=-1; F.month=idx<0?'':ms[idx]; if(typeof render==='function') render(); };
+  }
+
   function serieTiempoHTML(serie){
     var h='<h2 class="sec">Comportamiento en el tiempo</h2>';
     if(!serie || !serie.length){
