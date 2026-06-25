@@ -5,28 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>Tablero · Yo Desarrollo</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a1818'/%3E%3Ctext x='50' y='70' font-family='Georgia' font-size='58' font-weight='bold' fill='%23a72d96' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23703438'/%3E%3Ctext x='50' y='70' font-family='Georgia' font-size='58' font-weight='bold' fill='%23ffffff' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Identidad yodesarrollo.mx: Kefa (firma) + Poppins/Raleway, blanco/negro + acentos magenta·teal·azul */
+  /* Identidad yodesarrollo.mx: Kefa (firma) + Poppins/Raleway, blanco/negro + acento vino #703438 (teal/índigo menores) */
   @font-face{font-family:'Kefa-Regular';src:local('Kefa'),url('fonts/Kefa-Regular.ttf') format('truetype');font-display:swap;}
-  :root{--negro:#1a1818;--oro:#a72d96;--crema:#f5f4f2;--arena:#efedea;--piedra:#8b8782;--carbon:#4a4744;--linea:#e6e3dd;
-    --verde:#2da795;--amar:#c2862f;--rojo:#a05252;
-    --magenta:#a72d96;--teal:#036873;--azul:#4297ec;}
+  :root{--negro:#1a1818;--oro:#703438;--crema:#f6f5f2;--arena:#efedea;--piedra:#8b8782;--carbon:#4a4744;--linea:#e6e3dd;
+    --verde:#2f7d68;--amar:#c2862f;--rojo:#bf4a3d;
+    --vino:#703438;--teal:#013e42;--azul:#465798;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--crema);color:var(--negro);font-family:'Poppins','Raleway','Helvetica Neue',Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
   .serif{font-family:Kefa-Regular,Georgia,serif;}
-  header{background:var(--negro);border-bottom:1px solid var(--oro);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
-  .logo{display:flex;align-items:center;gap:11px;}
-  .logo-box{width:38px;height:38px;border:1px solid var(--oro);color:var(--oro);display:flex;align-items:center;justify-content:center;font-family:Kefa-Regular,Georgia,serif;font-size:15px;flex:none;}
-  .logo .nm{color:#f4f1ec;letter-spacing:2px;font-weight:bold;font-size:12px;}
-  .logo .sub{color:var(--oro);font-size:10px;letter-spacing:1.5px;}
+  header{background:#fff;border-bottom:1px solid var(--linea);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:50;}
+  .logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .logo-img{height:25px;width:auto;display:block;}
+  .logo .sub{color:var(--piedra);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border-left:1px solid var(--linea);padding-left:11px;}
   .hctrl{display:flex;align-items:center;gap:10px;}
-  #badge{display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:#cfc6b4;border:1px solid #3a3a3a;border-radius:20px;padding:5px 11px;cursor:pointer;}
+  #badge{display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--linea);border-radius:20px;padding:5px 11px;cursor:pointer;}
   #badge .dot{width:7px;height:7px;border-radius:50%;background:#888;}
-  #badge[data-s="live"] .dot{background:var(--verde);} #badge[data-s="live"]{color:#bcd3c2;}
+  #badge[data-s="live"] .dot{background:var(--verde);} #badge[data-s="live"]{color:var(--verde);}
   #badge[data-s="cache"] .dot{background:var(--amar);} #badge[data-s="error"] .dot{background:var(--rojo);}
   #badge[data-s="loading"] .dot{background:var(--oro);animation:pulse 1s infinite;}
   @keyframes pulse{50%{opacity:.3;}}
@@ -76,7 +75,7 @@
   .fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--linea);border-radius:5px;font-size:14px;font-family:inherit;background:var(--crema);}
   .fld textarea{min-height:64px;resize:vertical;}
   .btn{background:var(--oro);color:var(--negro);border:none;border-radius:5px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
-  .btn:hover{background:#8a2378;} .btn:disabled{opacity:.5;cursor:default;}
+  .btn:hover{background:#4f2427;} .btn:disabled{opacity:.5;cursor:default;}
   .hint{font-size:11px;color:var(--piedra);margin-top:8px;line-height:1.5;}
   .hint code{background:var(--arena);padding:1px 5px;border-radius:3px;font-size:11px;}
   .nota{font-size:12px;color:var(--piedra);font-style:italic;line-height:1.5;}
@@ -96,7 +95,7 @@
   .pbadge{position:absolute;top:8px;left:8px;background:var(--oro);color:#1a1a1a;font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:20px;text-transform:uppercase;}
   .pnet{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;font-family:Kefa-Regular,Georgia,serif;}
   .pnet.ig{background:#c13584;} .pnet.fb{background:#1877f2;}
-  .pcov-ph{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;background:linear-gradient(135deg,var(--arena),#e9c8e2);color:var(--carbon);font-size:11px;line-height:1.35;}
+  .pcov-ph{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;background:linear-gradient(135deg,var(--arena),#e3cccd);color:var(--carbon);font-size:11px;line-height:1.35;}
   /* ficha modal */
   .pov{position:fixed;inset:0;background:rgba(26,26,26,.55);z-index:80;display:flex;align-items:flex-start;justify-content:center;padding:24px 14px;overflow-y:auto;}
   .pficha{background:var(--crema);border-radius:10px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);}
@@ -118,10 +117,10 @@
   .pfrow b{color:var(--negro);}
   .spark{display:block;margin-top:6px;}
   /* franja de decisión + hueco del lead */
-  .decision{background:linear-gradient(135deg,#fff,#f7e7f3);border:1px solid var(--oro);border-left:4px solid var(--oro);border-radius:8px;padding:14px 18px;margin-bottom:10px;}
+  .decision{background:linear-gradient(135deg,#fff,#f4eaea);border:1px solid var(--oro);border-left:4px solid var(--oro);border-radius:8px;padding:14px 18px;margin-bottom:10px;}
   .decision .dl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--piedra);}
   .decision .dm{font-family:Kefa-Regular,Georgia,serif;font-size:clamp(15px,2.2vw,19px);color:var(--negro);margin-top:3px;line-height:1.4;}
-  .decision .dm b{color:#8a2378;}
+  .decision .dm b{color:#4f2427;}
   .leadgap{display:flex;gap:11px;align-items:flex-start;background:#fbf1ec;border:1px solid var(--rojo);border-left:4px solid var(--rojo);border-radius:8px;padding:12px 16px;margin-bottom:14px;}
   .leadgap .li{font-size:18px;line-height:1.2;flex:none;}
   .leadgap .lt{font-size:13px;color:#7a3b3b;line-height:1.45;}
@@ -140,9 +139,9 @@
   .pcard .pmain{font-size:17px;margin-top:3px;}
   .pcard .pmain b{font-family:Kefa-Regular,Georgia,serif;} .pcard .pmain small{font-size:11px;color:var(--piedra);}
   .pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:6px;}
-  .pang{font-size:10px;color:#8a2378;background:#f7e7f3;border-radius:20px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .pgo{font-size:11px;color:#8a2378;font-weight:600;flex:none;}
-  .pmore{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8a2378;border:1px solid var(--oro);border-radius:20px;padding:8px 16px;cursor:pointer;background:#fff;}
+  .pang{font-size:10px;color:#4f2427;background:#f4eaea;border-radius:20px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pgo{font-size:11px;color:#4f2427;font-weight:600;flex:none;}
+  .pmore{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#4f2427;border:1px solid var(--oro);border-radius:20px;padding:8px 16px;cursor:pointer;background:#fff;}
   .pcount{font-size:11.5px;color:var(--piedra);margin:10px 0 2px;}
   /* ficha: hero + bloques + tiles legibles */
   .pfhead img{width:128px;height:160px;}
@@ -155,7 +154,7 @@
 </head>
 <body>
 <header>
-  <div class="logo"><div class="logo-box">YD</div><div><div class="nm">YO DESARROLLO</div><div class="sub">TABLERO DE MEDICIÓN</div></div></div>
+  <a class="logo" href="https://yodesarrollo.mx" target="_blank" rel="noopener"><img class="logo-img" src="img/yod-logo.png" alt="Yo Desarrollo"><span class="sub">Tablero de medición</span></a>
   <div class="hctrl">
     <span class="muted" id="periodo">—</span>
     <div id="badge" data-s="loading" title="Toca para actualizar"><span class="dot"></span><span class="t">Cargando…</span></div>
@@ -365,8 +364,8 @@
 
   /* ============ COMPORTAMIENTO EN EL TIEMPO (serie por día del Apps Script) ============ */
   /* ============ EMBUDO INTEGRADO (segmentado por hora/día + navegador por mes) ============ */
-  var HRAMP=['#f3d9ec','#e3a9d3','#cf6fb5','#a72d96','#7c2070','#4f1448'], WCONV=[0.6,0.7,0.9,1.05,1.15,1.45];
-  var WRAMP=['#f5deef','#e7b1d9','#d488c0','#bd57a6','#a72d96','#7c2070','#511449'];
+  var HRAMP=['#efdcdd','#d9b1b3','#c08589','#703438','#52262a','#341a1c'], WCONV=[0.6,0.7,0.9,1.05,1.15,1.45];
+  var WRAMP=['#f1e0e1','#ddb9bb','#c89396','#a96a6e','#703438','#52262a','#341a1c'];
   function bandH(h){ return Math.min(5,Math.floor(h/4)); }
   var MES={'01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre'};
   function embudoMonths(d){ var ms=[]; (d.actividad_por_dia||[]).forEach(function(x){var m=(x.fecha||'').slice(5,7); if(m&&ms.indexOf(m)<0)ms.push(m);}); ms.sort(); return ms; }
@@ -427,7 +426,7 @@
       if(i===0) return;  /* "Inicio" NO es barra: la entrada es la 1ª página (Estilo). Una sola entrada, sin duplicar. */
       var w=Math.max(Math.round(n/base*100),4), oro=(i>=NL-2), bars='';
       if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
-      else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#c44fb0,#a72d96);"></div>';
+      else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#8f4d50,#703438);"></div>';
       h+='<div style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
         '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
         '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
@@ -465,7 +464,7 @@
       '</div>';
     });
     h+='</div></div>';
-    h+='<p class="hint">Cada barra = un día (alto = más visitas). <span style="color:#8a2378;font-weight:600">Oro</span> = día pico · <span style="color:var(--verde);font-weight:600">verde</span> = día con lead (con el número arriba). Pasa el dedo/mouse para ver el detalle. El número es el día del mes.</p>';
+    h+='<p class="hint">Cada barra = un día (alto = más visitas). <span style="color:#4f2427;font-weight:600">Oro</span> = día pico · <span style="color:var(--verde);font-weight:600">verde</span> = día con lead (con el número arriba). Pasa el dedo/mouse para ver el detalle. El número es el día del mes.</p>';
     /* horas del día */
     var hrs={}; s.forEach(function(x){ var H=x.horas||{}; Object.keys(H).forEach(function(k){ var hk=String(parseInt(k,10)); if(hk!=="NaN") hrs[hk]=(hrs[hk]||0)+num(H[k]); }); });
     if(Object.keys(hrs).length){
@@ -591,14 +590,14 @@
     if(mx===mn) return '';
     var w=220,hh=38;
     var pts=vals.map(function(v,i){var x=i/(vals.length-1)*w; var y=hh-((v-mn)/(mx-mn))*(hh-6)-3; return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
-    return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'"><polyline points="'+pts+'" fill="none" stroke="#a72d96" stroke-width="2"/></svg>';
+    return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'"><polyline points="'+pts+'" fill="none" stroke="#703438" stroke-width="2"/></svg>';
   }
   function fichaHTML(p,ctx){
     var isIG=p.red==="IG", reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0);
     var cov = p.cover ? '<img src="'+esc(p.cover)+'" alt="">' : '<div class="pcov-ph">'+esc((p.titulo||"").slice(0,40))+'</div>';
     var net = isIG?"Instagram":"Facebook", ang=anguloDe(p), miss=[];
     var h='<div class="pficha">';
-    h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+tipoLabel(p.tipo)+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:#8a2378">NUEVO</span>':'')+(ang?' · '+esc(ang):'')+'</div>'+
+    h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+tipoLabel(p.tipo)+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:#4f2427">NUEVO</span>':'')+(ang?' · '+esc(ang):'')+'</div>'+
        '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
        (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
        '<button class="pfclose" onclick="cerrarFicha()">×</button></div>';
