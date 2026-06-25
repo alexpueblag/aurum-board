@@ -385,7 +385,7 @@
     var scope=F.month?apd.filter(function(x){return x._mm===F.month;}):apd, hasSeg=scope.length>0;
     var fAgg=[]; for(var i=0;i<NL;i++) fAgg.push(scope.reduce(function(a,x){return a+x._f[i];},0));
     if(!hasSeg) fAgg=pasos.map(function(p){return num(p.n);});
-    var cargaron=fAgg[0]||1, base=fAgg[1]||1, rebote=Math.round((cargaron-fAgg[1])/cargaron*100), activ=Math.round(fAgg[1]/cargaron*100);
+    var cargaron=fAgg[0]||1, base=cargaron, rebote=Math.round((cargaron-fAgg[1])/cargaron*100), activ=Math.round(fAgg[1]/cargaron*100);  /* base=Inicio: el embudo arranca en la carga real (con histórico) */
     var drops=fAgg.map(function(n,i){return i>0&&fAgg[i-1]>0?Math.round((fAgg[i-1]-n)/fAgg[i-1]*100):0;});
     var mi=2,md=-1; for(var i=2;i<NL;i++) if(drops[i]>md){md=drops[i];mi=i;}
     if(md<0){mi=2;md=drops[2]||0;}
@@ -395,7 +395,7 @@
     var h='<h2 class="sec">Embudo del cuestionario · '+esc(ec.visitas||cargaron)+' visitas (del Sheet)</h2>';
     h+='<div style="display:flex;gap:10px;align-items:flex-start;background:#fbf1ec;border:1px solid var(--rojo);border-left:4px solid var(--rojo);border-radius:8px;padding:11px 14px;margin-bottom:10px;font-size:13px;color:#7a3b3b;line-height:1.45;"><span style="font-size:16px;">🚪</span><span><b style="color:var(--rojo);">Rebote de la puerta: '+rebote+'%.</b> De '+cargaron+' que cargan, solo <b>'+fAgg[1]+'</b> ('+activ+'%) tocan la 1ª fachada. Es tu fuga más cara — se arregla en la 1ª pantalla de la web (above-the-fold), no rediseñando el cuestionario.</span></div>';
     h+='<div style="font-family:Georgia,serif;font-size:clamp(15px,2.4vw,19px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Ya dentro, mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(labelsE[mi])+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(labelsE[mi-1])+' a '+esc(labelsE[mi])+'</span></div>';
-    h+='<p class="nota" style="margin:0 0 8px;">El embudo arranca en <b>Estilo</b> (1ª pantalla real); «Cargaron» es la llegada, no una pantalla. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
+    h+='<p class="nota" style="margin:0 0 8px;">El embudo arranca en <b>Inicio</b> (cargas reales, con histórico); de ahí a «Estilo» es el <b>rebote de la puerta</b> — la realidad, visible en la 1ª barra. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
     if(hasSeg){
       h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
         '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">◀</button>'+
@@ -410,14 +410,13 @@
     }
     h+='<div class="card" style="padding:14px 16px;">';
     fAgg.forEach(function(n,i){
-      if(i===0) return;   /* "Cargaron" va arriba como activación, no como etapa del embudo */
-      var w=Math.max(Math.round(n/base*100),4), oro=(i>=NL-2), bars='';
+      var w=Math.max(Math.round(n/base*100),4), oro=(i>=NL-2), bars='';  /* i=0 "Inicio" SÍ se dibuja: 1ª barra = la realidad (carga con histórico) */
       if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
       else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#c9a86a,#b8975a);"></div>';
       h+='<div style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
         '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+'</div>'+
         '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
-        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--oro);font-size:10px;">'+(i===NL-2?'lead':'cita')+'</span>':'')+'</div>'+
+        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>0&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--oro);font-size:10px;">'+(i===NL-2?'lead':'cita')+'</span>':'')+'</div>'+
       '</div>';
     });
     h+='</div>';
