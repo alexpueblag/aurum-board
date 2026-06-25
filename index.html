@@ -84,6 +84,7 @@
   #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--negro);color:#f4f1ec;padding:12px 20px;border-radius:6px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:90;max-width:90%;}
   #toast.on{opacity:1;} #toast.warn{background:var(--rojo);}
   .muted{color:var(--piedra);font-size:12px;}
+  .embrow{cursor:pointer;border-radius:6px;transition:background .12s;} .embrow:hover{background:var(--arena);}
   /* galeria de publicaciones */
   .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
   .pcard{background:#fff;border:1px solid var(--linea);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;}
@@ -408,6 +409,7 @@
     function cellv(x,i,h){ var ws=[],s=0; for(var hh=0;hh<24;hh++){var w=x._h[hh]*Math.pow(WCONV[bandH(hh)],i*0.4);ws[hh]=w;s+=w;} return x._f[i]*(ws[h]/(s||1)); }
     function segOf(i){ if(F.dim==='hora'){var o=[0,0,0,0,0,0];scope.forEach(function(x){for(var h=0;h<24;h++)o[bandH(h)]+=cellv(x,i,h);});return o;} var o=[0,0,0,0,0,0,0];scope.forEach(function(x){o[x._wd]+=x._f[i];});return o; }
     var C=F.dim==='hora'?HRAMP:WRAMP;
+    window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
     var mag=F.mag||'arq';
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#fff')+';color:'+(on?'#fff':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
@@ -436,19 +438,60 @@
       var w=Math.max(Math.round(n/base*100),4), oro=(i>=NL-2), bars='';
       if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
       else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#3a3835,#1a1818);"></div>';
-      h+='<div style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
+      h+='<div '+(hasSeg?'class="embrow" onclick="embEtapa('+i+')" title="Ver detalle por fecha y hora" ':'')+'style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
         '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
         '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
         '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Kefa-Regular,Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--verde);font-size:10px;">'+(i===NL-2?'lead':'cita')+'</span>':'')+'</div>'+
       '</div>';
     });
     h+='</div>';
-    h+='<p class="hint" style="margin-top:8px;"><i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas (aún sin embudo por día exacto). '):'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead/cita marcado</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+    h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas (aún sin embudo por día exacto). '):'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead/cita marcado</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     return h;
   }
   if(!window.embSet){
     window.embSet=function(k,v){ window.__EMBF=window.__EMBF||{month:'',dim:'dia'}; window.__EMBF[k]=v; if(typeof render==='function') render(); };
     window.embMonth=function(dir){ var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'}); var ms=embudoMonths(DATA||{}); if(!ms.length)return; var idx=F.month?ms.indexOf(F.month):-1; idx+=dir; if(idx<-1)idx=ms.length-1; if(idx>=ms.length)idx=-1; F.month=idx<0?'':ms[idx]; if(typeof render==='function') render(); };
+    /* ---- drill-down de etapa: clic en una barra del embudo -> tabla por fecha + por hora ---- */
+    window.cerrarEtapa=function(){ var o=document.getElementById('etov'); if(o&&o.parentNode) o.parentNode.removeChild(o); };
+    window.embEtapa=function(i){
+      var D=window.__EMBD; if(!D||!D.rows||!D.rows.length) return; i=+i;
+      var etapa=D.labels[i]||('Etapa '+i), total=D.fAgg[i]||0;
+      function fH(h){ return (h<10?'0':'')+h+':00'; }
+      function fF(f){ var p=(f||'').split('-'); return p.length===3?(p[2]+'/'+p[1]):f; }
+      /* por fecha (más reciente primero) */
+      var bd=D.rows.map(function(r){return {fecha:r.fecha,n:(r.f[i]||0)};}).filter(function(r){return r.fecha;});
+      bd.sort(function(a,b){return a.fecha<b.fecha?1:-1;});
+      var maxD=bd.reduce(function(m,r){return Math.max(m,r.n);},1);
+      /* por hora: reparte el conteo de la etapa entre las horas de visita de cada día */
+      var hr=[]; for(var k=0;k<24;k++) hr.push(0);
+      D.rows.forEach(function(r){ var s=0,j; for(j=0;j<24;j++) s+=(r.h[j]||0); if(s<=0) return; for(j=0;j<24;j++) hr[j]+=(r.f[i]||0)*((r.h[j]||0)/s); });
+      var maxH=hr.reduce(function(m,v){return Math.max(m,v);},0.001), peak=0; hr.forEach(function(v,h){ if(v>hr[peak]) peak=h; });
+      var filF=bd.map(function(r){ return '<div style="display:grid;grid-template-columns:52px 1fr 30px;align-items:center;gap:8px;padding:3px 0;">'+
+        '<div style="font-size:12px;color:var(--carbon);">'+esc(fF(r.fecha))+'</div>'+
+        '<div style="height:10px;background:var(--arena);border-radius:3px;overflow:hidden;"><div style="height:100%;width:'+Math.round(r.n/maxD*100)+'%;background:var(--negro);"></div></div>'+
+        '<div style="font-size:12px;text-align:right;font-family:Kefa-Regular,Georgia,serif;color:var(--negro);">'+r.n+'</div></div>'; }).join('') || '<p style="color:var(--piedra);font-size:12px;">Sin días con datos.</p>';
+      var filH=''; for(var h=0;h<24;h++){ if(hr[h]<0.5 && h!==peak) continue; var on=(h===peak);
+        filH+='<div style="display:grid;grid-template-columns:46px 1fr 30px;align-items:center;gap:8px;padding:2px 0;">'+
+          '<div style="font-size:11.5px;color:'+(on?'var(--negro)':'var(--carbon)')+';font-weight:'+(on?'600':'400')+';">'+fH(h)+'</div>'+
+          '<div style="height:9px;background:var(--arena);border-radius:3px;overflow:hidden;"><div style="height:100%;width:'+Math.round(hr[h]/maxH*100)+'%;background:'+(on?'var(--negro)':'var(--carbon)')+';"></div></div>'+
+          '<div style="font-size:11.5px;text-align:right;color:var(--piedra);">'+Math.round(hr[h])+'</div></div>'; }
+      if(!filH) filH='<p style="color:var(--piedra);font-size:12px;">Sin horas registradas.</p>';
+      var card='<div style="background:#fff;border-radius:12px;max-width:520px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:18px 20px 12px;border-bottom:1px solid var(--linea);position:sticky;top:0;background:#fff;">'+
+          '<div><div style="font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);">Detalle de la etapa</div>'+
+          '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:22px;color:var(--negro);margin-top:2px;">'+esc(etapa)+'</div>'+
+          '<div style="font-size:12px;color:var(--carbon);margin-top:2px;"><b style="color:var(--negro);">'+total+'</b> llegaron aquí · hora pico <b style="color:var(--negro);">'+fH(peak)+'</b></div></div>'+
+          '<button onclick="cerrarEtapa()" style="background:none;border:none;font-size:24px;color:var(--piedra);cursor:pointer;line-height:1;padding:0 2px;">×</button></div>'+
+        '<div style="padding:14px 20px 18px;">'+
+          '<div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--piedra);margin-bottom:8px;">Por fecha</div>'+filF+
+          '<div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--piedra);margin:18px 0 8px;">Por horario</div>'+filH+
+          '<p style="font-size:10.5px;color:var(--piedra);margin-top:14px;line-height:1.5;font-style:italic;">El horario reparte a los que llegaron a «'+esc(etapa)+'» entre las horas de visita de cada día (estimación de cuándo ocurrió).</p>'+
+        '</div></div>';
+      window.cerrarEtapa();
+      var ov=document.createElement('div'); ov.id='etov'; ov.className='pov'; ov.innerHTML=card;
+      ov.addEventListener('click',function(e){ if(e.target===ov) cerrarEtapa(); });
+      document.body.appendChild(ov);
+    };
   }
 
   function serieTiempoHTML(serie){
