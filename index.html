@@ -383,6 +383,7 @@
     apd.forEach(function(x){ x._mm=(x.fecha||'').slice(5,7); x._f=dayFunnel(x); x._h=hArr(x); x._wd=wd(x.fecha); });
     var months=embudoMonths(d); if(F.month && months.indexOf(F.month)<0) F.month='';
     var scope=F.month?apd.filter(function(x){return x._mm===F.month;}):apd, hasSeg=scope.length>0;
+    var exacto=hasSeg&&scope.every(function(x){return x.embudo;});  /* embudo por día del Sheet ya desplegado => desglose por etapa EXACTO */
     var fAgg=[]; for(var i=0;i<NL;i++) fAgg.push(scope.reduce(function(a,x){return a+x._f[i];},0));
     if(!hasSeg) fAgg=pasos.map(function(p){return num(p.n);});
     var cargaron=fAgg[0]||1, base=cargaron, rebote=Math.round((cargaron-fAgg[1])/cargaron*100), activ=Math.round(fAgg[1]/cargaron*100);  /* base=Inicio: el embudo arranca en la carga real (con histórico) */
@@ -421,7 +422,7 @@
       '</div>';
     });
     h+='</div>';
-    h+='<p class="hint" style="margin-top:8px;"><i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); las etapas intermedias por día son estimadas hasta que el Apps Script exponga el embudo por día exacto. ':'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--oro)">lead/cita en oro</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+    h+='<p class="hint" style="margin-top:8px;"><i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas (aún sin embudo por día exacto). '):'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--oro)">lead/cita en oro</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     return h;
   }
   if(!window.embSet){
