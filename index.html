@@ -293,47 +293,30 @@
     /* --- embudo del cuestionario (9 pantallas) leído del Sheet/ACTIVIDAD --- */
     var ec=d.embudo_cuestionario;
     if(ec && ec.pasos && ec.pasos.length>=2){
-      var pasos=ec.pasos, inicio=pasos[0], started=pasos[1];
-      var base0=num(inicio.n), base2=num(started.n)||1, empezaron=num(started.n);
-      var agendaStep=pasos[pasos.length-1];
-      var pctEmpez=base0>0?Math.round(empezaron/base0*100):0, dropPortada=base0>0?Math.round((base0-empezaron)/base0*100):0;
+      var pasos=ec.pasos, base0=num(pasos[0].n)||1;
+      /* retención paso a paso + mayor fuga (auto-detectada) */
+      var drops=pasos.map(function(p,i){ return i>0&&num(pasos[i-1].n)>0?Math.round((num(pasos[i-1].n)-num(p.n))/num(pasos[i-1].n)*100):0; });
+      var mi=1,md=-1; for(var i=1;i<pasos.length;i++) if(drops[i]>md){md=drops[i];mi=i;}
+      var leadStep=pasos[pasos.length-2], citaStep=pasos[pasos.length-1];
       html+='<h2 class="sec">Embudo del cuestionario · '+esc(ec.visitas||base0)+' visitas (del Sheet)</h2>';
-      var hayPortada = dropPortada>=25;   /* portada retirada 24-jun: el rebote histórico se va encogiendo con el tráfico nuevo */
-      /* --- aviso: portada retirada --- */
-      html+='<div class="alert verde" style="margin-bottom:12px;"><span class="ai">✓</span><span><b>Portada retirada el 24-jun.</b> Ahora aterrizan directo en la 1ª pregunta (los renders), sin pantalla de «Empezar». '+(hayPortada?'El rebote de abajo es <b>histórico</b> — debe encogerse con el tráfico nuevo. ':'')+'<a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></span></div>';
-      /* --- tarjetas resumen --- */
-      html+='<div class="nums" style="margin-bottom:12px;">';
-      html+=numHTML("Cargaron la página", base0, "", false);
-      if(hayPortada) html+='<div class="num" style="border-color:var(--rojo);box-shadow:0 0 0 1px var(--rojo);"><div class="k">Empezaron (portada vieja)</div><div class="v" style="color:var(--rojo);">'+empezaron+' <small>· '+pctEmpez+'%</small></div><div class="d down">▼ '+dropPortada+'% se iba en la portada</div></div>';
-      else html+=numHTML("Empezaron el cuestionario", empezaron, pctEmpez+'% de quienes cargan', false);
-      html+=numHTML("Agendaron cita", num(agendaStep.n), "la meta", true);
-      html+='</div>';
-      /* --- ACTO 1: la puerta (solo mientras quede rebote histórico de la portada) --- */
-      if(hayPortada){
-        html+='<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);margin:4px 0 8px;">Acto 1 · la puerta <span style="text-transform:none;letter-spacing:0;">(histórico · portada ya retirada)</span></div>';
-        html+='<div class="card" style="padding:14px 16px;margin-bottom:16px;">'+
-          '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:90px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">Cargaron</div><div style="flex:1;height:24px;background:var(--arena);border-radius:4px;position:relative;"><div style="height:100%;width:100%;background:var(--piedra);border-radius:4px;"></div><span style="position:absolute;right:8px;top:3px;font-family:Georgia,serif;font-size:14px;color:#fff;">'+base0+'</span></div></div>'+
-          '<div style="display:flex;align-items:center;gap:10px;"><div style="width:90px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">Empezaron</div><div style="flex:1;height:24px;background:var(--arena);border-radius:4px;position:relative;"><div style="height:100%;width:'+Math.max(pctEmpez,2)+'%;background:var(--rojo);border-radius:4px;"></div><span style="position:absolute;left:calc('+Math.max(pctEmpez,2)+'% + 8px);top:3px;font-family:Georgia,serif;font-size:14px;color:var(--rojo);">'+empezaron+'</span></div></div>'+
-          '<div style="margin-top:11px;padding-top:9px;border-top:1px solid var(--linea);font-size:13px;color:var(--rojo);">⚠️ '+dropPortada+'% se iba sin tocar una pregunta <span style="color:var(--piedra);">— con la portada vieja. Era tu fuga #1; obsérvala bajar.</span></div>'+
+      /* 1) lo primero que ve el ojo: la mayor fuga */
+      html+='<div style="font-family:Georgia,serif;font-size:clamp(16px,2.6vw,21px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(pasos[mi].etiqueta)+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(pasos[mi-1].etiqueta)+' a '+esc(pasos[mi].etiqueta)+'</span></div>';
+      html+='<p class="nota" style="margin:0 0 10px;">Portada retirada el 24-jun: ahora aterrizan directo en la 1ª pregunta. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
+      /* tira de referencia de-enfatizada */
+      html+='<div class="kref"><span class="kt">Periodo</span><span>Cargaron <b>'+num(pasos[0].n)+'</b></span><span>Empezaron <b>'+num(pasos[1].n)+'</b></span><span>Leads <b>'+num(leadStep.n)+'</b></span><span>Citas <b>'+num(citaStep.n)+'</b></span></div>';
+      /* el embudo: % de retención paso a paso; mayor fuga en rojo; lead/cita en oro */
+      html+='<div class="card" style="padding:14px 16px;margin-top:10px;">';
+      pasos.forEach(function(p,i){
+        var w=Math.max(Math.round(num(p.n)/base0*100),4), oro=(i>=pasos.length-2);
+        var col=oro?'linear-gradient(180deg,#cda85f,#8a6d34)':'linear-gradient(180deg,#c9a86a,#b8975a)';
+        html+='<div style="display:grid;grid-template-columns:92px 1fr 96px;align-items:center;gap:8px;margin-bottom:'+(i<pasos.length-1?'5px':'0')+';">'+
+          '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(p.etiqueta)+'</div>'+
+          '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:30px;background:'+col+';display:flex;align-items:center;justify-content:center;"><span style="font-family:Georgia,serif;font-size:13px;color:#241c10;">'+num(p.n)+'</span></div></div>'+
+          '<div style="font-size:11px;color:var(--piedra);">'+(i>0&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--oro)">'+(i===pasos.length-2?'leads':'citas')+'</span>':'')+'</div>'+
         '</div>';
-      }
-      /* --- ACTO 2: el cuestionario, rebasado a quienes empiezan --- */
-      var act2=pasos.slice(1), mc={i:-1,d:0}, pv=base2;
-      act2.forEach(function(p,i){ var c=(i>0&&pv>0)?Math.round((pv-num(p.n))/pv*100):0; if(c>mc.d){mc={i:i,d:c};} pv=num(p.n); });
-      html+='<div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);margin:4px 0 8px;">Acto 2 · el cuestionario <span style="text-transform:none;letter-spacing:0;">(de los '+empezaron+' que empezaron)</span></div>';
-      html+='<div class="card" style="padding:14px 16px;">'; pv=base2;
-      act2.forEach(function(p,i){
-        var w=base2>0?Math.round(num(p.n)/base2*100):0, c=(i>0&&pv>0)?Math.round((pv-num(p.n))/pv*100):0, rojo=(i===mc.i&&mc.d>0);
-        html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:'+(i<act2.length-1?'7px':'0')+';">'+
-          '<div style="width:92px;font-size:12px;color:var(--carbon);text-align:right;flex:none;">'+esc(p.etiqueta)+'</div>'+
-          '<div style="flex:1;height:22px;background:var(--arena);border-radius:4px;position:relative;overflow:hidden;"><div style="height:100%;width:'+Math.max(w,2)+'%;background:'+(rojo?"var(--rojo)":"var(--verde)")+';border-radius:4px;"></div></div>'+
-          '<div style="width:118px;font-family:Georgia,serif;font-size:14px;flex:none;">'+esc(p.n)+' <small style="color:var(--piedra);font-size:11px;">'+w+'%</small>'+(i>0&&c>0?' <span style="color:'+(rojo?"var(--rojo)":"var(--piedra)")+';font-size:11px;">−'+c+'%</span>':'')+'</div>'+
-        '</div>';
-        pv=num(p.n);
       });
       html+='</div>';
-      /* A/B retirado el 2026-06-19 (portada única): ya no hay dos versiones vivas, no se muestra prueba A/B. */
-      html+='<p class="nota" style="margin-top:10px;">De TU Sheet (pestaña <code style="background:var(--arena);padding:1px 5px;border-radius:3px;">ACTIVIDAD</code>). '+(hayPortada?'Mientras se reencuadra, se ve en dos: la <b>portada</b> (ya retirada, fuga histórica del '+dropPortada+'%) y el <b>cuestionario</b> rebasado a quienes empiezan. ':'El cuestionario rebasado a quienes cargan. ')+'<a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+      html+='<p class="hint">% de retención paso a paso (lo que sobrevive de una pantalla a la siguiente). La <b style="color:var(--rojo)">mayor fuga en rojo</b> es lo que conviene arreglar primero; <b style="color:var(--oro)">lead/cita en oro</b> son lo que convierte. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     } else {
       html+='<h2 class="sec">Embudo del cuestionario</h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
