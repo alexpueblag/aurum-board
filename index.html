@@ -140,6 +140,14 @@
   .pcard .pmain{font-size:17px;margin-top:3px;}
   .pcard .pmain b{font-family:Kefa-Regular,Georgia,serif;} .pcard .pmain small{font-size:11px;color:var(--piedra);}
   .pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:6px;}
+  /* chips de métricas: icono + número, MISMO peso (todo lo de IG/FB, sin héroe) */
+  .chips{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;}
+  .chips.ficha{gap:9px 16px;padding:13px 16px 4px;}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--carbon);white-space:nowrap;line-height:1.6;}
+  .chip .cic{font-size:11.5px;opacity:.9;}
+  .chip .cv{font-weight:600;color:var(--negro);font-variant-numeric:tabular-nums;}
+  .chip .cl{color:var(--piedra);font-size:11px;}
+  .chip.nd{opacity:.6;} .chip.nd .cv{color:var(--piedra);font-weight:400;}
   .pang{font-size:10px;color:#1a1818;background:#f4f3f3;border-radius:20px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .pgo{font-size:11px;color:#1a1818;font-weight:600;flex:none;}
   .pmore{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#1a1818;border:1px solid var(--oro);border-radius:20px;padding:8px 16px;cursor:pointer;background:#fff;}
@@ -497,7 +505,28 @@
     if(/sueñ|hogar|despierta|potencial|vida|elefante/.test(t)) return 'Aspiracional';
     if(/plusval|invertir|inversión|inversion|preventa|crédito|credito|pension/.test(t)) return 'Inversión';
     return null; }
-  function intenc(p){ return num(p.saves)+num(p.shares)+num(p.profile_visits); } /* proxy de lead: guardar+compartir+ir al perfil */
+  function intenc(p){ return num(p.saves)+num(p.shares)+num(p.profile_visits); } /* solo para decidir el ángulo que más intención genera, NO para destacar guardados en las tarjetas */
+  /* chips de métricas: icono + número, TODOS del mismo peso. null -> "—" presente (ojo: num() vuelve null en 0). */
+  function chip(icon,label,val,showLabel){ var nd=(val==null); return '<span class="chip'+(nd?' nd':'')+'" title="'+esc(label)+(nd?' · la plataforma no lo da para este post':'')+'"><span class="cic">'+icon+'</span><span class="cv">'+(nd?'—':fmtN(val))+'</span>'+(showLabel?'<span class="cl">'+esc(label)+'</span>':'')+'</span>'; }
+  function fbClicksDe(p){ return p.red==='FB'?(p.clicks==null?null:p.clicks):(p._fb?p._fb.clicks:null); } /* clics al enlace: solo FB los da (post_clicks) */
+  function fbSharesDe(p){ return p.red==='FB'?p.shares:(p._fb&&p._fb.shares!=null?p._fb.shares:p.shares); }
+  /* tarjeta: solo las métricas que existen (sin "—", para no saturar la portada) */
+  function cardChips(p){
+    var reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0), c=[];
+    if(p.red==='IG'){ c.push(['📣','Alcance',p.reach]); if(reel)c.push(['▶️','Vistas',p.views]);
+      c.push(['❤️','Me gusta',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔁','Compart.',p.shares]); c.push(['🔖','Guardados',p.saves]); }
+    else { c.push(['▶️','Vistas',p.views]); c.push(['❤️','Reacc.',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔗','Clics',p.clicks]); }
+    return '<div class="chips">'+c.filter(function(x){return x[2]!=null;}).map(function(x){return chip(x[0],x[1],x[2],false);}).join('')+'</div>';
+  }
+  /* ficha: TODO lo que Meta permite, incluido n/d como "—" presente y legible */
+  function fichaChips(p){
+    var isIG=p.red==='IG', reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0);
+    var rows=[ ['📣','Alcance', isIG?p.reach:null], ['✨','Gente nueva', p.reach_nonfollower],
+      ['▶️','Reproducciones', (reel||!isIG)?p.views:null], ['❤️', isIG?'Me gusta':'Reacciones', p.likes],
+      ['💬','Comentarios', p.comments], ['🔁','Compartidos', fbSharesDe(p)], ['🔖','Guardados', p.saves],
+      ['👏','Interacciones', p.interacciones], ['👤','Visitas al perfil', p.profile_visits], ['🔗','Clics al enlace', fbClicksDe(p)] ];
+    return '<div class="chips ficha">'+rows.map(function(x){return chip(x[0],x[1],x[2],true);}).join('')+'</div>';
+  }
   function mergePosts(posts){
     var map={}, order=[];
     posts.forEach(function(p){
@@ -550,13 +579,13 @@
        '<span>Guardados <b>'+fmtN(saves30)+'</b></span>'+(best?'<span>Mejor ER <b>'+best.er+'%</b></span>':'')+'</div>';
     /* ---- D) controles de orden / filtro ---- */
     function cb(grp,val,lbl){ return '<button class="chipbtn'+(F[grp]===val?' on':'')+'" onclick="pubSet(&#39;'+grp+'&#39;,&#39;'+val+'&#39;)">'+lbl+'</button>'; }
-    h+='<div class="pfilters"><span class="pfl">Orden</span>'+cb('orden','reciente','Más reciente')+cb('orden','intencion','Más intención')+cb('orden','alcance','Más alcance')+
+    h+='<div class="pfilters"><span class="pfl">Orden</span>'+cb('orden','reciente','Más reciente')+cb('orden','alcance','Más alcance')+cb('orden','interaccion','Más interacción')+
        '<span class="pfl" style="margin-left:6px">Red</span>'+cb('red','todas','Todas')+cb('red','IG','Instagram')+cb('red','FB','Facebook')+'</div>';
     /* ---- galería ---- */
     var merged=mergePosts(posts);
     if(F.red!=='todas') merged=merged.filter(function(p){return p.red===F.red;});
-    if(F.orden==='intencion') merged.sort(function(a,b){return intenc(b)-intenc(a);});
-    else if(F.orden==='alcance') merged.sort(function(a,b){return num(b.reach)-num(a.reach);});
+    if(F.orden==='alcance') merged.sort(function(a,b){return num(b.reach)-num(a.reach);});
+    else if(F.orden==='interaccion') merged.sort(function(a,b){return num(b.interacciones)-num(a.interacciones);});
     var total=merged.length, lim=F.verMas?total:Math.min(18,total);
     var vis=merged.slice(0,lim);
     h+='<div class="pgrid">';
@@ -564,12 +593,9 @@
       var nuevo=ageDays(p)<=10?'<span class="pbadge">Nuevo</span>':'';
       var net='<span class="pnet '+(p.red==="IG"?"ig":"fb")+'">'+(p.red==="IG"?"IG":"f")+'</span>';
       var ang=anguloDe(p);
-      var main = p.red==="IG"
-        ? '<b>'+intenc(p)+'</b> <small>intención</small>'+(p.reach!=null?' &nbsp;<small>'+fmtN(p.reach)+' alc.</small>':'')
-        : '<b>'+(p.interacciones||0)+'</b> <small>interac.</small>';
       h+='<div class="pcard" onclick="abrirFicha(&#39;'+p.id+'&#39;)">'+nuevo+net+covHTML(p)+
          '<div class="ph"><div class="pt"><span>'+esc(tipoLabel(p.tipo))+'</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
-         '<div class="pmain">'+main+'</div>'+
+         cardChips(p)+
          '<div class="pfoot">'+(ang?'<span class="pang">'+esc(ang)+'</span>':'<span></span>')+'<span class="pgo">ver →</span></div>'+
          '</div></div>';
     });
@@ -577,7 +603,7 @@
     h+='<div class="pcount">Mostrando '+vis.length+' de '+total+' publicaciones.</div>';
     if(lim<total) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,1)">Ver las '+(total-lim)+' restantes</span>';
     else if(total>18) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,0)">Ver menos</span>';
-    h+='<p class="hint">«Intención» = guardados + compartidos + visitas al perfil (lo que precede a un lead). FB no da alcance por post (n/d). Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post; los clics al Plan de Potencial necesitan UTM. Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
   }
   /* ---- ficha (modal) con bloques ---- */
@@ -602,37 +628,23 @@
        '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
        (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
        '<button class="pfclose" onclick="cerrarFicha()">×</button></div>';
-    /* Bloque 1: intención de contacto (lo más cerca del lead) */
-    var b1=['<div class="fm gap"><div class="fk">Clics → leads</div><div class="fv">n/d</div><div class="fsub">falta UTM</div></div>'];
-    tileIf(b1,miss,"Guardados",p.saves, p.save_rate!=null?(p.save_rate+'% del alcance'):'');
-    tileIf(b1,miss,"Compartidos",p.shares,'');
-    tileIf(b1,miss,"Visitas al perfil",p.profile_visits,'');
-    h+=block('¿Trajo intención de contacto?',b1);
-    /* Bloque 2: alcance / gente nueva */
-    var b2=[], dR=(isIG&&p.reach!=null&&ctx.avgReach)?Math.round((p.reach-ctx.avgReach)/ctx.avgReach*100):null;
-    if(isIG) tileIf(b2,miss,"Alcance",p.reach, dR!=null?('<span style="color:'+(dR>=0?'var(--verde)':'var(--rojo)')+'">'+(dR>=0?'+':'')+dR+'% vs tu media</span>'):'');
-    else miss.push("Alcance (FB no lo da)");
-    tileIf(b2,miss,"Alcance gente nueva",p.reach_nonfollower,(p.reach_nonfollower!=null&&p.reach)?(Math.round(p.reach_nonfollower/p.reach*100)+'% del alcance'):'');
-    if(reel) tileIf(b2,miss,"Reproducciones",p.views, p.watch_avg!=null?(p.watch_avg.toFixed(1)+'s vistos en promedio'):'');
-    h+=block('¿Llegó a gente nueva?',b2);
-    /* lectura en lenguaje llano */
+    /* TODAS las métricas de la publicación, mismo peso (sin héroe de guardados) */
+    var dR=(isIG&&p.reach!=null&&ctx.avgReach)?Math.round((p.reach-ctx.avgReach)/ctx.avgReach*100):null;
+    h+='<div class="fblock">Métricas de la publicación</div>'+fichaChips(p);
+    /* lectura en lenguaje llano (apoyo, sin elevar ninguna métrica) */
     if(isIG && p.reach!=null && ctx.avgReach){
       var msg = dR>=10?('✅ Alcance '+dR+'% sobre tu media — el ángulo funcionó, repítelo.')
               : dR<=-10?('Alcance '+Math.abs(dR)+'% bajo tu media — prueba otro gancho o ángulo.')
-              : 'Alcance en línea con tu media.';
-      h+='<div class="pfrow"><b>Lectura:</b> '+msg+(p.id===ctx.bestId?' · 🏆 tu mejor post':'')+'</div>';
+              : 'Alcance en línea con tu media ('+(dR>=0?'+':'')+dR+'%).';
+      h+='<div class="pfrow"><b>Lectura:</b> '+msg+(p.id===ctx.bestId?' · 🏆 tu mejor post':'')+(p.er!=null?' · '+p.er+'% ER':'')+(p.save_rate!=null?' · '+p.save_rate+'% guardado/alcance':'')+'</div>';
     }
-    /* Bloque 3: aplauso / contexto */
-    var b3=[]; tileIf(b3,miss,"Me gusta",p.likes,''); tileIf(b3,miss,"Comentarios",p.comments,'');
-    tileIf(b3,miss,"Interacciones",p.interacciones,p.er!=null?(p.er+'% ER'):'');
-    h+=block('Aplauso / contexto',b3);
     /* crecimiento */
     var sp=sparkline(p.serie);
     if(sp) h+='<div class="pfrow"><b>Crecimiento del alcance</b>'+sp+'</div>';
-    /* facebook adjunto */
-    if(p._fb){ var f=p._fb; h+='<div class="pfrow">También en <b>Facebook</b>: '+(f.likes||0)+' reacciones · '+(f.comments||0)+' comentarios · '+(f.shares||0)+' compartidos'+(f.clicks!=null?' · '+f.clicks+' clics':'')+'</div>'; }
-    /* lo que falta (token nuevo) */
-    if(miss.length) h+='<div class="pfrow"><span class="muted">Sin token nuevo: '+esc(miss.join(', '))+'.</span></div>';
+    /* facebook adjunto (la otra red del mismo post) */
+    if(p._fb){ var f=p._fb; h+='<div class="pfrow">También en <b>Facebook</b>: '+(f.likes||0)+' reacciones · '+(f.comments||0)+' comentarios'+(f.shares!=null?' · '+f.shares+' compartidos':'')+(f.clicks!=null?' · '+f.clicks+' clics':'')+'</div>'; }
+    /* por qué hay «—» */
+    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren permisos nuevos del token). Los clics → leads necesitan UTM.</span></div>';
     h+='</div>';
     return h;
   }
