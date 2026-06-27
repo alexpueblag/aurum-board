@@ -326,7 +326,9 @@
     }
 
     /* --- comportamiento en el tiempo (serie por día del Apps Script) --- */
-    html+=serieTiempoHTML(d.actividad_por_dia);
+    var _magSer=(window.__EMBF||{}).mag||'arq';
+    var _serie=(_magSer==='pot'&&DATA_POT)?(DATA_POT.actividad_por_dia||[]):d.actividad_por_dia;
+    html+=serieTiempoHTML(_serie, _magSer==='pot'?'Plan de Potencial':'Arquitectura de Autor');
 
     /* --- canal de agenda (whatsapp vs calendario) — el A/B de portada se retiró (portada única) --- */
     var can=ec&&ec.canal;
@@ -339,14 +341,16 @@
     }
 
     /* --- por fuente --- */
-    if((d.por_fuente||[]).length){
-      html+='<h2 class="sec">Por fuente / campaña</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">Citas</th><th class="r">% a cita</th></tr>';
-      d.por_fuente.forEach(function(f){html+='<tr><td>'+esc(f.fuente||"(directo)")+'</td><td class="r">'+esc(f.leads)+'</td><td class="r">'+esc(f.citas||0)+'</td><td class="r">'+pct(f.citas,f.leads)+'%</td></tr>';});
+    var _pf=(_magSer==='pot'&&DATA_POT)?(DATA_POT.por_fuente||[]):(d.por_fuente||[]);
+    if(_pf.length){
+      var _cl=(_magSer==='pot'?'Agendadas':'Citas'), _al=(_magSer==='pot'?'agenda':'cita');
+      html+='<h2 class="sec">Por fuente / campaña'+(_magSer==='pot'?' · Plan de Potencial':'')+'</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">'+_cl+'</th><th class="r">% a '+_al+'</th></tr>';
+      _pf.forEach(function(f){var c=(_magSer==='pot'?(f.agendadas||0):(f.citas||0)); html+='<tr><td>'+esc(f.fuente||"(directo)")+'</td><td class="r">'+esc(f.leads)+'</td><td class="r">'+esc(c)+'</td><td class="r">'+pct(c,f.leads)+'%</td></tr>';});
       html+='</table><p class="hint">Se llena cuando los anuncios traigan la plantilla de UTMs. Hoy "(directo)" = sin etiqueta.</p>';
     }
 
     /* --- por dia --- */
-    if((d.por_dia||[]).length){
+    if((d.por_dia||[]).length && _magSer!=='pot'){   /* pot no expone por_dia; no mostrar el de arq bajo el imán pot */
       html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
       ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
         var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
@@ -396,7 +400,7 @@
     var mag=F.mag||'arq';
     var MAGCFG={
       arq:{titulo:'Arquitectura de Autor',fuenteSuf:'(del Sheet)',abren:'que abren la página',empiezan:'empiezan el cuestionario',entrada:'El embudo arranca en la <b>1ª página</b> del formulario (Estilo = la entrada) y cada barra es una página del cuestionario.',verUrl:'https://alexpueblag.github.io/aurum-experiencia/',verTxt:'Ver el cuestionario →'},
-      pot:{titulo:'Plan de Potencial',fuenteSuf:'(medido por beacon, sin pérdida iOS)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
+      pot:{titulo:'Plan de Potencial',fuenteSuf:'(beacon server-side · no lo recorta iOS/ATT)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
     };
     var cfg=MAGCFG[mag]||MAGCFG.arq;
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#fff')+';color:'+(on?'#fff':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
@@ -468,9 +472,11 @@
       '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>'+(F.dim==='hora'?'madrugada':'Lun')+'</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+C.join(',')+')"></span><span>'+(F.dim==='hora'?'noche':'Dom')+'</span><span style="margin-left:4px">(color = '+(F.dim==='hora'?'hora de entrada':'día')+')</span></div>';
     }
     h+='<div class="card" style="padding:14px 16px;">';
+    var prevW=999;
     fAgg.forEach(function(n,i){
-      if(i===0) return;  /* "Inicio" NO es barra: la entrada es la 1ª página (Estilo). Una sola entrada, sin duplicar. */
-      var w=Math.max(Math.round(n/base*100),4), oro=(i>=NL-2), bars='';
+      if(i===0) return;  /* "Inicio" NO es barra: la entrada es la 1ª página. Una sola entrada, sin duplicar. */
+      var w=Math.max(Math.round(n/base*100),4); if(i>1) w=Math.min(w,prevW); prevW=w;  /* clamp: el embudo no se ensancha (lead/agenda del CRM/beacon no superan la barra previa; el nº exacto va al lado) */
+      var oro=(i>=NL-2), bars='';
       if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
       else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#3a3835,#1a1818);"></div>';
       h+='<div '+(hasSeg?'class="embrow" onclick="embEtapa('+i+')" title="Ver detalle por fecha y hora" ':'')+'style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
@@ -480,13 +486,13 @@
       '</div>';
     });
     h+='</div>';
-    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) vienen del CRM/beacon y pueden no cuadrar con «Cierre»: son fuentes distintas, por eso el embudo puede no ser monótono ahí. La <b>cita confirmada</b> es la del North Star (arriba), no el clic.</p>';
+    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) son del beacon de pantallas y pueden no cuadrar con «Cierre» ni entre sí (fuentes distintas). El <b>conteo de leads que vale es el del CRM</b> (arriba, '+(DATA_POT&&DATA_POT.kpis?num(DATA_POT.kpis.leads):0)+', server-side); «Dejó datos» aquí es solo lo que alcanzó a registrar el beacon. La <b>cita confirmada</b> es la del North Star, no el clic.</p>';
     h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas. '):(mag==='pot'?'Acumulado de todos los días; el desglose por día/hora se enciende al desplegar el Apps Script del formulario. ':''))+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead'+(mag==='pot'?'':'/cita')+' marcado</b>'+(mag==='pot'?', <b style="color:var(--amar)">clic en ámbar</b>':'')+'. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     return h;
   }
   if(!window.embSet){
     window.embSet=function(k,v){ window.__EMBF=window.__EMBF||{month:'',dim:'dia'}; window.__EMBF[k]=v; if(typeof render==='function') render(); };
-    window.embMonth=function(dir){ var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'}); var ms=embudoMonths(DATA||{}); if(!ms.length)return; var idx=F.month?ms.indexOf(F.month):-1; idx+=dir; if(idx<-1)idx=ms.length-1; if(idx>=ms.length)idx=-1; F.month=idx<0?'':ms[idx]; if(typeof render==='function') render(); };
+    window.embMonth=function(dir){ var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'}); var src=(F.mag==='pot'&&DATA_POT)?{actividad_por_dia:DATA_POT.actividad_por_dia||[]}:(DATA||{}); var ms=embudoMonths(src); if(!ms.length)return; var idx=F.month?ms.indexOf(F.month):-1; idx+=dir; if(idx<-1)idx=ms.length-1; if(idx>=ms.length)idx=-1; F.month=idx<0?'':ms[idx]; if(typeof render==='function') render(); };
     /* ---- drill-down de etapa: clic en una barra del embudo -> tabla por fecha + por hora ---- */
     window.cerrarEtapa=function(){ var o=document.getElementById('etov'); if(o&&o.parentNode) o.parentNode.removeChild(o); };
     window.embEtapa=function(i){
@@ -530,8 +536,8 @@
     };
   }
 
-  function serieTiempoHTML(serie){
-    var h='<h2 class="sec">Comportamiento en el tiempo</h2>';
+  function serieTiempoHTML(serie, magLbl){
+    var h='<h2 class="sec">Comportamiento en el tiempo'+(magLbl?' · '+esc(magLbl):'')+'</h2>';
     if(!serie || !serie.length){
       return h+'<p class="nota">Se enciende al actualizar tu Apps Script (expone <code>actividad_por_dia</code> — te paso el código de 2 pasos). Mientras, el embudo de arriba es el <b>acumulado</b> de todos los días.</p>';
     }
