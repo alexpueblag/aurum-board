@@ -184,10 +184,11 @@
     META_EVENTS_URL: "https://business.facebook.com/events_manager2/list/dataset/1563269895817275/overview",
     FETCH_TIMEOUT: 12000,
     REFRESH_MS: 600000,
-    METRICS_URL: "metrics.json"   /* metricas de publicaciones (lo genera pull_metrics.py) */
+    METRICS_URL: "metrics.json",   /* metricas de publicaciones (lo genera pull_metrics.py) */
+    POT_URL: "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec"   /* Apps Script del formulario Plan de Potencial (imán 'pot') — su propio ?recurso=board */
   };
   var CACHE_KEY="aurum_board_cache_v1", QKEY="aurum_board_q_v1", MCACHE="aurum_metrics_cache_v1";
-  var DATA=null, LAST=null, METRICS=null;
+  var DATA=null, LAST=null, METRICS=null, DATA_POT=null;
 
   /* ============ SNAPSHOT EMBEBIDO (se ve aunque el .gs aún no esté desplegado) ============
      Mismos campos que devuelve GET ?recurso=board. Se reemplaza por datos en vivo al cargar. */
@@ -256,6 +257,17 @@
       if(j && j.posts){ METRICS=j; try{localStorage.setItem(MCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }
     }).catch(function(){
       try{var c=JSON.parse(localStorage.getItem(MCACHE)); if(c&&c.posts&&!METRICS){METRICS=c; if(DATA) render();}}catch(e){}
+    });
+  }
+  /* --- embudo Plan de Potencial (2º imán): su PROPIO Apps Script ?recurso=board --- */
+  var POTCACHE="aurum_pot_cache_v1";
+  function fetchPot(){
+    if(!CONFIG.POT_URL) return;
+    var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&cb="+Date.now();
+    fetch(url).then(function(r){return r.json();}).then(function(j){
+      if(j && j.funnel){ DATA_POT=j; try{localStorage.setItem(POTCACHE,JSON.stringify(j));}catch(e){} if(DATA && (window.__EMBF||{}).mag==='pot') render(); }
+    }).catch(function(){
+      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA&&(window.__EMBF||{}).mag==='pot')render();}}catch(e){}
     });
   }
 
@@ -381,6 +393,21 @@
   function embudoMonths(d){ var ms=[]; (d.actividad_por_dia||[]).forEach(function(x){var m=(x.fecha||'').slice(5,7); if(m&&ms.indexOf(m)<0)ms.push(m);}); ms.sort(); return ms; }
   function embudoIntegrado(d, ec){
     var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'});
+    var mag=F.mag||'arq';
+    var MAGCFG={
+      arq:{titulo:'Arquitectura de Autor',fuenteSuf:'(del Sheet)',abren:'que abren la página',empiezan:'empiezan el cuestionario',entrada:'El embudo arranca en la <b>1ª página</b> del formulario (Estilo = la entrada) y cada barra es una página del cuestionario.',verUrl:'https://alexpueblag.github.io/aurum-experiencia/',verTxt:'Ver el cuestionario →'},
+      pot:{titulo:'Plan de Potencial',fuenteSuf:'(medido por beacon, sin pérdida iOS)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
+    };
+    var cfg=MAGCFG[mag]||MAGCFG.arq;
+    function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#fff')+';color:'+(on?'#fff':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
+      '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
+      '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
+    var sel='<h2 class="sec" style="margin-bottom:8px;">Embudo · ¿qué imán mides?</h2><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
+    /* imán Plan de Potencial: su propia fuente de datos (DATA_POT, de su Apps Script). Si aún no llega, muestra cargando. */
+    if(mag==='pot'){
+      if(!DATA_POT||!DATA_POT.funnel||!DATA_POT.funnel.length) return sel+'<div class="card" style="text-align:center;padding:30px 22px;"><p style="font-family:Kefa-Regular,Georgia,serif;font-size:17px;color:var(--negro);">Plan de Potencial · cargando datos…</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.5;">Leyendo el embudo de «Despierta tu Terreno» (su Apps Script). Si no aparece, aún no hay actividad registrada en el formulario.</p></div>';
+      ec={pasos:DATA_POT.funnel,visitas:DATA_POT.visitas}; d={actividad_por_dia:DATA_POT.actividad_por_dia||[]};
+    }
     var pasos=ec.pasos, NL=pasos.length, labelsE=pasos.map(function(p){return p.etiqueta;});
     var apd=(d.actividad_por_dia||[]).slice();
     var aggEmp=num(pasos[1].n)||1, ratio=pasos.map(function(p){return num(p.n)/aggEmp;});
@@ -390,7 +417,7 @@
         if(emb && emb[stageKey(i)]!=null) f.push(num(emb[stageKey(i)]));
         else if(i===0) f.push(num(x.cargaron)); else if(i===1) f.push(num(x.empezaron));
         else if(i===NL-2) f.push(num(x.lead)); else if(i===NL-1) f.push(num(x.agenda));
-        else if(i===7 && x.formulario!=null) f.push(num(x.formulario));
+        else if(i===7 && i<NL-2 && x.formulario!=null) f.push(num(x.formulario));  /* solo arq (NL=11, i=7=Formulario); en pot i=7=lead, no entra */
         else f.push(Math.round(num(x.empezaron)*ratio[i]));
       } return f; }
     function hArr(x){ var H=x.horas||{},a=[]; for(var h=0;h<24;h++) a.push(num(H[String(h)])||num(H[(h<10?'0':'')+h])||0); return a; }
@@ -410,16 +437,24 @@
     function segOf(i){ if(F.dim==='hora'){var o=[0,0,0,0,0,0];scope.forEach(function(x){for(var h=0;h<24;h++)o[bandH(h)]+=cellv(x,i,h);});return o;} var o=[0,0,0,0,0,0,0];scope.forEach(function(x){o[x._wd]+=x._f[i];});return o; }
     var C=F.dim==='hora'?HRAMP:WRAMP;
     window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
-    var mag=F.mag||'arq';
-    function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#fff')+';color:'+(on?'#fff':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
-      '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
-      '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
-    var sel='<h2 class="sec" style="margin-bottom:8px;">Embudo · ¿qué imán mides?</h2><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
-    if(mag==='pot') return sel+'<div class="card" style="text-align:center;padding:34px 22px;"><div style="font-size:30px;margin-bottom:8px;">🌱</div><p class="h" style="font-family:Kefa-Regular,Georgia,serif;font-size:18px;color:var(--negro);margin-bottom:6px;">Plan de Potencial · aún sin datos</p><p style="color:var(--carbon);font-size:13px;max-width:460px;margin:0 auto;line-height:1.55;">Es tu 2º lead magnet (co-desarrollo de terrenos). Tendrá <b>menos pasos de decantado</b> que Arquitectura. En cuanto su formulario registre actividad, este embudo se llena solo aquí — mismo tablero, misma medición.</p><p style="color:var(--piedra);font-size:11.5px;margin-top:12px;">Cuando exista, dime los pasos del formulario y lo conecto a la misma fuente (Sheet/beacon).</p></div>';
-    var h=sel+'<h2 class="sec">Embudo · Arquitectura de Autor · '+esc(visN||cargaron)+' visitas (del Sheet)</h2>';
-    h+='<p class="nota" style="margin:0 0 8px;font-style:normal;color:var(--carbon);">De <b style="color:var(--negro);">'+cargaron+'</b> que abren la página, <b style="color:var(--negro);">'+empezaron+'</b> ('+activ+'%) empiezan el cuestionario.'+(reboteEntrada>=25?' <span style="color:var(--rojo);">Rebote de entrada '+reboteEntrada+'%</span> — se trabaja en la 1ª pantalla de la web.':'')+'</p>';
+    var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · '+esc(visN||cargaron)+' visitas '+cfg.fuenteSuf+'</h2>';
+    if(mag==='pot'&&DATA_POT&&DATA_POT.kpis){ var K=DATA_POT.kpis;
+      var fAg=(DATA_POT.funnel||[]).filter(function(p){return p.paso==='agenda';})[0]; fAg=fAg?num(fAg.n):0;
+      h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px;align-items:stretch;">'+
+        '<div style="flex:2;min-width:210px;background:var(--negro);color:#fff;border-radius:8px;padding:15px 18px;">'+
+          '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">★ Meta real · videollamadas agendadas (CRM)</div>'+
+          '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:40px;line-height:1;margin-top:3px;">'+num(K.agendadas)+'</div>'+
+          '<div style="font-size:10.5px;opacity:.82;margin-top:3px;">de '+num(K.leads)+' leads en el CRM · '+num(K.clientes)+' clientes</div></div>'+
+        '<div style="flex:1;min-width:120px;background:#fff;border:1px solid var(--linea);border-radius:8px;padding:11px 13px;align-self:center;">'+
+          '<div style="font-size:8.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--piedra);">Otra forma (interés)</div>'+
+          '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:20px;line-height:1.05;margin-top:1px;color:var(--carbon);">'+num(K.interes)+'</div>'+
+          '<div style="font-size:9.5px;color:var(--piedra);margin-top:1px;">audiencia aparte · no es del embudo de terreno</div></div>'+
+      '</div>';
+      h+='<p class="nota" style="margin:0 0 10px;font-style:normal;color:var(--piedra);font-size:11.5px;line-height:1.5;">El <b>clic en agendar</b> ('+fAg+', del beacon) todavía no es una cita: la cita real la confirma el operador en el CRM (hoy <b style="color:var(--negro);">'+num(K.agendadas)+'</b>). Después de la videollamada hay etapas de dinero fuera del board (en CRM/manual): <b>Plan de Potencial vendido</b> (servicio de pago, se cierra en la llamada) → <b>co-desarrollo</b> (solo si los números califican).</p>';
+    }
+    h+='<p class="nota" style="margin:0 0 8px;font-style:normal;color:var(--carbon);">De <b style="color:var(--negro);">'+cargaron+'</b> '+cfg.abren+', <b style="color:var(--negro);">'+empezaron+'</b> ('+activ+'%) '+cfg.empiezan+'.'+(reboteEntrada>=25?' <span style="color:var(--rojo);">Rebote de entrada '+reboteEntrada+'%</span> — se trabaja en la 1ª pantalla.':'')+'</p>';
     if(md>0) h+='<div style="font-family:Kefa-Regular,Georgia,serif;font-size:clamp(15px,2.4vw,19px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Ya dentro, mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(labelsE[mi])+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(labelsE[mi-1])+' a '+esc(labelsE[mi])+'</span></div>';
-    h+='<p class="nota" style="margin:0 0 8px;">El embudo arranca en la <b>1ª página</b> del formulario (Estilo = la entrada) y cada barra es una página del cuestionario. <a class="link-meta" href="https://alexpueblag.github.io/aurum-experiencia/" target="_blank" rel="noopener">Ver el cuestionario →</a></p>';
+    h+='<p class="nota" style="margin:0 0 8px;">'+cfg.entrada+' <a class="link-meta" href="'+cfg.verUrl+'" target="_blank" rel="noopener">'+cfg.verTxt+'</a></p>';
     if(hasSeg){
       h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
         '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">◀</button>'+
@@ -441,11 +476,12 @@
       h+='<div '+(hasSeg?'class="embrow" onclick="embEtapa('+i+')" title="Ver detalle por fecha y hora" ':'')+'style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
         '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
         '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
-        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Kefa-Regular,Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:var(--verde);font-size:10px;">'+(i===NL-2?'lead':'cita')+'</span>':'')+'</div>'+
+        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Kefa-Regular,Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:'+((mag==='pot'&&i===NL-1)?'var(--amar)':'var(--verde)')+';font-size:10px;">'+(i===NL-2?'lead':(mag==='pot'?'clic':'cita'))+'</span>':'')+'</div>'+
       '</div>';
     });
     h+='</div>';
-    h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas (aún sin embudo por día exacto). '):'')+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead/cita marcado</b>. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) vienen del CRM/beacon y pueden no cuadrar con «Cierre»: son fuentes distintas, por eso el embudo puede no ser monótono ahí. La <b>cita confirmada</b> es la del North Star (arriba), no el clic.</p>';
+    h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas. '):(mag==='pot'?'Acumulado de todos los días; el desglose por día/hora se enciende al desplegar el Apps Script del formulario. ':''))+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead'+(mag==='pot'?'':'/cita')+' marcado</b>'+(mag==='pot'?', <b style="color:var(--amar)">clic en ámbar</b>':'')+'. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     return h;
   }
   if(!window.embSet){
@@ -754,10 +790,11 @@
   function iniciar(){
     $("badge").addEventListener("click",function(){fetchData(true);});
     document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&LAST&&Date.now()-LAST>CONFIG.REFRESH_MS)fetchData(false);});
-    setInterval(function(){if(document.visibilityState==="visible")fetchData(false);},CONFIG.REFRESH_MS);
+    setInterval(function(){if(document.visibilityState==="visible"){fetchData(false);fetchPot();}},CONFIG.REFRESH_MS);
     usarCacheOSnap();   /* pinta cache/snapshot al instante */
     fetchData(false);   /* y busca datos en vivo */
     fetchMetrics();     /* y las métricas de publicaciones */
+    fetchPot();         /* y el embudo de Plan de Potencial (2º imán) */
   }
   if(desbloqueado()) iniciar(); else renderGate();
 })();
