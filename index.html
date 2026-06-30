@@ -75,7 +75,7 @@
   .fld{flex:1;min-width:130px;} .fld label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--piedra);margin-bottom:4px;}
   .fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--linea);border-radius:5px;font-size:14px;font-family:inherit;background:var(--crema);}
   .fld textarea{min-height:64px;resize:vertical;}
-  .btn{background:var(--oro);color:var(--negro);border:none;border-radius:5px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
+  .btn{background:var(--oro);color:#fff;border:none;border-radius:5px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
   .btn:hover{background:#1a1818;} .btn:disabled{opacity:.5;cursor:default;}
   .hint{font-size:11px;color:var(--piedra);margin-top:8px;line-height:1.5;}
   .hint code{background:var(--arena);padding:1px 5px;border-radius:3px;font-size:11px;}
@@ -86,11 +86,11 @@
   .muted{color:var(--piedra);font-size:12px;}
   .embrow{cursor:pointer;border-radius:6px;transition:background .12s;} .embrow:hover{background:var(--arena);}
   /* galeria de publicaciones */
-  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
-  .pcard{background:#fff;border:1px solid var(--linea);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;}
+  .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;grid-auto-rows:1fr;}
+  .pcard{background:#fff;border:1px solid var(--linea);border-radius:8px;overflow:hidden;cursor:pointer;transition:transform .12s,box-shadow .12s;position:relative;display:flex;flex-direction:column;height:100%;}
   .pcard:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.10);border-color:var(--oro);}
   .pcard .cov{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--arena);}
-  .pcard .ph{padding:8px 10px;}
+  .pcard .ph{padding:8px 10px;flex:1;display:flex;flex-direction:column;}
   .pcard .pt{font-size:11px;color:var(--carbon);display:flex;justify-content:space-between;align-items:center;}
   .pcard .pmain{font-family:Kefa-Regular,Georgia,serif;font-size:17px;color:var(--negro);margin-top:2px;}
   .pcard .pmain small{font-size:11px;color:var(--piedra);font-family:inherit;}
@@ -140,7 +140,7 @@
   .pcard .pt{font-size:12px;}
   .pcard .pmain{font-size:17px;margin-top:3px;}
   .pcard .pmain b{font-family:Kefa-Regular,Georgia,serif;} .pcard .pmain small{font-size:11px;color:var(--piedra);}
-  .pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;gap:6px;}
+  .pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:6px;gap:6px;}
   /* chips de métricas: icono + número, MISMO peso (todo lo de IG/FB, sin héroe) */
   .chips{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px;}
   .chips.ficha{gap:9px 16px;padding:13px 16px 4px;}
@@ -179,7 +179,7 @@
   /* ============ CONFIG (mismo Apps Script que el cuestionario) ============ */
   var CONFIG = {
     SHEET_URL: "https://script.google.com/macros/s/AKfycbw1Wm5wOC6XE2PcS0xBbIy-OdBbmU5vjvwnVNaHN6Fa7HHugyuk-EvkoURtr56j6dDVag/exec",
-    WRITE_SECRET: "aurum-board-2026",   /* seguridad suave para escribir GASTO (debe igualar el .gs) */
+    WRITE_SECRET: "aurum-board-24a8a39951c4",   /* seguridad suave para escribir GASTO (debe igualar el .gs) */
     VIEW_KEY: "aurum2026",              /* clave para VER el board (seguridad suave, como tus otros boards) */
     META_EVENTS_URL: "https://business.facebook.com/events_manager2/list/dataset/1563269895817275/overview",
     FETCH_TIMEOUT: 12000,
@@ -242,7 +242,7 @@
         if(manual) toast("Board actualizado");
       } else { usarCacheOSnap(); }   /* gs aún sin recurso=board → snapshot/cache (no es "sin conexión") */
     }).catch(function(e){
-      clearTimeout(t); usarCacheOSnap();
+      clearTimeout(t); console.warn("[board] fetchData falló:",e); usarCacheOSnap();
     });
   }
   function usarCacheOSnap(){
@@ -255,8 +255,9 @@
     var url=CONFIG.METRICS_URL+(CONFIG.METRICS_URL.indexOf("?")<0?"?":"&")+"cb="+Date.now();
     fetch(url).then(function(r){return r.json();}).then(function(j){
       if(j && j.posts){ METRICS=j; try{localStorage.setItem(MCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }
-    }).catch(function(){
-      try{var c=JSON.parse(localStorage.getItem(MCACHE)); if(c&&c.posts&&!METRICS){METRICS=c; if(DATA) render();}}catch(e){}
+    }).catch(function(e){
+      console.warn("[board] fetchMetrics falló:",e);
+      try{var c=JSON.parse(localStorage.getItem(MCACHE)); if(c&&c.posts&&!METRICS){METRICS=c; if(DATA) render();}}catch(e2){}
     });
   }
   /* --- embudo Plan de Potencial (2º imán): su PROPIO Apps Script ?recurso=board --- */
@@ -266,8 +267,9 @@
     var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&cb="+Date.now();
     fetch(url).then(function(r){return r.json();}).then(function(j){
       if(j && j.funnel){ DATA_POT=j; try{localStorage.setItem(POTCACHE,JSON.stringify(j));}catch(e){} if(DATA && (window.__EMBF||{}).mag==='pot') render(); }
-    }).catch(function(){
-      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA&&(window.__EMBF||{}).mag==='pot')render();}}catch(e){}
+    }).catch(function(e){
+      console.warn("[board] fetchPot falló:",e);
+      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA&&(window.__EMBF||{}).mag==='pot')render();}}catch(e2){}
     });
   }
 
@@ -309,6 +311,12 @@
     html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false);
     html+='</div>';
 
+    /* --- alertas (arriba: lo primero que hay que revisar, antes de los embudos) --- */
+    if((d.alertas||[]).length){
+      html+='<h2 class="sec">Algo que revisar</h2>';
+      d.alertas.forEach(function(a){var ic=a.tipo==="rojo"?"⛔":a.tipo==="verde"?"✅":"⚠️";html+='<div class="alert '+(a.tipo||"amar")+'"><span class="ai">'+ic+'</span><span>'+esc(a.texto)+'</span></div>';});
+    }
+
     /* --- embudo de negocio --- */
     html+='<h2 class="sec">Embudo de negocio (del CRM)</h2><div class="funnel">';
     (d.funnel||[]).forEach(function(f,i){
@@ -317,16 +325,36 @@
         (i>0?'<div class="fr">'+pct(f.n,base)+'% de los leads</div>':'<div class="fr">base</div>')+'</div>';
     });
     html+='</div>';
-    /* --- embudo del cuestionario (9 pantallas) leído del Sheet/ACTIVIDAD --- */
+
     var ec=d.embudo_cuestionario;
+    var _magSer=(window.__EMBF||{}).mag||'arq';
+
+    /* --- por fuente --- */
+    var _pf=(_magSer==='pot'&&DATA_POT)?(DATA_POT.por_fuente||[]):(d.por_fuente||[]);
+    if(_pf.length){
+      var _cl=(_magSer==='pot'?'Agendadas':'Citas'), _al=(_magSer==='pot'?'agenda':'cita');
+      html+='<h2 class="sec">Por fuente / campaña'+(_magSer==='pot'?' · Plan de Potencial':'')+'</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">'+_cl+'</th><th class="r">% a '+_al+'</th></tr>';
+      _pf.forEach(function(f){var c=(_magSer==='pot'?(f.agendadas||0):(f.citas||0)); html+='<tr><td>'+esc(f.fuente||"(directo)")+'</td><td class="r">'+esc(f.leads)+'</td><td class="r">'+esc(c)+'</td><td class="r">'+pct(c,f.leads)+'%</td></tr>';});
+      html+='</table><p class="hint">Se llena cuando los links de tus anuncios traigan una etiqueta especial (se llama UTM). Hoy "(directo)" = sin etiqueta.</p>';
+    }
+
+    /* --- por dia --- */
+    if((d.por_dia||[]).length && _magSer!=='pot'){   /* pot no expone por_dia; no mostrar el de arq bajo el imán pot */
+      html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
+      ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
+        var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
+        html+='<div class="bar"><div class="bd">'+dia+'</div><div class="bn">'+(row.leads||0)+'</div><div class="bc">'+(row.citas||0)+' citas</div></div>';
+      });
+      html+='</div>';
+    }
+
+    /* --- tráfico a los formularios (detalle técnico): embudo del cuestionario + serie en el tiempo + canal de agenda --- */
     if(ec && ec.pasos && ec.pasos.length>=2){
       html+=embudoIntegrado(d, ec);
     } else {
-      html+='<h2 class="sec">Embudo del cuestionario</h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
+      html+='<h2 class="sec">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
-    /* --- comportamiento en el tiempo (serie por día del Apps Script) --- */
-    var _magSer=(window.__EMBF||{}).mag||'arq';
     var _serie=(_magSer==='pot'&&DATA_POT)?(DATA_POT.actividad_por_dia||[]):d.actividad_por_dia;
     html+=serieTiempoHTML(_serie, _magSer==='pot'?'Plan de Potencial':'Arquitectura de Autor');
 
@@ -340,33 +368,8 @@
       html+='</div>';
     }
 
-    /* --- por fuente --- */
-    var _pf=(_magSer==='pot'&&DATA_POT)?(DATA_POT.por_fuente||[]):(d.por_fuente||[]);
-    if(_pf.length){
-      var _cl=(_magSer==='pot'?'Agendadas':'Citas'), _al=(_magSer==='pot'?'agenda':'cita');
-      html+='<h2 class="sec">Por fuente / campaña'+(_magSer==='pot'?' · Plan de Potencial':'')+'</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">'+_cl+'</th><th class="r">% a '+_al+'</th></tr>';
-      _pf.forEach(function(f){var c=(_magSer==='pot'?(f.agendadas||0):(f.citas||0)); html+='<tr><td>'+esc(f.fuente||"(directo)")+'</td><td class="r">'+esc(f.leads)+'</td><td class="r">'+esc(c)+'</td><td class="r">'+pct(c,f.leads)+'%</td></tr>';});
-      html+='</table><p class="hint">Se llena cuando los anuncios traigan la plantilla de UTMs. Hoy "(directo)" = sin etiqueta.</p>';
-    }
-
-    /* --- por dia --- */
-    if((d.por_dia||[]).length && _magSer!=='pot'){   /* pot no expone por_dia; no mostrar el de arq bajo el imán pot */
-      html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
-      ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
-        var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
-        html+='<div class="bar"><div class="bd">'+dia+'</div><div class="bn">'+(row.leads||0)+'</div><div class="bc">'+(row.citas||0)+' citas</div></div>';
-      });
-      html+='</div>';
-    }
-
     /* --- publicaciones (redes) --- */
     html+=pubSection();
-
-    /* --- alertas --- */
-    if((d.alertas||[]).length){
-      html+='<h2 class="sec">Algo que revisar</h2>';
-      d.alertas.forEach(function(a){var ic=a.tipo==="rojo"?"⛔":a.tipo==="verde"?"✅":"⚠️";html+='<div class="alert '+(a.tipo||"amar")+'"><span class="ai">'+ic+'</span><span>'+esc(a.texto)+'</span></div>';});
-    }
 
     /* --- gasto manual (codificacion densa en celda) --- */
     html+='<h2 class="sec">Registrar gasto de la semana</h2>'+
@@ -400,13 +403,13 @@
     var mag=F.mag||'arq';
     var MAGCFG={
       arq:{titulo:'Arquitectura de Autor',fuenteSuf:'(del Sheet)',abren:'que abren la página',empiezan:'empiezan el cuestionario',entrada:'El embudo arranca en la <b>1ª página</b> del formulario (Estilo = la entrada) y cada barra es una página del cuestionario.',verUrl:'https://alexpueblag.github.io/aurum-experiencia/',verTxt:'Ver el cuestionario →'},
-      pot:{titulo:'Plan de Potencial',fuenteSuf:'(beacon server-side · no lo recorta iOS/ATT)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
+      pot:{titulo:'Plan de Potencial',fuenteSuf:'(medido directo en el servidor · no se pierde con bloqueadores de iPhone)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
     };
     var cfg=MAGCFG[mag]||MAGCFG.arq;
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#fff')+';color:'+(on?'#fff':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
       '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
-    var sel='<h2 class="sec" style="margin-bottom:8px;">Embudo · ¿qué imán mides?</h2><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
+    var sel='<h2 class="sec" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
     /* imán Plan de Potencial: su propia fuente de datos (DATA_POT, de su Apps Script). Si aún no llega, muestra cargando. */
     if(mag==='pot'){
       if(!DATA_POT||!DATA_POT.funnel||!DATA_POT.funnel.length) return sel+'<div class="card" style="text-align:center;padding:30px 22px;"><p style="font-family:Kefa-Regular,Georgia,serif;font-size:17px;color:var(--negro);">Plan de Potencial · cargando datos…</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.5;">Leyendo el embudo de «Despierta tu Terreno» (su Apps Script). Si no aparece, aún no hay actividad registrada en el formulario.</p></div>';
@@ -454,20 +457,20 @@
           '<div style="font-family:Kefa-Regular,Georgia,serif;font-size:20px;line-height:1.05;margin-top:1px;color:var(--carbon);">'+num(K.interes)+'</div>'+
           '<div style="font-size:9.5px;color:var(--piedra);margin-top:1px;">audiencia aparte · no es del embudo de terreno</div></div>'+
       '</div>';
-      h+='<p class="nota" style="margin:0 0 10px;font-style:normal;color:var(--piedra);font-size:11.5px;line-height:1.5;">El <b>clic en agendar</b> ('+fAg+', del beacon) todavía no es una cita: la cita real la confirma el operador en el CRM (hoy <b style="color:var(--negro);">'+num(K.agendadas)+'</b>). Después de la videollamada hay etapas de dinero fuera del board (en CRM/manual): <b>Plan de Potencial vendido</b> (servicio de pago, se cierra en la llamada) → <b>co-desarrollo</b> (solo si los números califican).</p>';
+      h+='<p class="nota" style="margin:0 0 10px;font-style:normal;color:var(--piedra);font-size:11.5px;line-height:1.5;">El <b>clic en agendar</b> ('+fAg+', medido en la pantalla del visitante) todavía no es una cita: la cita real la confirma el operador en el CRM (hoy <b style="color:var(--negro);">'+num(K.agendadas)+'</b>). Después de la videollamada hay etapas de dinero fuera del board (en CRM/manual): <b>Plan de Potencial vendido</b> (servicio de pago, se cierra en la llamada) → <b>co-desarrollo</b> (solo si los números califican).</p>';
     }
     h+='<p class="nota" style="margin:0 0 8px;font-style:normal;color:var(--carbon);">De <b style="color:var(--negro);">'+cargaron+'</b> '+cfg.abren+', <b style="color:var(--negro);">'+empezaron+'</b> ('+activ+'%) '+cfg.empiezan+'.'+(reboteEntrada>=25?' <span style="color:var(--rojo);">Rebote de entrada '+reboteEntrada+'%</span> — se trabaja en la 1ª pantalla.':'')+'</p>';
     if(md>0) h+='<div style="font-family:Kefa-Regular,Georgia,serif;font-size:clamp(15px,2.4vw,19px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Ya dentro, mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(labelsE[mi])+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(labelsE[mi-1])+' a '+esc(labelsE[mi])+'</span></div>';
     h+='<p class="nota" style="margin:0 0 8px;">'+cfg.entrada+' <a class="link-meta" href="'+cfg.verUrl+'" target="_blank" rel="noopener">'+cfg.verTxt+'</a></p>';
     if(hasSeg){
       h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
-        '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">◀</button>'+
-        '<span onclick="embSet(&#39;month&#39;,&#39;&#39;)" style="font-family:Kefa-Regular,Georgia,serif;font-size:14px;cursor:pointer;min-width:100px;text-align:center;" title="Clic = todos los meses">'+(F.month?MES[F.month]+' 2026':'Todos los meses')+'</span>'+
-        '<button onclick="embMonth(1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;">▶</button>'+
+        '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">◀</button>'+
+        '<span onclick="embSet(&#39;month&#39;,&#39;&#39;)" style="font-family:Kefa-Regular,Georgia,serif;font-size:14px;cursor:pointer;min-width:100px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;" title="Clic = todos los meses">'+(F.month?MES[F.month]+' 2026':'Todos los meses')+'</span>'+
+        '<button onclick="embMonth(1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">▶</button>'+
         '<span style="flex:1"></span>'+
         '<span style="font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);">Ver por</span>'+
-        '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:0 0 2px;">Hora</button>'+
-        '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:0 0 2px;">Día de semana</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Hora</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Día de semana</button>'+
       '</div>'+
       '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>'+(F.dim==='hora'?'madrugada':'Lun')+'</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+C.join(',')+')"></span><span>'+(F.dim==='hora'?'noche':'Dom')+'</span><span style="margin-left:4px">(color = '+(F.dim==='hora'?'hora de entrada':'día')+')</span></div>';
     }
@@ -486,7 +489,7 @@
       '</div>';
     });
     h+='</div>';
-    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) son del beacon de pantallas y pueden no cuadrar con «Cierre» ni entre sí (fuentes distintas). El <b>conteo de leads que vale es el del CRM</b> (arriba, '+(DATA_POT&&DATA_POT.kpis?num(DATA_POT.kpis.leads):0)+', server-side); «Dejó datos» aquí es solo lo que alcanzó a registrar el beacon. La <b>cita confirmada</b> es la del North Star, no el clic.</p>';
+    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) son de lo que se midió en la pantalla del visitante y pueden no cuadrar con «Cierre» ni entre sí (fuentes distintas). El <b>conteo de leads que vale es el del CRM</b> (arriba, '+(DATA_POT&&DATA_POT.kpis?num(DATA_POT.kpis.leads):0)+', medido en el servidor); «Dejó datos» aquí es solo lo que alcanzó a registrar esa medición de pantalla. La <b>cita confirmada</b> es la meta real, no el clic.</p>';
     h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas. '):(mag==='pot'?'Acumulado de todos los días; el desglose por día/hora se enciende al desplegar el Apps Script del formulario. ':''))+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead'+(mag==='pot'?'':'/cita')+' marcado</b>'+(mag==='pot'?', <b style="color:var(--amar)">clic en ámbar</b>':'')+'. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
     return h;
   }
@@ -657,11 +660,22 @@
         '</div></div>';
     }
     /* ---- hueco del LEAD (lo que de verdad importa) ---- */
-    h+='<div class="leadgap"><span class="li">⚠️</span><span class="lt"><b>Aún no mides lo único que paga: los clics al Plan de Potencial.</b> Hoy juzgas posts por likes y alcance, no por leads. Con enlaces <b>UTM</b> (~15 min de montaje) cada publicación mostraría cuántos formularios trajo, y aparecería esa columna aquí.</span></div>';
+    h+='<div class="leadgap"><span class="li">⚠️</span><span class="lt"><b>Aún no mides lo único que paga: los clics al Plan de Potencial.</b> Hoy juzgas posts por likes y alcance, no por leads. Poniendo una etiqueta especial en el link de cada post (se llama UTM, ~15 min de montaje) sabrías cuántos formularios trajo cada publicación, y aparecería esa columna aquí.</span></div>';
     /* ---- KPIs de cuenta (referencia, de-enfatizados) ---- */
     h+='<div class="kref"><span class="kt">Cuenta · 30 días</span>'+
        '<span>Alcance IG <b>'+fmtN(reach30)+'</b></span><span>Interacciones <b>'+fmtN(inter30)+'</b></span>'+
-       '<span>Guardados <b>'+fmtN(saves30)+'</b></span>'+(best?'<span>Mejor ER <b>'+best.er+'%</b></span>':'')+'</div>';
+       '<span>Guardados <b>'+fmtN(saves30)+'</b></span>'+(best?'<span title="ER = qué tanto interactúa la gente con tus posts (me gusta+comentarios+compartidos ÷ alcance)">Mejor ER <b>'+best.er+'%</b></span>':'')+'</div>';
+    /* ---- comparativo semana vs. semana pasada (mismo patrón ▲/▼ que el resto del board) ---- */
+    if(METRICS.semana && METRICS.semana.anterior && (METRICS.semana.actual.posts||METRICS.semana.anterior.posts)){
+      var sw=METRICS.semana.actual, sp=METRICS.semana.anterior;
+      h+='<div class="kref"><span class="kt">Esta semana vs. la pasada</span>'+
+         '<span>Publicaste <b>'+sw.posts+'</b> '+flechaHTML(sw.posts,sp.posts)+'</span>'+
+         '<span>Alcance IG '+flechaHTML(sw.reach,sp.reach)+'</span>'+
+         '<span>Interacciones '+flechaHTML(sw.interacciones,sp.interacciones)+'</span></div>';
+    }
+    if(METRICS.dias_sin_publicar!=null && METRICS.dias_sin_publicar>=5){
+      h+='<div class="alert amar"><span class="ai">⚠️</span><span>Llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin publicar nada nuevo en redes.</span></div>';
+    }
     /* ---- D) controles de orden / filtro ---- */
     function cb(grp,val,lbl){ return '<button class="chipbtn'+(F[grp]===val?' on':'')+'" onclick="pubSet(&#39;'+grp+'&#39;,&#39;'+val+'&#39;)">'+lbl+'</button>'; }
     h+='<div class="pfilters"><span class="pfl">Orden</span>'+cb('orden','reciente','Más reciente')+cb('orden','alcance','Más alcance')+cb('orden','interaccion','Más interacción')+
@@ -688,7 +702,7 @@
     h+='<div class="pcount">Mostrando '+vis.length+' de '+total+' publicaciones.</div>';
     if(lim<total) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,1)">Ver las '+(total-lim)+' restantes</span>';
     else if(total>18) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,0)">Ver menos</span>';
-    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post; los clics al Plan de Potencial necesitan UTM. Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post; los clics al Plan de Potencial necesitan la etiqueta especial del link (UTM). Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
   }
   /* ---- ficha (modal) con bloques ---- */
@@ -729,7 +743,7 @@
     /* facebook adjunto (la otra red del mismo post) */
     if(p._fb){ var f=p._fb; h+='<div class="pfrow">También en <b>Facebook</b>: '+(f.likes||0)+' reacciones · '+(f.comments||0)+' comentarios'+(f.shares!=null?' · '+f.shares+' compartidos':'')+(f.clicks!=null?' · '+f.clicks+' clics':'')+'</div>'; }
     /* por qué hay «—» */
-    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren permisos nuevos del token). Los clics → leads necesitan UTM.</span></div>';
+    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren más permisos de la cuenta de Meta). Los clics → leads necesitan la etiqueta especial del link (UTM).</span></div>';
     h+='</div>';
     return h;
   }
@@ -796,7 +810,7 @@
   function iniciar(){
     $("badge").addEventListener("click",function(){fetchData(true);});
     document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&LAST&&Date.now()-LAST>CONFIG.REFRESH_MS)fetchData(false);});
-    setInterval(function(){if(document.visibilityState==="visible"){fetchData(false);fetchPot();}},CONFIG.REFRESH_MS);
+    setInterval(function(){if(document.visibilityState==="visible"){fetchData(false);fetchMetrics();fetchPot();}},CONFIG.REFRESH_MS);
     usarCacheOSnap();   /* pinta cache/snapshot al instante */
     fetchData(false);   /* y busca datos en vivo */
     fetchMetrics();     /* y las métricas de publicaciones */
