@@ -388,6 +388,7 @@
 
     $("app").innerHTML=html;
     var gb=$("gGuardar"); if(gb) gb.addEventListener("click",guardarGasto);
+    if(window.genLinkFB && $("lgUrl")) window.genLinkFB();
   }
   function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
 
@@ -603,7 +604,7 @@
     var reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0), c=[];
     if(p.red==='IG'){ c.push(['📣','Alcance',p.reach]); if(reel)c.push(['▶️','Vistas',p.views]);
       c.push(['❤️','Me gusta',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔁','Compart.',p.shares]); c.push(['🔖','Guardados',p.saves]); }
-    else { c.push(['▶️','Vistas',p.views]); c.push(['❤️','Reacc.',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔗','Clics',p.clicks]); }
+    else { c.push(['▶️','Vistas',p.views]); c.push(['❤️','Reacc.',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔗','Clics',p.clicks]); c.push(['🎯','Leads',p.leads_atribuidos]); }
     return '<div class="chips">'+c.filter(function(x){return x[2]!=null;}).map(function(x){return chip(x[0],x[1],x[2],false);}).join('')+'</div>';
   }
   /* ficha: TODO lo que Meta permite, incluido n/d como "—" presente y legible */
@@ -612,7 +613,8 @@
     var rows=[ ['📣','Alcance', isIG?p.reach:null], ['✨','Gente nueva', p.reach_nonfollower],
       ['▶️','Reproducciones', (reel||!isIG)?p.views:null], ['❤️', isIG?'Me gusta':'Reacciones', p.likes],
       ['💬','Comentarios', p.comments], ['🔁','Compartidos', fbSharesDe(p)], ['🔖','Guardados', p.saves],
-      ['👏','Interacciones', p.interacciones], ['👤','Visitas al perfil', p.profile_visits], ['🔗','Clics al enlace', fbClicksDe(p)] ];
+      ['👏','Interacciones', p.interacciones], ['👤','Visitas al perfil', p.profile_visits], ['🔗','Clics al enlace', fbClicksDe(p)],
+      ['🎯','Leads de este post', p.leads_atribuidos] ];
     return '<div class="chips ficha">'+rows.map(function(x){return chip(x[0],x[1],x[2],true);}).join('')+'</div>';
   }
   function mergePosts(posts){
@@ -660,7 +662,16 @@
         '</div></div>';
     }
     /* ---- hueco del LEAD (lo que de verdad importa) ---- */
-    h+='<div class="leadgap"><span class="li">⚠️</span><span class="lt"><b>Aún no mides lo único que paga: los clics al Plan de Potencial.</b> Hoy juzgas posts por likes y alcance, no por leads. Poniendo una etiqueta especial en el link de cada post (se llama UTM, ~15 min de montaje) sabrías cuántos formularios trajo cada publicación, y aparecería esa columna aquí.</span></div>';
+    h+='<div class="leadgap"><span class="li">🎯</span><span class="lt"><b>Ya puedes saber qué post de Facebook trae leads reales.</b> Instagram no se puede (solo tienes un link en tu biografía, no uno por publicación) — pero en Facebook sí. La próxima vez que publiques ahí con un link, usa este en vez del normal:'+
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:9px;">'+
+        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--rojo);border-radius:5px;font-size:12px;background:#fff;color:var(--negro);">'+
+          '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
+        '</select>'+
+        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--rojo);border-radius:5px;font-size:11.5px;background:#fff;color:var(--carbon);font-family:monospace;">'+
+        '<button class="chipbtn on" onclick="copiarLinkFB()" style="border-color:var(--rojo);min-height:36px;">Copiar</button>'+
+      '</div>'+
+      '<div style="font-size:11px;color:'+'#7a3b3b'+';margin-top:6px;">Los leads que traiga ese link se marcan solos en la ficha de ese post (puede tardar hasta 48h en aparecer).</div>'+
+    '</span></div>';
     /* ---- KPIs de cuenta (referencia, de-enfatizados) ---- */
     h+='<div class="kref"><span class="kt">Cuenta · 30 días</span>'+
        '<span>Alcance IG <b>'+fmtN(reach30)+'</b></span><span>Interacciones <b>'+fmtN(inter30)+'</b></span>'+
@@ -702,7 +713,7 @@
     h+='<div class="pcount">Mostrando '+vis.length+' de '+total+' publicaciones.</div>';
     if(lim<total) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,1)">Ver las '+(total-lim)+' restantes</span>';
     else if(total>18) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,0)">Ver menos</span>';
-    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post; los clics al Plan de Potencial necesitan la etiqueta especial del link (UTM). Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics · 🎯 leads (solo Facebook, con el link de arriba). Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post. Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
   }
   /* ---- ficha (modal) con bloques ---- */
@@ -743,7 +754,7 @@
     /* facebook adjunto (la otra red del mismo post) */
     if(p._fb){ var f=p._fb; h+='<div class="pfrow">También en <b>Facebook</b>: '+(f.likes||0)+' reacciones · '+(f.comments||0)+' comentarios'+(f.shares!=null?' · '+f.shares+' compartidos':'')+(f.clicks!=null?' · '+f.clicks+' clics':'')+'</div>'; }
     /* por qué hay «—» */
-    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren más permisos de la cuenta de Meta). Los clics → leads necesitan la etiqueta especial del link (UTM).</span></div>';
+    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren más permisos de la cuenta de Meta). «Leads de este post» solo aplica a Facebook (usando el link con etiqueta especial de arriba); Instagram no se puede medir por publicación — solo tienes un link en tu biografía, no uno por post.</span></div>';
     h+='</div>';
     return h;
   }
@@ -759,6 +770,23 @@
     };
     window.pubSet=function(grp,val){ window.__PUBF=window.__PUBF||{orden:'reciente',red:'todas',verMas:false}; window.__PUBF[grp]=(grp==='verMas')?!!val:val; if(grp!=='verMas') window.__PUBF.verMas=false; if(typeof render==='function') render(); };
     document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.cerrarFicha(); });
+    /* ---- generador de link con UTM para el proximo post de Facebook (atribucion real, solo FB) ---- */
+    var LG_DEST={pot:'https://alexpueblag.github.io/plan-potencial/',cuest:'https://alexpueblag.github.io/aurum-experiencia/'};
+    window.genLinkFB=function(){
+      var sel=$("lgDest"), inp=$("lgUrl"); if(!sel||!inp) return;
+      var d=new Date(), pad=function(n){return (n<10?"0":"")+n;};
+      var fecha=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+      inp.value=LG_DEST[sel.value]+"?utm_source=facebook&utm_medium=social&utm_campaign=fb-"+fecha;
+    };
+    window.copiarLinkFB=function(){
+      var inp=$("lgUrl"); if(!inp) return;
+      inp.select(); inp.setSelectionRange(0,99999);
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(inp.value).then(function(){toast("Link copiado ✓");}).catch(function(){toast("No se pudo copiar — selecciona el texto y copia a mano",true);});
+      } else {
+        try{document.execCommand("copy"); toast("Link copiado ✓");}catch(e){toast("No se pudo copiar — selecciona el texto y copia a mano",true);}
+      }
+    };
   }
 
   function semaforo(d){
