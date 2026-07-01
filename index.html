@@ -741,6 +741,19 @@
     /* TODAS las métricas de la publicación, mismo peso (sin héroe de guardados) */
     var dR=(isIG&&p.reach!=null&&ctx.avgReach)?Math.round((p.reach-ctx.avgReach)/ctx.avgReach*100):null;
     h+='<div class="fblock">Métricas de la publicación</div>'+fichaChips(p);
+    /* generador de link CON el ID de este post (a diferencia del de arriba, que usa la fecha
+       de hoy para posts nuevos, este sirve para editar posts YA publicados: cada uno queda con
+       su propio identificador, asi que no se mezclan aunque edites varios el mismo dia) */
+    if(!isIG){
+      h+='<div class="fblock">Link con seguimiento para ESTE post</div>'+
+        '<div class="pfrow"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+
+          '<select id="lgDestP" onchange="genLinkPost(&#39;'+esc(p.id)+'&#39;)" style="padding:7px 9px;border:1px solid var(--linea);border-radius:5px;font-size:12px;background:#fff;color:var(--negro);">'+
+            '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
+          '</select>'+
+          '<input id="lgUrlP" readonly onclick="this.select()" style="flex:1;min-width:200px;padding:7px 9px;border:1px solid var(--linea);border-radius:5px;font-size:11px;background:var(--crema);color:var(--carbon);font-family:monospace;">'+
+          '<button class="chipbtn on" onclick="copiarLinkPost()" style="min-height:34px;">Copiar</button>'+
+        '</div><div style="font-size:10.5px;color:var(--piedra);margin-top:6px;">Edita este post en Facebook y pega este link en el texto — no el generador general de arriba (ese es para posts nuevos, este es solo para este post).</div></div>';
+    }
     /* lectura en lenguaje llano (apoyo, sin elevar ninguna métrica) */
     if(isIG && p.reach!=null && ctx.avgReach){
       var msg = dR>=10?('✅ Alcance '+dR+'% sobre tu media — el ángulo funcionó, repítelo.')
@@ -767,6 +780,7 @@
       o.addEventListener('click',function(e){ if(e.target===o) window.cerrarFicha(); });
       o.innerHTML=fichaHTML(p,ctx);
       document.body.appendChild(o);
+      if(window.genLinkPost && $("lgUrlP")) window.genLinkPost(p.id);
     };
     window.pubSet=function(grp,val){ window.__PUBF=window.__PUBF||{orden:'reciente',red:'todas',verMas:false}; window.__PUBF[grp]=(grp==='verMas')?!!val:val; if(grp!=='verMas') window.__PUBF.verMas=false; if(typeof render==='function') render(); };
     document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.cerrarFicha(); });
@@ -780,6 +794,21 @@
     };
     window.copiarLinkFB=function(){
       var inp=$("lgUrl"); if(!inp) return;
+      inp.select(); inp.setSelectionRange(0,99999);
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(inp.value).then(function(){toast("Link copiado ✓");}).catch(function(){toast("No se pudo copiar — selecciona el texto y copia a mano",true);});
+      } else {
+        try{document.execCommand("copy"); toast("Link copiado ✓");}catch(e){toast("No se pudo copiar — selecciona el texto y copia a mano",true);}
+      }
+    };
+    /* ---- generador de link CON EL ID de un post ya publicado (edicion retroactiva, no se mezcla con otros) ---- */
+    window.genLinkPost=function(postId){
+      var sel=$("lgDestP"), inp=$("lgUrlP"); if(!sel||!inp) return;
+      var shortid=String(postId).split("_").pop().slice(-10);
+      inp.value=LG_DEST[sel.value]+"?utm_source=facebook&utm_medium=social&utm_campaign=fb-"+shortid;
+    };
+    window.copiarLinkPost=function(){
+      var inp=$("lgUrlP"); if(!inp) return;
       inp.select(); inp.setSelectionRange(0,99999);
       if(navigator.clipboard&&navigator.clipboard.writeText){
         navigator.clipboard.writeText(inp.value).then(function(){toast("Link copiado ✓");}).catch(function(){toast("No se pudo copiar — selecciona el texto y copia a mano",true);});
