@@ -317,7 +317,10 @@
   /* ============ RENDER ============ */
   function render(){
     var d=DATA||SNAP, k=d.kpis||{}, g=d.gasto||{};
-    $("periodo").textContent=(d.meta&&d.meta.periodo)||"";
+    /* en el header: cuándo se actualizó cada fuente, para que nunca quede la duda de si el board está vivo */
+    var _fresh=(d.meta&&d.meta.periodo)||"";
+    if(METRICS&&METRICS.generado) _fresh+=(_fresh?" · ":"")+"redes al "+METRICS.generado.slice(5);
+    $("periodo").textContent=_fresh;
     var costoCita = num(k.citas)>0 ? money(num(g.semana_actual)/num(k.citas)) : "—";
     /* --- semaforo --- */
     var sem=semaforo(d), html="";
@@ -332,14 +335,19 @@
     var totArq=(d.funnel&&d.funnel[0])?num(d.funnel[0].n):0;
     var totLeads=totArq+(P?num(P.leads):0);
     var sinTocar=num(k.nuevos_sin_tocar_24h)+(P?num(P.nuevos):0);
-    function visUlt(serie){ if(!serie||!serie.length) return null; var u=serie[serie.length-1]; return {f:(u.fecha||'').slice(5), v:num(u.visitas)}; }
-    var vArq=visUlt(d.actividad_por_dia), vPot=visUlt(DATA_POT&&DATA_POT.actividad_por_dia);
-    var visHoy=(vArq?vArq.v:0)+(vPot?vPot.v:0);
+    /* visitas de HOY de verdad (el registro por día solo crea fila cuando alguien entra:
+       si el último día con fila es viejo, eso NO significa que el board esté desactualizado) */
+    var _hoyISO=(function(){var d2=new Date(),p=function(n){return(n<10?'0':'')+n;};return d2.getFullYear()+'-'+p(d2.getMonth()+1)+'-'+p(d2.getDate());})();
+    function visDia(serie){ if(!serie||!serie.length) return {hoy:0,ult:null}; var u=serie[serie.length-1]; return {hoy:(u.fecha===_hoyISO)?num(u.visitas):0, ult:u.fecha}; }
+    var dArq=visDia(d.actividad_por_dia), dPot=visDia(DATA_POT&&DATA_POT.actividad_por_dia);
+    var visHoy=dArq.hoy+dPot.hoy;
+    var _ultTraf=[dArq.ult,dPot.ult].filter(Boolean).sort().pop();
+    var visSub = visHoy>0 ? "visitas de hoy · los dos formularios" : ('<span style="color:var(--amar)">hoy aún sin visitas</span>'+(_ultTraf?' · últ. tráfico '+esc(_ultTraf.slice(5)):''));
     html+='<h2 class="sec" id="sec-hoy">Hoy en tu negocio · los dos imanes</h2><div class="nums">';
     html+=numHTML("🎯 Videollamadas agendadas", P?num(P.agendadas):"…", "", true, "meta real · Plan de Potencial (CRM)");
     html+=numHTML("Leads totales", totLeads, "", false, "cuestionario "+totArq+" · terreno "+(P?num(P.leads):"…"));
     html+=numHTML("Sin contestar +24h", sinTocar, "", false, sinTocar>0?'<span style="color:var(--amar)">requieren respuesta hoy</span>':"todo contestado ✓");
-    html+=numHTML("Visitas del día", visHoy, "", false, "últ. día registrado"+(vArq?" · "+esc(vArq.f):""));
+    html+=numHTML("Visitas de hoy", visHoy, "", false, visSub);
     html+='</div>';
 
     /* --- QUÉ HACER HOY: acciones concretas (no regaños), ordenadas por dinero --- */
