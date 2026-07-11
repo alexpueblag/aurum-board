@@ -160,6 +160,28 @@
   .fm .fk{font-size:10px;}
   .fm.gap{background:rgba(224,96,90,.14);} .fm.gap .fv{color:var(--rojo);font-size:15px;} .fm.gap .fsub{color:var(--rojo);}
   .pfclose{font-size:24px;min-width:40px;min-height:40px;}
+  /* --- mejoras jul-11: nav de secciones, acciones, estados de lead, caja-herramienta --- */
+  html{scroll-behavior:smooth;} h2.sec{scroll-margin-top:130px;}
+  .secnav{display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:2px 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .secnav::-webkit-scrollbar{display:none;}
+  @media(min-width:700px){.secnav{position:sticky;top:55px;z-index:40;background:linear-gradient(#0a0a0c 78%,rgba(10,10,12,0));}}
+  .secnav a{flex:none;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--linea);background:#16161a;border-radius:20px;padding:6px 13px;text-decoration:none;}
+  .secnav a:hover{border-color:var(--oro);color:var(--oro);}
+  .num .sub{font-size:10.5px;margin-top:3px;color:var(--piedra);line-height:1.35;}
+  .accion{display:flex;gap:11px;align-items:flex-start;background:#16161a;border:1px solid var(--linea);border-left:4px solid var(--oro);border-radius:6px;padding:12px 15px;margin-bottom:7px;font-size:13.5px;line-height:1.5;color:var(--carbon);}
+  .accion b{color:var(--negro);} .accion a{color:var(--oro);}
+  .accion .an{font-family:Instrument Serif,Georgia,serif;color:var(--oro);font-size:19px;line-height:1.1;min-width:15px;}
+  .accion.rojo{border-left-color:var(--rojo);} .accion.rojo .an{color:var(--rojo);}
+  .est{display:inline-block;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;border-radius:20px;padding:2px 9px;border:1px solid var(--linea);color:var(--carbon);white-space:nowrap;}
+  .est.nuevo{color:#0a0a0c;background:var(--amar);border-color:var(--amar);}
+  .est.agendada{color:#0a0a0c;background:var(--verde);border-color:var(--verde);}
+  .est.cliente{color:#0a0a0c;background:var(--oro);border-color:var(--oro);}
+  .est.descartado{opacity:.5;}
+  .magchip{font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--piedra);border:1px solid var(--linea);border-radius:4px;padding:2px 6px;white-space:nowrap;}
+  .toolbox{background:linear-gradient(135deg,#16161a,#1b1b20);border:1px solid var(--oro);border-left:4px solid var(--oro);border-radius:8px;padding:13px 16px;margin-bottom:14px;}
+  .toolbox .tt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--oro);margin-bottom:4px;}
+  .toolbox .tx{font-size:13px;color:var(--carbon);line-height:1.5;display:block;}
+  .toolbox b{color:var(--negro);}
 </style>
 </head>
 <body>
@@ -266,10 +288,10 @@
     if(!CONFIG.POT_URL) return;
     var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&cb="+Date.now();
     fetch(url).then(function(r){return r.json();}).then(function(j){
-      if(j && j.funnel){ DATA_POT=j; try{localStorage.setItem(POTCACHE,JSON.stringify(j));}catch(e){} if(DATA && (window.__EMBF||{}).mag==='pot') render(); }
+      if(j && j.funnel){ DATA_POT=j; try{localStorage.setItem(POTCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }   /* re-render siempre: la cabecera "Hoy" usa datos pot */
     }).catch(function(e){
       console.warn("[board] fetchPot falló:",e);
-      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA&&(window.__EMBF||{}).mag==='pot')render();}}catch(e2){}
+      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA)render();}}catch(e2){}
     });
   }
 
@@ -302,23 +324,49 @@
     html+='<div class="semaforo '+sem.color+'"><div class="lbl">Esta semana</div><div class="msg">'+esc(sem.msg)+'</div></div>';
     if(d.meta&&d.meta.es_snapshot) html+='<p class="nota" style="margin-bottom:10px;">Mostrando ejemplo: el board cobra vida cuando el Apps Script sirva <code>recurso=board</code> y entre tráfico.</p>';
 
-    /* --- numerotes --- */
-    html+='<h2 class="sec">Resumen del dueño</h2><div class="nums">';
-    html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false);
-    html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false);
-    html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), true);
-    html+=numHTML("Costo por cita", costoCita, "", true);
-    html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false);
+    /* --- nav de secciones (un tap y llegas; la página es larga) --- */
+    html+='<nav class="secnav"><a href="#sec-hoy">Hoy</a><a href="#sec-acciones">Qué hacer</a><a href="#sec-semana">Semana</a><a href="#sec-embudo">Embudo</a><a href="#sec-trafico">Tráfico</a><a href="#sec-pubs">Publicaciones</a><a href="#sec-gasto">Gasto</a></nav>';
+
+    /* --- HOY EN TU NEGOCIO: los DOS imanes juntos (arq CRM + pot CRM), nunca un muro de ceros --- */
+    var P=(DATA_POT&&DATA_POT.kpis)?DATA_POT.kpis:null;
+    var totArq=(d.funnel&&d.funnel[0])?num(d.funnel[0].n):0;
+    var totLeads=totArq+(P?num(P.leads):0);
+    var sinTocar=num(k.nuevos_sin_tocar_24h)+(P?num(P.nuevos):0);
+    function visUlt(serie){ if(!serie||!serie.length) return null; var u=serie[serie.length-1]; return {f:(u.fecha||'').slice(5), v:num(u.visitas)}; }
+    var vArq=visUlt(d.actividad_por_dia), vPot=visUlt(DATA_POT&&DATA_POT.actividad_por_dia);
+    var visHoy=(vArq?vArq.v:0)+(vPot?vPot.v:0);
+    html+='<h2 class="sec" id="sec-hoy">Hoy en tu negocio · los dos imanes</h2><div class="nums">';
+    html+=numHTML("🎯 Videollamadas agendadas", P?num(P.agendadas):"…", "", true, "meta real · Plan de Potencial (CRM)");
+    html+=numHTML("Leads totales", totLeads, "", false, "cuestionario "+totArq+" · terreno "+(P?num(P.leads):"…"));
+    html+=numHTML("Sin contestar +24h", sinTocar, "", false, sinTocar>0?'<span style="color:var(--amar)">requieren respuesta hoy</span>':"todo contestado ✓");
+    html+=numHTML("Visitas del día", visHoy, "", false, "últ. día registrado"+(vArq?" · "+esc(vArq.f):""));
     html+='</div>';
 
-    /* --- alertas (arriba: lo primero que hay que revisar, antes de los embudos) --- */
-    if((d.alertas||[]).length){
-      html+='<h2 class="sec">Algo que revisar</h2>';
-      d.alertas.forEach(function(a){var ic=a.tipo==="rojo"?"⛔":a.tipo==="verde"?"✅":"⚠️";html+='<div class="alert '+(a.tipo||"amar")+'"><span class="ai">'+ic+'</span><span>'+esc(a.texto)+'</span></div>';});
+    /* --- QUÉ HACER HOY: acciones concretas (no regaños), ordenadas por dinero --- */
+    var CRM_URL="https://docs.google.com/spreadsheets/d/1z1ZtvcUKnx4MUfxLICo8x5bTihlDY8tBC3j2sYwNvg8/edit";
+    var acc=[];
+    if(sinTocar>0) acc.push({t:'Contesta a los <b>'+sinTocar+' leads NUEVO</b> que llevan más de 24 h esperando. <a href="'+CRM_URL+'" target="_blank" rel="noopener">Abrir CRM →</a>', rojo:true});
+    if(METRICS && METRICS.dias_sin_publicar!=null && METRICS.dias_sin_publicar>=3) acc.push({t:'Publica hoy: llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin post nuevo. <a href="#sec-pubs">Ver qué formato conviene ↓</a>'});
+    if(num(g.semana_actual)===0 && !(d.meta&&d.meta.es_snapshot)) acc.push({t:'Registra el <b>gasto de pauta</b> de la semana — sin él no se puede calcular el costo por cita. <a href="#sec-gasto">Ir al formulario ↓</a>'});
+    var yaCubiertas=/NUEVO sin tocar|gasto registrado|sin etiqueta UTM/i;
+    var resto=(d.alertas||[]).filter(function(a){return !yaCubiertas.test(a.texto||'');});
+    if(acc.length||resto.length){
+      html+='<h2 class="sec" id="sec-acciones">Qué hacer hoy</h2>';
+      acc.slice(0,3).forEach(function(a,i){ html+='<div class="accion'+(a.rojo?' rojo':'')+'"><span class="an">'+(i+1)+'</span><span>'+a.t+'</span></div>'; });
+      resto.forEach(function(a){var ic=a.tipo==="rojo"?"⛔":a.tipo==="verde"?"✅":"⚠️";html+='<div class="alert '+(a.tipo||"amar")+'"><span class="ai">'+ic+'</span><span>'+esc(a.texto)+'</span></div>';});
     }
 
+    /* --- numerotes de la semana (arq) con ACUMULADO abajo: nunca se ve "muerto" --- */
+    html+='<h2 class="sec" id="sec-semana">Esta semana · Arquitectura de Autor</h2><div class="nums">';
+    html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "acumulado "+money(g.total));
+    html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false, totArq+" en total");
+    html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), false, ((d.funnel&&d.funnel[1])?num(d.funnel[1].n):0)+" en total");
+    html+=numHTML("Costo por cita", costoCita, "", false, num(g.semana_actual)>0?"":"registra el gasto para calcularlo");
+    html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false, ((d.funnel&&d.funnel[2])?num(d.funnel[2].n):0)+" en total");
+    html+='</div>';
+
     /* --- embudo de negocio --- */
-    html+='<h2 class="sec">Embudo de negocio (del CRM)</h2><div class="funnel">';
+    html+='<h2 class="sec" id="sec-embudo">Embudo de negocio (del CRM)</h2><div class="funnel">';
     (d.funnel||[]).forEach(function(f,i){
       var base=(d.funnel[0]||{}).n||0;
       html+='<div class="fstep"><div class="fn">'+esc(f.n)+'</div><div class="fl">'+esc(f.etapa)+'</div>'+
@@ -326,53 +374,77 @@
     });
     html+='</div>';
 
-    var ec=d.embudo_cuestionario;
-    var _magSer=(window.__EMBF||{}).mag||'arq';
+    /* --- últimos leads (ambos imanes): quién llegó y en qué va — el dato ya venía del Sheet y no se mostraba --- */
+    function estChip(e){ var s=String(e||'').toUpperCase();
+      var c=/NUEVO/.test(s)?'nuevo':(/AGENDADA|QAA/.test(s)?'agendada':(/CLIENTE/.test(s)?'cliente':(/DESCART/.test(s)?'descartado':'')));
+      return '<span class="est '+c+'">'+esc(e||'—')+'</span>'; }
+    var recPot=((DATA_POT&&DATA_POT.recientes)||[]).filter(function(r){return String(r.tipo||'')!=='lead_interes';}).slice(0,5);
+    var recArq=(d.recientes||[]).slice(0,5);
+    if(recPot.length||recArq.length){
+      html+='<h2 class="sec">Últimos leads · quién llegó y en qué va</h2><table><tr><th>Imán</th><th>Lead</th><th>Estado</th><th>Fuente</th></tr>';
+      recPot.forEach(function(r){ html+='<tr><td><span class="magchip">Terreno</span></td><td>'+esc(r.apodo||r.folio||'—')+'</td><td>'+estChip(r.estado)+'</td><td>'+esc(r.fuente||'(directo)')+'</td></tr>'; });
+      recArq.forEach(function(r){ html+='<tr><td><span class="magchip">Cuestionario</span></td><td>'+esc(r.folio||'—')+'</td><td>'+estChip(r.estado)+'</td><td>'+esc(r.fuente||'(directo)')+'</td></tr>'; });
+      html+='</table><p class="hint">Los más recientes de cada imán, directo del CRM (solo folio/apodo, sin datos personales). El detalle completo vive en el Sheet.</p>';
+    }
 
-    /* --- por fuente --- */
+    var ec=d.embudo_cuestionario;
+    var _magSer=(window.__EMBF||{}).mag;
+    if(!_magSer){ try{_magSer=localStorage.getItem('aurum_mag_v1')||'pot';}catch(e){_magSer='pot';} }
+    if(_magSer==='pot' && !DATA_POT) _magSer='arq';   /* pot aún sin datos: no etiquetar secciones con datos de arq como si fueran pot */
+
+    /* --- por fuente (compacta cuando solo hay "(directo)": una tabla de 1 fila no dice nada) --- */
     var _pf=(_magSer==='pot'&&DATA_POT)?(DATA_POT.por_fuente||[]):(d.por_fuente||[]);
-    if(_pf.length){
+    if(_pf.length===1 && (!_pf[0].fuente || _pf[0].fuente==='(directo)')){
+      html+='<div class="kref" style="margin-top:14px;"><span class="kt">Fuente de los leads</span><span>Todos llegan como <b>(directo)</b> — aún sin links etiquetados · el generador está en <a href="#sec-pubs" style="color:var(--oro)">Publicaciones ↓</a></span></div>';
+    } else if(_pf.length){
       var _cl=(_magSer==='pot'?'Agendadas':'Citas'), _al=(_magSer==='pot'?'agenda':'cita');
       html+='<h2 class="sec">Por fuente / campaña'+(_magSer==='pot'?' · Plan de Potencial':'')+'</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">'+_cl+'</th><th class="r">% a '+_al+'</th></tr>';
       _pf.forEach(function(f){var c=(_magSer==='pot'?(f.agendadas||0):(f.citas||0)); html+='<tr><td>'+esc(f.fuente||"(directo)")+'</td><td class="r">'+esc(f.leads)+'</td><td class="r">'+esc(c)+'</td><td class="r">'+pct(c,f.leads)+'%</td></tr>';});
       html+='</table><p class="hint">Se llena cuando los links de tus anuncios traigan una etiqueta especial (se llama UTM). Hoy "(directo)" = sin etiqueta.</p>';
     }
 
-    /* --- por dia --- */
+    /* --- por dia (compacto si hay pocos datos; oculto si puro cero) --- */
     if((d.por_dia||[]).length && _magSer!=='pot'){   /* pot no expone por_dia; no mostrar el de arq bajo el imán pot */
-      html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
-      ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
-        var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
-        html+='<div class="bar"><div class="bd">'+dia+'</div><div class="bn">'+(row.leads||0)+'</div><div class="bc">'+(row.citas||0)+' citas</div></div>';
-      });
-      html+='</div>';
+      var _pdTot=(d.por_dia||[]).reduce(function(a,x){return a+num(x.leads);},0);
+      if(_pdTot>0 && _pdTot<12){
+        var _mejor=null, _chips='';
+        ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
+          var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
+          var n=num(row.leads); if(n>0){ _chips+='<span>'+dia+' <b>'+n+'</b></span>'; if(!_mejor||n>_mejor.n)_mejor={d:dia,n:n}; }
+        });
+        html+='<div class="kref"><span class="kt">Leads por día</span>'+_chips+(_mejor?'<span style="color:var(--oro)">· mejor día: '+_mejor.d+'</span>':'')+'</div>';
+      } else if(_pdTot>=12){
+        html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
+        ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
+          var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
+          html+='<div class="bar"><div class="bd">'+dia+'</div><div class="bn">'+(row.leads||0)+'</div><div class="bc">'+(row.citas||0)+' citas</div></div>';
+        });
+        html+='</div>';
+      }
     }
 
     /* --- tráfico a los formularios (detalle técnico): embudo del cuestionario + serie en el tiempo + canal de agenda --- */
     if(ec && ec.pasos && ec.pasos.length>=2){
       html+=embudoIntegrado(d, ec);
     } else {
-      html+='<h2 class="sec">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
+      html+='<h2 class="sec" id="sec-trafico">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
     var _serie=(_magSer==='pot'&&DATA_POT)?(DATA_POT.actividad_por_dia||[]):d.actividad_por_dia;
     html+=serieTiempoHTML(_serie, _magSer==='pot'?'Plan de Potencial':'Arquitectura de Autor');
 
-    /* --- canal de agenda (whatsapp vs calendario) — el A/B de portada se retiró (portada única) --- */
+    /* --- canal de agenda: una línea compacta (dos tarjetones para 0/1 eran puro aire) --- */
     var can=ec&&ec.canal;
     if(can && (num(can.whatsapp)||num(can.calendario))){
       var tc=num(can.whatsapp)+num(can.calendario);
-      html+='<h2 class="sec">Canal de agenda</h2><div class="funnel">';
-      html+='<div class="fstep"><div class="fn">'+esc(can.whatsapp)+'</div><div class="fl">WhatsApp</div><div class="fr">'+pct(can.whatsapp,tc)+'%</div></div>';
-      html+='<div class="fstep"><div class="fn">'+esc(can.calendario)+'</div><div class="fl">Calendario</div><div class="fr">'+pct(can.calendario,tc)+'%</div></div>';
-      html+='</div>';
+      html+='<div class="kref" style="margin-top:14px;"><span class="kt">Canal de agenda</span><span>Calendario <b>'+esc(can.calendario)+'</b> ('+pct(can.calendario,tc)+'%)</span><span>WhatsApp <b>'+esc(can.whatsapp)+'</b> ('+pct(can.whatsapp,tc)+'%)</span></div>';
     }
 
     /* --- publicaciones (redes) --- */
     html+=pubSection();
 
     /* --- gasto manual (codificacion densa en celda) --- */
-    html+='<h2 class="sec">Registrar gasto de la semana</h2>'+
+    html+='<h2 class="sec" id="sec-gasto">Registrar gasto de la semana</h2>'+
       '<div class="card"><p class="h">Gasto de pauta — entrada manual</p>'+
       '<p class="s">Una fila por semana. Las campañas van en UNA sola celda (tu convención, para no hacer filas).</p>'+
       '<div class="frow">'+
@@ -390,7 +462,7 @@
     var gb=$("gGuardar"); if(gb) gb.addEventListener("click",guardarGasto);
     if(window.genLinkFB && $("lgUrl")) window.genLinkFB();
   }
-  function numHTML(k,v,delta,star){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+'</div>';}
+  function numHTML(k,v,delta,star,sub){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
 
   /* ============ COMPORTAMIENTO EN EL TIEMPO (serie por día del Apps Script) ============ */
   /* ============ EMBUDO INTEGRADO (segmentado por hora/día + navegador por mes) ============ */
@@ -401,7 +473,8 @@
   function embudoMonths(d){ var ms=[]; (d.actividad_por_dia||[]).forEach(function(x){var m=(x.fecha||'').slice(5,7); if(m&&ms.indexOf(m)<0)ms.push(m);}); ms.sort(); return ms; }
   function embudoIntegrado(d, ec){
     var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'});
-    var mag=F.mag||'arq';
+    if(!F.mag){ try{F.mag=localStorage.getItem('aurum_mag_v1')||'pot';}catch(e){F.mag='pot';} }   /* default = Plan de Potencial (imán actual) y recuerda tu última elección */
+    var mag=F.mag;
     var MAGCFG={
       arq:{titulo:'Arquitectura de Autor',fuenteSuf:'(del Sheet)',abren:'que abren la página',empiezan:'empiezan el cuestionario',entrada:'El embudo arranca en la <b>1ª página</b> del formulario (Estilo = la entrada) y cada barra es una página del cuestionario.',verUrl:'https://alexpueblag.github.io/aurum-experiencia/',verTxt:'Ver el cuestionario →'},
       pot:{titulo:'Plan de Potencial',fuenteSuf:'(medido directo en el servidor · no se pierde con bloqueadores de iPhone)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
@@ -410,7 +483,7 @@
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#16161a')+';color:'+(on?'#0a0a0c':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
       '<div style="font-family:Instrument Serif,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
-    var sel='<h2 class="sec" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
+    var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
     /* imán Plan de Potencial: su propia fuente de datos (DATA_POT, de su Apps Script). Si aún no llega, muestra cargando. */
     if(mag==='pot'){
       if(!DATA_POT||!DATA_POT.funnel||!DATA_POT.funnel.length) return sel+'<div class="card" style="text-align:center;padding:30px 22px;"><p style="font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);">Plan de Potencial · cargando datos…</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.5;">Leyendo el embudo de «Despierta tu Terreno» (su Apps Script). Si no aparece, aún no hay actividad registrada en el formulario.</p></div>';
@@ -495,7 +568,7 @@
     return h;
   }
   if(!window.embSet){
-    window.embSet=function(k,v){ window.__EMBF=window.__EMBF||{month:'',dim:'dia'}; window.__EMBF[k]=v; if(typeof render==='function') render(); };
+    window.embSet=function(k,v){ window.__EMBF=window.__EMBF||{month:'',dim:'dia'}; window.__EMBF[k]=v; if(k==='mag'){try{localStorage.setItem('aurum_mag_v1',v);}catch(e){}} if(typeof render==='function') render(); };
     window.embMonth=function(dir){ var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'}); var src=(F.mag==='pot'&&DATA_POT)?{actividad_por_dia:DATA_POT.actividad_por_dia||[]}:(DATA||{}); var ms=embudoMonths(src); if(!ms.length)return; var idx=F.month?ms.indexOf(F.month):-1; idx+=dir; if(idx<-1)idx=ms.length-1; if(idx>=ms.length)idx=-1; F.month=idx<0?'':ms[idx]; if(typeof render==='function') render(); };
     /* ---- drill-down de etapa: clic en una barra del embudo -> tabla por fecha + por hora ---- */
     window.cerrarEtapa=function(){ var o=document.getElementById('etov'); if(o&&o.parentNode) o.parentNode.removeChild(o); };
@@ -629,7 +702,7 @@
   }
   function pubSection(){
     var F=window.__PUBF||(window.__PUBF={orden:'reciente',red:'todas',verMas:false});
-    var h='<h2 class="sec">Publicaciones · toca una portada para ver su detalle</h2>';
+    var h='<h2 class="sec" id="sec-pubs">Publicaciones · toca una portada para ver su detalle</h2>';
     if(!METRICS || !(METRICS.posts||[]).length){
       return h+'<p class="nota">Aún sin métricas. Corre <code>pull_metrics.py</code> y sube <code>metrics.json</code> + <code>covers/</code> al board.</p>';
     }
@@ -661,23 +734,23 @@
         (chico?'<span style="color:var(--piedra)">Señal temprana: '+top.avg.toFixed(1)+'% engagement en '+top.n+' post'+(top.n>1?'s':'')+(second?' vs '+second.avg.toFixed(1)+'% ('+esc(second.k)+', '+second.n+')':'')+' — confírmalo con 2–3 más.</span>':'Promedia '+top.avg.toFixed(1)+'% de engagement.')+
         '</div></div>';
     }
-    /* ---- hueco del LEAD (lo que de verdad importa) ---- */
-    h+='<div class="leadgap"><span class="li">🎯</span><span class="lt"><b>Ya puedes saber qué post de Facebook trae leads reales.</b> Instagram no se puede (solo tienes un link en tu biografía, no uno por publicación) — pero en Facebook sí. La próxima vez que publiques ahí con un link, usa este en vez del normal:'+
+    /* ---- generador de link medible (herramienta, no alarma: antes iba en caja roja de advertencia) ---- */
+    h+='<div class="toolbox"><div class="tt">🎯 Link medible para tu próximo post de Facebook</div><span class="tx">Pega este link en el texto del post y el board te dirá <b>cuántos leads trajo</b>. (Instagram no permite links por publicación — solo el de tu biografía.)'+
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:9px;">'+
-        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--rojo);border-radius:5px;font-size:12px;background:#16161a;color:var(--negro);">'+
+        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--linea);border-radius:5px;font-size:12px;background:#16161a;color:var(--negro);">'+
           '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
         '</select>'+
-        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--rojo);border-radius:5px;font-size:11.5px;background:#16161a;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
-        '<button class="chipbtn on" onclick="copiarLinkFB()" style="border-color:var(--rojo);min-height:36px;">Copiar</button>'+
+        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:5px;font-size:11.5px;background:#0f0f12;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
+        '<button class="chipbtn on" onclick="copiarLinkFB()" style="min-height:36px;">Copiar</button>'+
       '</div>'+
-      '<div style="font-size:11px;color:'+'#e6c1be'+';margin-top:6px;">Los leads que traiga ese link se marcan solos en la ficha de ese post (puede tardar hasta 48h en aparecer).</div>'+
+      '<div style="font-size:11px;color:var(--piedra);margin-top:6px;">Genera el link el mismo día que publicas; para un post ya publicado usa el generador dentro de su ficha. Los leads pueden tardar hasta 48 h en aparecer.</div>'+
     '</span></div>';
     /* ---- KPIs de cuenta (referencia, de-enfatizados) ---- */
     h+='<div class="kref"><span class="kt">Cuenta · 30 días</span>'+
        '<span>Alcance IG <b>'+fmtN(reach30)+'</b></span><span>Interacciones <b>'+fmtN(inter30)+'</b></span>'+
        '<span>Guardados <b>'+fmtN(saves30)+'</b></span>'+(best?'<span title="ER = qué tanto interactúa la gente con tus posts (me gusta+comentarios+compartidos ÷ alcance)">Mejor ER <b>'+best.er+'%</b></span>':'')+'</div>';
-    /* ---- comparativo semana vs. semana pasada (mismo patrón ▲/▼ que el resto del board) ---- */
-    if(METRICS.semana && METRICS.semana.anterior && (METRICS.semana.actual.posts||METRICS.semana.anterior.posts)){
+    /* ---- comparativo semana vs. semana pasada — SOLO si publicaste (si no, tres ▼100% gritando lo mismo que la alerta) ---- */
+    if(METRICS.semana && METRICS.semana.anterior && METRICS.semana.actual.posts>0){
       var sw=METRICS.semana.actual, sp=METRICS.semana.anterior;
       h+='<div class="kref"><span class="kt">Esta semana vs. la pasada</span>'+
          '<span>Publicaste <b>'+sw.posts+'</b> '+flechaHTML(sw.posts,sp.posts)+'</span>'+
@@ -685,7 +758,7 @@
          '<span>Interacciones '+flechaHTML(sw.interacciones,sp.interacciones)+'</span></div>';
     }
     if(METRICS.dias_sin_publicar!=null && METRICS.dias_sin_publicar>=5){
-      h+='<div class="alert amar"><span class="ai">⚠️</span><span>Llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin publicar nada nuevo en redes.</span></div>';
+      h+='<div class="alert amar"><span class="ai">⚠️</span><span>Llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin publicar nada nuevo'+(fl.length?' — vuelve con un <b>'+esc(fl[0].k)+'</b> (tu mejor formato)':'')+'.</span></div>';
     }
     /* ---- D) controles de orden / filtro ---- */
     function cb(grp,val,lbl){ return '<button class="chipbtn'+(F[grp]===val?' on':'')+'" onclick="pubSet(&#39;'+grp+'&#39;,&#39;'+val+'&#39;)">'+lbl+'</button>'; }
@@ -866,7 +939,7 @@
   /* ============ ARRANQUE ============ */
   function iniciar(){
     $("badge").addEventListener("click",function(){fetchData(true);});
-    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&LAST&&Date.now()-LAST>CONFIG.REFRESH_MS)fetchData(false);});
+    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&LAST&&Date.now()-LAST>CONFIG.REFRESH_MS){fetchData(false);fetchMetrics();fetchPot();}});
     setInterval(function(){if(document.visibilityState==="visible"){fetchData(false);fetchMetrics();fetchPot();}},CONFIG.REFRESH_MS);
     usarCacheOSnap();   /* pinta cache/snapshot al instante */
     fetchData(false);   /* y busca datos en vivo */
