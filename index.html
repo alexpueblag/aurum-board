@@ -774,7 +774,9 @@
        '<span class="pfl" style="margin-left:6px">Red</span>'+cb('red','todas','Todas')+cb('red','IG','Instagram')+cb('red','FB','Facebook')+'</div>';
     /* ---- galería ---- */
     var merged=mergePosts(posts);
-    if(F.red!=='todas') merged=merged.filter(function(p){return p.red===F.red;});
+    /* el filtro Facebook TAMBIÉN muestra los posts fusionados (publicados en las dos redes):
+       antes quedaban etiquetados IG y "desaparecían" del filtro FB aunque sí están en Facebook */
+    if(F.red!=='todas') merged=merged.filter(function(p){return p.red===F.red || (F.red==='FB' && p._fb);});
     if(F.orden==='alcance') merged.sort(function(a,b){return num(b.reach)-num(a.reach);});
     else if(F.orden==='interaccion') merged.sort(function(a,b){return num(b.interacciones)-num(a.interacciones);});
     var total=merged.length, lim=F.verMas?total:Math.min(18,total);
@@ -782,7 +784,9 @@
     h+='<div class="pgrid">';
     vis.forEach(function(p){
       var nuevo=ageDays(p)<=10?'<span class="pbadge">Nuevo</span>':'';
-      var net='<span class="pnet '+(p.red==="IG"?"ig":"fb")+'">'+(p.red==="IG"?"IG":"f")+'</span>';
+      /* publicado en las DOS redes -> doble insignia (IG + f), para que se vea que también es un post de Facebook */
+      var net=p._fb?'<span class="pnet fb" style="right:34px;">f</span><span class="pnet ig">IG</span>'
+                   :'<span class="pnet '+(p.red==="IG"?"ig":"fb")+'">'+(p.red==="IG"?"IG":"f")+'</span>';
       var ang=anguloDe(p);
       h+='<div class="pcard" onclick="abrirFicha(&#39;'+p.id+'&#39;)">'+nuevo+net+covHTML(p)+
          '<div class="ph"><div class="pt"><span>'+esc(tipoLabel(p.tipo))+'</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
@@ -794,7 +798,7 @@
     h+='<div class="pcount">Mostrando '+vis.length+' de '+total+' publicaciones.</div>';
     if(lim<total) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,1)">Ver las '+(total-lim)+' restantes</span>';
     else if(total>18) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,0)">Ver menos</span>';
-    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics · 🎯 leads (solo Facebook, con el link de arriba). Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post. Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics · 🎯 leads (solo Facebook, con el link de arriba). Lo que publicas <b>en las dos redes a la vez</b> aparece UNA sola vez con doble insignia (IG + f) — su lado de Facebook va dentro de la ficha. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post. Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
   }
   /* ---- ficha (modal) con bloques ---- */
