@@ -178,10 +178,59 @@
   .est.cliente{color:#0a0a0c;background:var(--oro);border-color:var(--oro);}
   .est.descartado{opacity:.5;}
   .magchip{font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--piedra);border:1px solid var(--linea);border-radius:4px;padding:2px 6px;white-space:nowrap;}
-  .toolbox{background:linear-gradient(135deg,#16161a,#1b1b20);border:1px solid var(--oro);border-left:4px solid var(--oro);border-radius:8px;padding:13px 16px;margin-bottom:14px;}
+  .toolbox{background:linear-gradient(135deg,#16161a,#1b1b20);border:1px solid rgba(201,169,110,.35);border-left:4px solid rgba(201,169,110,.55);border-radius:8px;padding:13px 16px;margin-bottom:14px;}
   .toolbox .tt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--oro);margin-bottom:4px;}
   .toolbox .tx{font-size:13px;color:var(--carbon);line-height:1.5;display:block;}
   .toolbox b{color:var(--negro);}
+  /* --- review Chris Do + UX (jul-11): estados, presupuesto de oro, dinámica --- */
+  :root{--oro-tenue:rgba(201,169,110,.4);}
+  /* presupuesto de acento: links y controles secundarios dejan el oro sólido */
+  .link-meta{color:var(--carbon);border-bottom:1px solid var(--linea);}
+  .link-meta:hover{color:var(--oro);border-bottom-color:var(--oro-tenue);}
+  .chipbtn.on{background:transparent;color:var(--oro);border-color:var(--oro);}
+  .pgo{color:var(--carbon);} .pmore{color:var(--carbon);border-color:var(--linea);}
+  .pang{color:var(--carbon);background:rgba(255,255,255,.05);}
+  /* semáforo por tarjeta: el ESTADO decide el énfasis */
+  .num{border-left:3px solid transparent;}
+  .num.ok{border-left-color:var(--verde);} .num.warn{border-left-color:var(--amar);}
+  .num.urgente{border-left:3px solid var(--rojo);border-color:var(--rojo);box-shadow:0 0 0 1px rgba(224,96,90,.35),0 0 22px rgba(224,96,90,.12);}
+  .num.urgente .v{font-size:clamp(34px,5.2vw,46px);color:var(--rojo);}
+  .num .cta{display:inline-block;margin-top:6px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--rojo);border:1px solid var(--rojo);border-radius:20px;padding:4px 11px;text-decoration:none;}
+  /* embudo de negocio con forma (barras proporcionales) */
+  .bfrow{display:grid;grid-template-columns:88px 1fr 120px;align-items:center;gap:8px;margin-bottom:6px;}
+  .bfrow .bfl{font-size:11.5px;color:var(--carbon);text-align:right;}
+  .bfrow .bfn{font-size:11px;color:var(--piedra);}
+  .bfrow .bfn b{font-family:Instrument Serif,Georgia,serif;font-size:15px;color:var(--negro);font-weight:normal;}
+  .cuello{font-family:Instrument Serif,Georgia,serif;font-size:clamp(14px,2.2vw,17px);color:var(--negro);margin-top:9px;}
+  .cuello b{color:var(--rojo);}
+  /* detalles colapsables (metodología fuera de la vista) */
+  details.como{margin:8px 0 4px;} details.como summary{cursor:pointer;font-size:11px;color:var(--piedra);letter-spacing:.5px;list-style:none;display:inline-block;border:1px solid var(--linea);border-radius:20px;padding:5px 12px;}
+  details.como summary::-webkit-details-marker{display:none;}
+  details.como[open] summary{color:var(--carbon);border-color:var(--carbon);}
+  details.como .cuerpo{margin-top:8px;padding:10px 14px;background:#101013;border:1px solid var(--linea);border-radius:6px;}
+  /* leyenda de días tocable */
+  .diachips{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin:6px 0 8px;}
+  .diachips button{border:none;border-radius:5px;padding:5px 9px;font-size:10.5px;color:#0a0a0c;cursor:pointer;font-weight:600;min-height:30px;}
+  /* animaciones (respetando reduced-motion) */
+  @media(prefers-reduced-motion:no-preference){
+    .grow{transform:scaleX(0);transform-origin:left;}
+    .grow.in{transform:scaleX(1);transition:transform .55s cubic-bezier(.22,1,.36,1);transition-delay:calc(var(--i,0)*60ms);}
+    .spark polyline{stroke-dasharray:600;stroke-dashoffset:600;}
+    .spark.in polyline{stroke-dashoffset:0;transition:stroke-dashoffset .8s ease .25s;}
+    @keyframes flashoro{0%{color:var(--oro);}100%{color:inherit;}}
+    .flash{animation:flashoro .9s ease-out;}
+    .ringp{transition:stroke-dashoffset .8s cubic-bezier(.22,1,.36,1) .3s;}
+  }
+  /* tooltip táctil propio (title= no existe en móvil) */
+  #tip{position:fixed;z-index:95;background:#f4f1ea;color:#0a0a0c;font-size:12px;line-height:1.4;padding:8px 11px;border-radius:6px;max-width:240px;pointer-events:none;opacity:0;transition:opacity .15s;box-shadow:0 6px 20px rgba(0,0,0,.5);}
+  #tip.on{opacity:1;}
+  /* chips de métricas: etiqueta oculta en tarjeta, se abre al tocar */
+  .chips:not(.ficha) .chip .cl{display:none;}
+  .chips:not(.ficha) .chip.open .cl{display:inline;}
+  .chip{cursor:pointer;}
+  .chip svg{width:13px;height:13px;vertical-align:-2px;opacity:.85;}
+  .lectura{font-family:Instrument Serif,Georgia,serif;font-size:19px;line-height:1.35;color:var(--negro);}
+  .lectura b{color:var(--oro);font-weight:normal;}
 </style>
 </head>
 <body>
@@ -322,15 +371,9 @@
     if(METRICS&&METRICS.generado) _fresh+=(_fresh?" · ":"")+"redes al "+METRICS.generado.slice(5);
     $("periodo").textContent=_fresh;
     var costoCita = num(k.citas)>0 ? money(num(g.semana_actual)/num(k.citas)) : "—";
-    /* --- semaforo --- */
-    var sem=semaforo(d), html="";
-    html+='<div class="semaforo '+sem.color+'"><div class="lbl">Esta semana</div><div class="msg">'+esc(sem.msg)+'</div></div>';
-    if(d.meta&&d.meta.es_snapshot) html+='<p class="nota" style="margin-bottom:10px;">Mostrando ejemplo: el board cobra vida cuando el Apps Script sirva <code>recurso=board</code> y entre tráfico.</p>';
 
-    /* --- nav de secciones (un tap y llegas; la página es larga) --- */
-    html+='<nav class="secnav"><a href="#sec-hoy">Hoy</a><a href="#sec-acciones">Qué hacer</a><a href="#sec-semana">Semana</a><a href="#sec-embudo">Embudo</a><a href="#sec-trafico">Tráfico</a><a href="#sec-pubs">Publicaciones</a><a href="#sec-gasto">Gasto</a></nav>';
-
-    /* --- HOY EN TU NEGOCIO: los DOS imanes juntos (arq CRM + pot CRM), nunca un muro de ceros --- */
+    /* --- primero los DATOS de hoy: el hero y las tarjetas salen de los MISMOS números (nunca se contradicen) --- */
+    var CRM_URL="https://docs.google.com/spreadsheets/d/1z1ZtvcUKnx4MUfxLICo8x5bTihlDY8tBC3j2sYwNvg8/edit";
     var P=(DATA_POT&&DATA_POT.kpis)?DATA_POT.kpis:null;
     var totArq=(d.funnel&&d.funnel[0])?num(d.funnel[0].n):0;
     var totLeads=totArq+(P?num(P.leads):0);
@@ -343,15 +386,34 @@
     var visHoy=dArq.hoy+dPot.hoy;
     var _ultTraf=[dArq.ult,dPot.ult].filter(Boolean).sort().pop();
     var visSub = visHoy>0 ? "visitas de hoy · los dos formularios" : ('<span style="color:var(--amar)">hoy aún sin visitas</span>'+(_ultTraf?' · últ. tráfico '+esc(_ultTraf.slice(5)):''));
+    /* series de 7 días (arq+pot sumadas por fecha) para las mini-tendencias */
+    function serie7(campo){ var m={}; [(d.actividad_por_dia||[]),((DATA_POT&&DATA_POT.actividad_por_dia)||[])].forEach(function(s){ s.forEach(function(x){ if(x.fecha) m[x.fecha]=(m[x.fecha]||0)+num(x[campo]); }); }); var ks=Object.keys(m).sort(); return ks.slice(-7).map(function(kk){return m[kk];}); }
+    function sparkMini(vals){ if(!vals||vals.length<2) return ''; var mx=Math.max.apply(null,vals.concat([1])); var w=120,hh=24; var pts=vals.map(function(v,i){var x=i/(vals.length-1)*w;var y=hh-(v/mx)*(hh-4)-2;return x.toFixed(1)+','+y.toFixed(1);}).join(' '); return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'" style="display:block;margin-top:5px;"><polyline points="'+pts+'" fill="none" stroke="var(--oro-tenue)" stroke-width="1.6"/></svg>'; }
+    /* anillo de conversión lead→videollamada (pot): "¿voy bien?" sin leer texto */
+    function anillo(agen,leads){ var r=17,c=2*Math.PI*r,pv=leads>0?Math.min(agen/leads,1):0; return '<svg width="44" height="44" viewBox="0 0 44 44" style="flex:none;"><circle cx="22" cy="22" r="'+r+'" fill="none" stroke="var(--arena)" stroke-width="5"/><circle class="ringp" cx="22" cy="22" r="'+r+'" fill="none" stroke="'+(agen>0?'var(--oro)':'var(--rojo)')+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+(c*(1-pv)).toFixed(1)+'" transform="rotate(-90 22 22)"/></svg>'; }
+
+    /* --- semáforo GLOBAL (mismos datos que las tarjetas) --- */
+    var sem=semaforoGlobal(d,sinTocar,visHoy), html="";
+    html+='<div class="semaforo '+sem.color+'"><div class="lbl">Ahora mismo</div><div class="msg">'+esc(sem.msg)+'</div></div>';
+    if(d.meta&&d.meta.es_snapshot) html+='<p class="nota" style="margin-bottom:10px;">Mostrando ejemplo: el board cobra vida cuando el Apps Script sirva <code>recurso=board</code> y entre tráfico.</p>';
+
+    /* --- nav de secciones (un tap y llegas; la página es larga) --- */
+    html+='<nav class="secnav"><a href="#sec-hoy">Hoy</a><a href="#sec-acciones">Qué hacer</a><a href="#sec-semana">Semana</a><a href="#sec-embudo">Embudo</a><a href="#sec-trafico">Tráfico</a><a href="#sec-pubs">Publicaciones</a><a href="#sec-gasto">Gasto</a></nav>';
+
+    /* --- HOY EN TU NEGOCIO: el ESTADO decide el énfasis (una tarjeta grita, las demás susurran) --- */
+    var hayUrgente=sinTocar>0;
     html+='<h2 class="sec" id="sec-hoy">Hoy en tu negocio · los dos imanes</h2><div class="nums">';
-    html+=numHTML("🎯 Videollamadas agendadas", P?num(P.agendadas):"…", "", true, "meta real · Plan de Potencial (CRM)");
-    html+=numHTML("Leads totales", totLeads, "", false, "cuestionario "+totArq+" · terreno "+(P?num(P.leads):"…"));
-    html+=numHTML("Sin contestar +24h", sinTocar, "", false, sinTocar>0?'<span style="color:var(--amar)">requieren respuesta hoy</span>':"todo contestado ✓");
-    html+=numHTML("Visitas de hoy", visHoy, "", false, visSub);
+    html+='<div class="num'+(hayUrgente?'':' star')+'"><div class="k">🎯 Videollamadas agendadas</div>'+
+      '<div style="display:flex;align-items:center;gap:10px;">'+(P?anillo(num(P.agendadas),num(P.leads)):'')+'<div class="v"'+(P?' data-n="'+num(P.agendadas)+'"':'')+'>'+(P?num(P.agendadas):'…')+'</div></div>'+
+      '<div class="sub">históricas · CRM Plan de Potencial'+(P&&num(P.leads)>0?' · <b style="color:var(--carbon)">'+pct(P.agendadas,P.leads)+'%</b> de sus '+num(P.leads)+' leads':'')+'</div></div>';
+    html+=numHTML("Leads totales", totLeads, "", false, "históricos · cuestionario "+totArq+" · terreno "+(P?num(P.leads):"…")+sparkMini(serie7('lead')));
+    html+='<div class="num '+(sinTocar>0?'urgente':'ok')+'"><div class="k">Sin contestar +24h</div><div class="v" data-n="'+sinTocar+'">'+sinTocar+'</div>'+
+      '<div class="sub">'+(sinTocar>0?'llevan más de un día esperando':'todo contestado ✓')+'</div>'+
+      (sinTocar>0?'<a class="cta" href="'+CRM_URL+'" target="_blank" rel="noopener">Abrir CRM →</a>':'')+'</div>';
+    html+='<div class="num '+(visHoy>0?'ok':'warn')+'"><div class="k">Visitas de hoy</div><div class="v" data-n="'+visHoy+'">'+visHoy+'</div><div class="sub">'+visSub+sparkMini(serie7('visitas'))+'</div></div>';
     html+='</div>';
 
     /* --- QUÉ HACER HOY: acciones concretas (no regaños), ordenadas por dinero --- */
-    var CRM_URL="https://docs.google.com/spreadsheets/d/1z1ZtvcUKnx4MUfxLICo8x5bTihlDY8tBC3j2sYwNvg8/edit";
     var acc=[];
     if(sinTocar>0) acc.push({t:'Contesta a los <b>'+sinTocar+' leads NUEVO</b> que llevan más de 24 h esperando. <a href="'+CRM_URL+'" target="_blank" rel="noopener">Abrir CRM →</a>', rojo:true});
     if(METRICS && METRICS.dias_sin_publicar!=null && METRICS.dias_sin_publicar>=3) acc.push({t:'Publica hoy: llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin post nuevo. <a href="#sec-pubs">Ver qué formato conviene ↓</a>'});
@@ -364,23 +426,42 @@
       resto.forEach(function(a){var ic=a.tipo==="rojo"?"⛔":a.tipo==="verde"?"✅":"⚠️";html+='<div class="alert '+(a.tipo||"amar")+'"><span class="ai">'+ic+'</span><span>'+esc(a.texto)+'</span></div>';});
     }
 
-    /* --- numerotes de la semana (arq) con ACUMULADO abajo: nunca se ve "muerto" --- */
-    html+='<h2 class="sec" id="sec-semana">Esta semana · Arquitectura de Autor</h2><div class="nums">';
-    html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "acumulado "+money(g.total));
-    html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false, totArq+" en total");
-    html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), false, ((d.funnel&&d.funnel[1])?num(d.funnel[1].n):0)+" en total");
-    html+=numHTML("Costo por cita", costoCita, "", false, num(g.semana_actual)>0?"":"registra el gasto para calcularlo");
-    html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false, ((d.funnel&&d.funnel[2])?num(d.funnel[2].n):0)+" en total");
-    html+='</div>';
+    /* --- semana (arq): si va TODA en cero, colapsa a UNA tarjeta de estado (5 tarjetas de ceros = ruido que entrena al ojo a ignorar la zona) --- */
+    var totCitasH=((d.funnel&&d.funnel[1])?num(d.funnel[1].n):0), totCliH=((d.funnel&&d.funnel[2])?num(d.funnel[2].n):0);
+    var _semVacia = num(g.semana_actual)===0 && num(k.leads)===0 && num(k.citas)===0 && num(k.clientes)===0;
+    html+='<h2 class="sec" id="sec-semana">Esta semana · Arquitectura de Autor</h2>';
+    if(_semVacia && !(d.meta&&d.meta.es_snapshot)){
+      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;">Semana en blanco para <b style="color:var(--negro)">Arquitectura de Autor</b> — sin gasto, leads ni citas nuevas. Históricos: <b style="color:var(--negro)">'+totArq+'</b> leads · <b style="color:var(--negro)">'+totCitasH+'</b> citas · <b style="color:var(--negro)">'+totCliH+'</b> clientes. El movimiento está en <a href="#sec-trafico" style="color:var(--oro)">Plan de Potencial ↓</a> · <a href="#sec-gasto" style="color:var(--carbon)">registrar gasto →</a></div>';
+    } else {
+      html+='<div class="nums">';
+      html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "histórico "+money(g.total));
+      html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false, totArq+" históricos");
+      html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), false, totCitasH+" históricas");
+      html+=numHTML("Costo por cita", costoCita, "", false, num(g.semana_actual)>0?"":"registra el gasto para calcularlo");
+      html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false, totCliH+" históricos");
+      html+='</div>';
+    }
 
-    /* --- embudo de negocio --- */
-    html+='<h2 class="sec" id="sec-embudo">Embudo de negocio (del CRM)</h2><div class="funnel">';
-    (d.funnel||[]).forEach(function(f,i){
-      var base=(d.funnel[0]||{}).n||0;
-      html+='<div class="fstep"><div class="fn">'+esc(f.n)+'</div><div class="fl">'+esc(f.etapa)+'</div>'+
-        (i>0?'<div class="fr">'+pct(f.n,base)+'% de los leads</div>':'<div class="fr">base</div>')+'</div>';
-    });
-    html+='</div>';
+    /* --- embudo de negocio CON FORMA (barras proporcionales + cuello nombrado; antes eran 3 cajas gemelas) --- */
+    html+='<h2 class="sec" id="sec-embudo">Embudo de negocio · del lead al cliente <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· histórico CRM</span></h2>';
+    var fb0=totArq||0;
+    if(fb0>0){
+      html+='<div class="card" style="padding:14px 16px;">';
+      var _prevN=null,_cI=-1,_cD=-1;
+      (d.funnel||[]).forEach(function(f,i){
+        var n=num(f.n), w=Math.max(pct(n,fb0),3);
+        var drop=(i>0&&_prevN>0)?Math.round((_prevN-n)/_prevN*100):null;
+        if(drop!=null&&drop>_cD){_cD=drop;_cI=i;}
+        html+='<div class="bfrow"><div class="bfl">'+esc(f.etapa)+'</div>'+
+          '<div><div class="grow" style="--i:'+i+';height:24px;border-radius:5px;width:'+w+'%;min-width:26px;background:linear-gradient(180deg,#e0c590,#c9a96e);"></div></div>'+
+          '<div class="bfn"><b>'+n+'</b>'+(i>0?' · '+pct(n,fb0)+'%'+(drop!=null&&drop>0?' <span style="color:var(--rojo)">−'+drop+'%</span>':''):' · base')+'</div></div>';
+        _prevN=n;
+      });
+      if(_cI>0&&_cD>0) html+='<div class="cuello">Tu cuello está en <b>'+esc((d.funnel[_cI-1]||{}).etapa)+' → '+esc((d.funnel[_cI]||{}).etapa)+'</b> · ahí se pierde el '+_cD+'%</div>';
+      html+='</div>';
+    } else {
+      html+='<p class="nota">Aún sin leads en el CRM del cuestionario.</p>';
+    }
 
     /* --- últimos leads (ambos imanes): quién llegó y en qué va — el dato ya venía del Sheet y no se mostraba --- */
     function estChip(e){ var s=String(e||'').toUpperCase();
@@ -469,18 +550,67 @@
     $("app").innerHTML=html;
     var gb=$("gGuardar"); if(gb) gb.addEventListener("click",guardarGasto);
     if(window.genLinkFB && $("lgUrl")) window.genLinkFB();
+    animarNumeros();
   }
-  function numHTML(k,v,delta,star,sub){return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v">'+esc(v)+'</div>'+(delta||"")+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
+
+  /* ============ CAPA DINÁMICA (vanilla): count-up, cascada, flash, tooltip táctil ============ */
+  var REDUCED=false; try{REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  window.__prevN=window.__prevN||{};
+  function animarNumeros(){
+    /* count-up SOLO cuando el valor cambió (primer pintado o dato nuevo del refresh); si cambió, flash oro */
+    document.querySelectorAll('.num .v[data-n]').forEach(function(el){
+      var n=parseFloat(el.getAttribute('data-n'))||0;
+      var kEl=el.closest('.num')?el.closest('.num').querySelector('.k'):null;
+      var key=kEl?kEl.textContent:String(n);
+      var prev=window.__prevN[key]; window.__prevN[key]=n;
+      if(REDUCED||prev===n){ el.textContent=n; return; }
+      if(prev!=null){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+      var desde=(prev==null)?0:prev, t0=null, dur=600;
+      (function paso(ts){ if(ts==null){requestAnimationFrame(paso);return;} if(!t0)t0=ts;
+        var t=Math.min((ts-t0)/dur,1), e=1-Math.pow(1-t,3);
+        el.textContent=Math.round(desde+(n-desde)*e);
+        if(t<1) requestAnimationFrame(paso); })(null);
+    });
+    /* barras en cascada + sparklines que se trazan */
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.querySelectorAll('.grow,.spark').forEach(function(el){el.classList.add('in');}); }); });
+  }
+  /* tooltip táctil único: title= no existe en el celular, que es donde más se lee el board */
+  (function(){
+    var tip=document.createElement('div'); tip.id='tip'; document.body.appendChild(tip);
+    function show(el){ var t=el.getAttribute('data-tip'); if(!t) return;
+      tip.textContent=t; tip.classList.add('on');
+      var r=el.getBoundingClientRect();
+      tip.style.left=Math.max(6,Math.min(window.innerWidth-250,r.left+r.width/2-110))+'px';
+      tip.style.top=Math.max(6,r.top-46)+'px'; }
+    function hide(){ tip.classList.remove('on'); }
+    document.addEventListener('pointerdown',function(e){
+      var ch=e.target.closest('.chips:not(.ficha) .chip'); if(ch) ch.classList.toggle('open');   /* tap = ver nombre de la métrica */
+      var el=e.target.closest('[data-tip]'); if(el) show(el); else hide();
+    },{passive:true});
+    document.addEventListener('mouseover',function(e){ var el=e.target.closest('[data-tip]'); if(el) show(el); else if(!e.target.closest('[data-scrub]')) hide(); });
+    /* scrub: deslizas el dedo/mouse por las horas y el tooltip va cantando cada una */
+    document.addEventListener('pointermove',function(e){
+      var sc=e.target.closest('[data-scrub]'); if(!sc) return;
+      var arr=window.__HORASARR||[]; if(!arr.length) return;
+      var r=sc.getBoundingClientRect(), idx=Math.max(0,Math.min(23,Math.floor((e.clientX-r.left)/r.width*24)));
+      tip.textContent=idx+':00 — '+arr[idx]+' visita'+(arr[idx]===1?'':'s'); tip.classList.add('on');
+      tip.style.left=Math.max(6,Math.min(window.innerWidth-250,e.clientX-60))+'px'; tip.style.top=Math.max(6,r.top-42)+'px';
+    },{passive:true});
+  })();
+  function numHTML(k,v,delta,star,sub){var dn=(typeof v==='number'&&isFinite(v))?' data-n="'+v+'"':'';return '<div class="num'+(star?" star":"")+'"><div class="k">'+esc(k)+'</div><div class="v"'+dn+'>'+esc(v)+'</div>'+(delta||"")+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>';}
 
   /* ============ COMPORTAMIENTO EN EL TIEMPO (serie por día del Apps Script) ============ */
   /* ============ EMBUDO INTEGRADO (segmentado por hora/día + navegador por mes) ============ */
-  var HRAMP=['#26262b','#3a3a40','#55534e','#787369','#a5a096','#f4f1ea'], WCONV=[0.6,0.7,0.9,1.05,1.15,1.45];
-  var WRAMP=['#26262b','#36363c','#4c4b50','#68655e','#8a8780','#bcb8ad','#f4f1ea'];
+  /* escalas CÁLIDAS (oro→arena): los grises fríos se leían como "barra medio llena", no como días */
+  var HRAMP=['#4a3d24','#6a5632','#8a6f42','#a98a52','#c9a96e','#ecd9ac'], WCONV=[0.6,0.7,0.9,1.05,1.15,1.45];
+  var WRAMP=['#453a22','#5c4b2c','#735d37','#8a7042','#a2854d','#c9a96e','#eddcb2'];
+  var DIAS7=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
   function bandH(h){ return Math.min(5,Math.floor(h/4)); }
   var MES={'01':'Enero','02':'Febrero','03':'Marzo','04':'Abril','05':'Mayo','06':'Junio','07':'Julio','08':'Agosto','09':'Septiembre','10':'Octubre','11':'Noviembre','12':'Diciembre'};
   function embudoMonths(d){ var ms=[]; (d.actividad_por_dia||[]).forEach(function(x){var m=(x.fecha||'').slice(5,7); if(m&&ms.indexOf(m)<0)ms.push(m);}); ms.sort(); return ms; }
   function embudoIntegrado(d, ec){
-    var F=window.__EMBF||(window.__EMBF={month:'',dim:'dia'});
+    var F=window.__EMBF||(window.__EMBF={month:'',dim:'simple',diaSel:-1});   /* default SIMPLE: la segmentación por color es opcional, no impuesta */
+    if(F.dim==null) F.dim='simple'; if(F.diaSel==null) F.diaSel=-1;
     if(!F.mag){ try{F.mag=localStorage.getItem('aurum_mag_v1')||'pot';}catch(e){F.mag='pot';} }   /* default = Plan de Potencial (imán actual) y recuerda tu última elección */
     var mag=F.mag;
     var MAGCFG={
@@ -526,7 +656,7 @@
     function segOf(i){ if(F.dim==='hora'){var o=[0,0,0,0,0,0];scope.forEach(function(x){for(var h=0;h<24;h++)o[bandH(h)]+=cellv(x,i,h);});return o;} var o=[0,0,0,0,0,0,0];scope.forEach(function(x){o[x._wd]+=x._f[i];});return o; }
     var C=F.dim==='hora'?HRAMP:WRAMP;
     window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
-    var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · '+esc(visN||cargaron)+' visitas '+cfg.fuenteSuf+'</h2>';
+    var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · ¿cuántos llegan y dónde se caen?</h2>';
     if(mag==='pot'&&DATA_POT&&DATA_POT.kpis){ var K=DATA_POT.kpis;
       var fAg=(DATA_POT.funnel||[]).filter(function(p){return p.paso==='agenda';})[0]; fAg=fAg?num(fAg.n):0;
       h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px;align-items:stretch;">'+
@@ -539,11 +669,14 @@
           '<div style="font-family:Instrument Serif,Georgia,serif;font-size:20px;line-height:1.05;margin-top:1px;color:var(--carbon);">'+num(K.interes)+'</div>'+
           '<div style="font-size:9.5px;color:var(--piedra);margin-top:1px;">audiencia aparte · no es del embudo de terreno</div></div>'+
       '</div>';
-      h+='<p class="nota" style="margin:0 0 10px;font-style:normal;color:var(--piedra);font-size:11.5px;line-height:1.5;">El <b>clic en agendar</b> ('+fAg+', medido en la pantalla del visitante) todavía no es una cita: la cita real la confirma el operador en el CRM (hoy <b style="color:var(--negro);">'+num(K.agendadas)+'</b>). Después de la videollamada hay etapas de dinero fuera del board (en CRM/manual): <b>Plan de Potencial vendido</b> (servicio de pago, se cierra en la llamada) → <b>co-desarrollo</b> (solo si los números califican).</p>';
     }
-    h+='<p class="nota" style="margin:0 0 8px;font-style:normal;color:var(--carbon);">De <b style="color:var(--negro);">'+cargaron+'</b> '+cfg.abren+', <b style="color:var(--negro);">'+empezaron+'</b> ('+activ+'%) '+cfg.empiezan+'.'+(reboteEntrada>=25?' <span style="color:var(--rojo);">Rebote de entrada '+reboteEntrada+'%</span> — se trabaja en la 1ª pantalla.':'')+'</p>';
-    if(md>0) h+='<div style="font-family:Instrument Serif,Georgia,serif;font-size:clamp(15px,2.4vw,19px);color:var(--negro);margin:0 0 4px;line-height:1.3;">Ya dentro, mayor fuga: <span style="color:var(--rojo);">−'+md+'%</span> en «'+esc(labelsE[mi])+'» <span style="font-size:12px;font-family:inherit;color:var(--piedra);">· de '+esc(labelsE[mi-1])+' a '+esc(labelsE[mi])+'</span></div>';
-    h+='<p class="nota" style="margin:0 0 8px;">'+cfg.entrada+' <a class="link-meta" href="'+cfg.verUrl+'" target="_blank" rel="noopener">'+cfg.verTxt+'</a></p>';
+    /* lo clave en chips escaneables — la prosa metodológica vive colapsada al final de la sección */
+    h+='<div class="kref"><span class="kt">Lo clave</span>'+
+       '<span><b>'+esc(visN||cargaron)+'</b> visitas</span>'+
+       '<span>'+cargaron+' abren → <b>'+empezaron+'</b> empiezan ('+activ+'%)</span>'+
+       (reboteEntrada>=25?'<span style="color:var(--rojo)">rebote de entrada <b style="color:var(--rojo)">'+reboteEntrada+'%</b></span>':'')+
+       (md>0?'<span style="color:var(--rojo)">mayor fuga <b style="color:var(--rojo)">−'+md+'%</b> en «'+esc(labelsE[mi])+'»</span>':'')+
+       '<span><a class="link-meta" style="margin-top:0" href="'+cfg.verUrl+'" target="_blank" rel="noopener">'+cfg.verTxt+'</a></span></div>';
     if(hasSeg){
       h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
         '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">◀</button>'+
@@ -551,28 +684,43 @@
         '<button onclick="embMonth(1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">▶</button>'+
         '<span style="flex:1"></span>'+
         '<span style="font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);">Ver por</span>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;simple&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='simple'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='simple'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Simple</button>'+
         '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Hora</button>'+
         '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Día de semana</button>'+
-      '</div>'+
-      '<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>'+(F.dim==='hora'?'madrugada':'Lun')+'</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+C.join(',')+')"></span><span>'+(F.dim==='hora'?'noche':'Dom')+'</span><span style="margin-left:4px">(color = '+(F.dim==='hora'?'hora de entrada':'día')+')</span></div>';
+      '</div>';
+      if(F.dim==='hora'){
+        h+='<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>madrugada</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+HRAMP.join(',')+')"></span><span>noche</span><span style="margin-left:4px">(color = hora de entrada)</span></div>';
+      } else if(F.dim==='dia'){
+        /* leyenda TOCABLE: tap en un día = resaltarlo en las barras (los demás se atenúan) */
+        var wdTot=[0,0,0,0,0,0,0]; scope.forEach(function(x){wdTot[x._wd]+=num(x.visitas);});
+        var topWd=wdTot.indexOf(Math.max.apply(null,wdTot));
+        h+='<div class="diachips">';
+        DIAS7.forEach(function(dn,kk){ h+='<button onclick="embSet(&#39;diaSel&#39;,'+(F.diaSel===kk?-1:kk)+')" style="background:'+WRAMP[kk]+';opacity:'+((F.diaSel<0||F.diaSel===kk)?1:.35)+';'+(F.diaSel===kk?'outline:2px solid var(--negro);':'')+'">'+dn+'</button>'; });
+        h+='<span style="font-size:11px;color:var(--piedra);margin-left:4px;">toca un día para aislarlo'+(wdTot[topWd]>0?' · la mayoría llegó en <b style="color:var(--carbon)">'+DIAS7[topWd]+'</b>':'')+'</span></div>';
+      }
     }
     h+='<div class="card" style="padding:14px 16px;">';
     var prevW=999;
     fAgg.forEach(function(n,i){
       if(i===0) return;  /* "Inicio" NO es barra: la entrada es la 1ª página. Una sola entrada, sin duplicar. */
       var w=Math.max(Math.round(n/base*100),4); if(i>1) w=Math.min(w,prevW); prevW=w;  /* clamp: el embudo no se ensancha (lead/agenda del CRM/beacon no superan la barra previa; el nº exacto va al lado) */
-      var oro=(i>=NL-2), bars='';
-      if(hasSeg){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';"></div>'; }); }
+      var oro=(i>=NL-2), bars='', segmentar=hasSeg&&F.dim!=='simple';
+      if(segmentar){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; var dimSeg=(F.dim==='dia'&&F.diaSel>=0&&F.diaSel!==k); bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';'+(dimSeg?'opacity:.18;':'')+'"></div>'; }); }
       else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#e0c590,#c9a96e);"></div>';
       h+='<div '+(hasSeg?'class="embrow" onclick="embEtapa('+i+')" title="Ver detalle por fecha y hora" ':'')+'style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
         '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
-        '<div style="display:flex;justify-content:center;"><div style="height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
-        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Instrument Serif,Georgia,serif;font-size:13px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:'+((mag==='pot'&&i===NL-1)?'var(--amar)':'var(--verde)')+';font-size:10px;">'+(i===NL-2?'lead':(mag==='pot'?'clic':'cita'))+'</span>':'')+'</div>'+
+        '<div style="display:flex;justify-content:center;"><div class="grow" style="--i:'+i+';height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
+        '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Instrument Serif,Georgia,serif;font-size:15px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:'+((mag==='pot'&&i===NL-1)?'var(--amar)':'var(--verde)')+';font-size:10px;">'+(i===NL-2?'lead':(mag==='pot'?'clic':'cita'))+'</span>':'')+'</div>'+
       '</div>';
     });
     h+='</div>';
-    if(mag==='pot') h+='<p class="hint" style="margin-top:6px;color:var(--amar);">⚠ Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) son de lo que se midió en la pantalla del visitante y pueden no cuadrar con «Cierre» ni entre sí (fuentes distintas). El <b>conteo de leads que vale es el del CRM</b> (arriba, '+(DATA_POT&&DATA_POT.kpis?num(DATA_POT.kpis.leads):0)+', medido en el servidor); «Dejó datos» aquí es solo lo que alcanzó a registrar esa medición de pantalla. La <b>cita confirmada</b> es la meta real, no el clic.</p>';
-    h+='<p class="hint" style="margin-top:8px;">'+(hasSeg?'<b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora. ':'')+'<i style="color:var(--piedra)">Próximamente: segmentar por fuente · dispositivo · respuesta.</i> '+(hasSeg?'El color = el «Ver por» elegido (hora/día); '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias por día estimadas. '):(mag==='pot'?'Acumulado de todos los días; el desglose por día/hora se enciende al desplegar el Apps Script del formulario. ':''))+'<b style="color:var(--rojo)">Mayor fuga en rojo</b>, <b style="color:var(--verde)">lead'+(mag==='pot'?'':'/cita')+' marcado</b>'+(mag==='pot'?', <b style="color:var(--amar)">clic en ámbar</b>':'')+'. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>';
+    if(hasSeg) h+='<p class="hint" style="margin-top:6px;"><b style="color:var(--negro)">Toca una etapa</b> para ver su detalle por fecha y hora.</p>';
+    /* la metodología completa vive COLAPSADA: el gráfico debe comunicar solo (review Chris Do) */
+    h+='<details class="como"><summary>¿Cómo se mide esto?</summary><div class="cuerpo">'+
+      '<p class="hint" style="margin-top:0;">'+cfg.entrada+' Fuente: '+cfg.fuenteSuf+'.</p>'+
+      (mag==='pot'?'<p class="hint">Las 2 últimas barras (<b>Dejó datos</b> · <b>Agendó</b>) vienen de la medición en pantalla del visitante y pueden no cuadrar con «Cierre» ni entre sí. El <b>conteo que vale es el del CRM</b> ('+(DATA_POT&&DATA_POT.kpis?num(DATA_POT.kpis.leads):0)+' leads, medido en el servidor); el clic en agendar aún no es una cita — la confirma el operador. Después de la videollamada hay etapas de dinero fuera del board: <b>Plan de Potencial vendido</b> → <b>co-desarrollo</b> (solo si los números califican).</p>':'')+
+      '<p class="hint">'+(hasSeg?('El color de las barras = el «Ver por» elegido; '+(exacto?'desglose por etapa <b>exacto</b> (embudo por día del Sheet). ':'etapas intermedias estimadas por día. ')):'')+'Mayor fuga en <b style="color:var(--rojo)">rojo</b>; <b style="color:var(--verde)">lead'+(mag==='pot'?'':'/cita')+'</b> marcado'+(mag==='pot'?', <b style="color:var(--amar)">clic en ámbar</b>':'')+'. <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">Ver también en Meta →</a></p>'+
+      '</div></details>';
     return h;
   }
   if(!window.embSet){
@@ -636,7 +784,7 @@
     s.forEach(function(x){
       var hv=Math.round(num(x.visitas)/maxV*108), esLead=num(x.lead)>0, esPico=(x.fecha===peak.fecha);
       var col=esPico?'var(--oro)':(esLead?'var(--verde)':'var(--piedra)');
-      h+='<div title="'+esc(x.fecha)+' · '+x.visitas+' visitas · '+x.empezaron+' empezaron · '+x.lead+' leads · '+x.agenda+' citas" style="flex:1 0 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;">'+
+      h+='<div data-tip="'+esc(x.fecha)+' · '+x.visitas+' visitas · '+x.empezaron+' empezaron · '+x.lead+' leads · '+x.agenda+' citas" style="flex:1 0 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;">'+
         (esLead?'<span style="font-size:9px;color:var(--verde);font-weight:bold;">'+x.lead+'</span>':'')+
         '<div style="width:100%;max-width:24px;height:'+Math.max(hv,3)+'px;background:'+col+';border-radius:3px 3px 0 0;"></div>'+
         '<span style="font-size:9px;color:var(--piedra);">'+esc(x.fecha.slice(8,10))+'</span>'+
@@ -650,12 +798,13 @@
       var arrH=[]; for(var i=0;i<24;i++) arrH.push(hrs[String(i)]||0);
       var maxH=Math.max.apply(null,arrH.concat([1])), peakH=arrH.indexOf(Math.max.apply(null,arrH));
       h+='<h2 class="sec" style="margin-top:18px;">¿A qué hora llegan?</h2>';
-      h+='<div style="display:flex;align-items:flex-end;gap:2px;height:64px;">';
+      window.__HORASARR=arrH;   /* para el "scrub": deslizas el dedo y el tooltip va cantando la hora */
+      h+='<div data-scrub="horas" style="display:flex;align-items:flex-end;gap:2px;height:64px;touch-action:pan-y;">';
       arrH.forEach(function(c,H){
         var hh=Math.round(c/maxH*52);
-        h+='<div title="'+H+':00 — '+c+' visitas" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;"><div style="width:100%;height:'+Math.max(hh,2)+'px;background:'+(H===peakH&&c>0?'var(--oro)':'var(--arena)')+';border-radius:2px 2px 0 0;"></div><span style="font-size:8px;color:var(--piedra);">'+(H%3===0?H:'')+'</span></div>';
+        h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;"><div style="width:100%;height:'+Math.max(hh,2)+'px;background:'+(H===peakH&&c>0?'var(--oro)':'var(--arena)')+';border-radius:2px 2px 0 0;"></div><span style="font-size:8px;color:var(--piedra);">'+(H%3===0?H:'')+'</span></div>';
       });
-      h+='</div><p class="hint">Hora del día (0–23 h) en que entran tus visitas. Pico: <b>'+peakH+':00</b>. Úsalo para programar publicaciones y dar seguimiento cuando están activos.</p>';
+      h+='</div><p class="hint">Hora del día (0–23 h) en que entran tus visitas — <b>desliza el dedo sobre las barras</b> para ver cada hora. Pico: <b>'+peakH+':00</b>. Úsalo para programar publicaciones y dar seguimiento cuando están activos.</p>';
     }
     return h;
   }
@@ -676,44 +825,70 @@
     if(/plusval|invertir|inversión|inversion|preventa|crédito|credito|pension/.test(t)) return 'Inversión';
     return null; }
   function intenc(p){ return num(p.saves)+num(p.shares)+num(p.profile_visits); } /* solo para decidir el ángulo que más intención genera, NO para destacar guardados en las tarjetas */
-  /* chips de métricas: icono + número, TODOS del mismo peso. null -> "—" presente (ojo: num() vuelve null en 0). */
-  function chip(icon,label,val,showLabel){ var nd=(val==null); return '<span class="chip'+(nd?' nd':'')+'" title="'+esc(label)+(nd?' · la plataforma no lo da para este post':'')+'"><span class="cic">'+icon+'</span><span class="cv">'+(nd?'—':fmtN(val))+'</span>'+(showLabel?'<span class="cl">'+esc(label)+'</span>':'')+'</span>'; }
+  /* iconos SVG monocromo (los emojis de sistema chocaban con la identidad Fintech Editorial) */
+  var ICO={
+    alcance:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"/></svg>',
+    vistas:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+    like:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.2-4.6-9.6-8.1C.5 10 2 6.4 5.4 6c2-.2 3.7 1 4.6 2.6C10.9 7 12.6 5.8 14.6 6c3.4.4 4.9 4 2.9 6.9C15.2 16.4 12 21 12 21z"/></svg>',
+    coment:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v11H9l-5 4z" stroke-linejoin="round"/></svg>',
+    compartir:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="12" r="2.3"/><circle cx="17.5" cy="5.5" r="2.3"/><circle cx="17.5" cy="18.5" r="2.3"/><path d="M8.1 10.9l7.3-4.2M8.1 13.1l7.3 4.2"/></svg>',
+    guardado:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3.5h10V21l-5-3.6L7 21z"/></svg>',
+    clic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14L20 4M14 4h6v6" stroke-linecap="round"/><path d="M19 13v7H4V5h8"/></svg>',
+    leads:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>',
+    inter:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.1 6.1L20 12l-5.9 2.9L12 21l-2.1-6.1L4 12l5.9-2.9z"/></svg>',
+    perfil:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c1.4-3.8 4.6-5.7 7.5-5.7s6.1 1.9 7.5 5.7"/></svg>',
+    nuevos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="8" r="3.4"/><path d="M3.5 20c1.3-3.5 4-5.2 6.5-5.2s5.2 1.7 6.5 5.2"/><path d="M18 5v6M15 8h6" stroke-linecap="round"/></svg>'
+  };
+  /* chips de métricas: icono + número, TODOS del mismo peso. null -> "—" presente (ojo: num() vuelve null en 0).
+     La etiqueta (.cl) siempre viaja en el chip: visible en la ficha, y en la tarjeta se abre al TOCAR el chip. */
+  function chip(icon,label,val,showLabel){ var nd=(val==null); return '<span class="chip'+(nd?' nd':'')+'" data-tip="'+esc(label)+(nd?' · la plataforma no lo da para este post':'')+'"><span class="cic">'+(ICO[icon]||icon)+'</span><span class="cv">'+(nd?'—':fmtN(val))+'</span><span class="cl">'+esc(label)+'</span></span>'; }
   function fbClicksDe(p){ return p.red==='FB'?(p.clicks==null?null:p.clicks):(p._fb?p._fb.clicks:null); } /* clics al enlace: solo FB los da (post_clicks) */
   function fbSharesDe(p){ return p.red==='FB'?p.shares:(p._fb&&p._fb.shares!=null?p._fb.shares:p.shares); }
   /* tarjeta: solo las métricas que existen (sin "—", para no saturar la portada).
      En posts FUSIONADOS (publicados en IG y FB a la vez) los números SUMAN las dos redes
      — excepto alcance y guardados, que solo los da Instagram. */
   function sum2(a,b){ if(a==null&&b==null) return null; return num(a)+num(b); }
+  /* tarjeta: MÁXIMO 3 métricas con valor + leads (10 chips por tarjeta = cero chips leídos).
+     El desglose completo vive en la ficha; tocar un chip muestra su nombre. */
   function cardChips(p){
     var reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0), c=[], f=p._fb||null;
     if(p.red==='IG'){
-      c.push(['📣','Alcance (solo IG lo da)',p.reach]);
-      if(reel||f) c.push(['▶️','Vistas'+(f?' · IG+FB':''), f?sum2(p.views,f.views):p.views]);
-      c.push(['❤️','Me gusta'+(f?' · IG+FB':''), f?sum2(p.likes,f.likes):p.likes]);
-      c.push(['💬','Coment.'+(f?' · IG+FB':''), f?sum2(p.comments,f.comments):p.comments]);
-      c.push(['🔁','Compart.'+(f?' · IG+FB':''), f?sum2(p.shares,f.shares):p.shares]);
-      c.push(['🔖','Guardados (solo IG lo da)',p.saves]);
-      if(f){ if(f.clicks!=null)c.push(['🔗','Clics (FB)',f.clicks]); if(f.leads_atribuidos!=null)c.push(['🎯','Leads (FB)',f.leads_atribuidos]); }
+      c.push(['alcance','Alcance (solo IG lo da)',p.reach]);
+      if(reel||f) c.push(['vistas','Vistas'+(f?' · IG+FB':''), f?sum2(p.views,f.views):p.views]);
+      c.push(['like','Me gusta'+(f?' · IG+FB':''), f?sum2(p.likes,f.likes):p.likes]);
+      c.push(['coment','Comentarios'+(f?' · IG+FB':''), f?sum2(p.comments,f.comments):p.comments]);
+      c.push(['compartir','Compartidos'+(f?' · IG+FB':''), f?sum2(p.shares,f.shares):p.shares]);
+      c.push(['guardado','Guardados (solo IG lo da)',p.saves]);
+      if(f&&f.clicks!=null) c.push(['clic','Clics al link (FB)',f.clicks]);
     }
-    else { c.push(['▶️','Vistas',p.views]); c.push(['❤️','Reacc.',p.likes]); c.push(['💬','Coment.',p.comments]); c.push(['🔗','Clics',p.clicks]); c.push(['🎯','Leads',p.leads_atribuidos]); }
-    return '<div class="chips">'+c.filter(function(x){return x[2]!=null;}).map(function(x){return chip(x[0],x[1],x[2],false);}).join('')+'</div>';
+    else { c.push(['vistas','Vistas',p.views]); c.push(['like','Reacciones',p.likes]); c.push(['coment','Comentarios',p.comments]); c.push(['clic','Clics al link',p.clicks]); }
+    var top=c.filter(function(x){return x[2]!=null&&num(x[2])>0;}).slice(0,3);
+    if(!top.length) top=c.filter(function(x){return x[2]!=null;}).slice(0,2);
+    var lv=f?f.leads_atribuidos:(p.red==='FB'?p.leads_atribuidos:null);
+    if(lv!=null) top.push(['leads','Leads que trajo (link medible de FB)',lv]);
+    return '<div class="chips">'+top.map(function(x){return chip(x[0],x[1],x[2],false);}).join('')+'</div>';
   }
-  /* ficha: TODO lo que Meta permite, incluido n/d como "—" presente y legible.
+  /* ficha: solo las métricas CON dato (las «—» se agrupan en una línea, no compiten con los números).
      soloIG=true => valores PUROS de Instagram (post fusionado: Facebook va en su propio bloque). */
+  function chipsFiltrados(rows){
+    var con=rows.filter(function(x){return x[2]!=null;}), sin=rows.filter(function(x){return x[2]==null;}).map(function(x){return x[1];});
+    return '<div class="chips ficha">'+con.map(function(x){return chip(x[0],x[1],x[2],true);}).join('')+'</div>'+
+      (sin.length?'<div class="hint" style="padding:2px 16px 10px;margin-top:0;">La plataforma no da aquí: '+esc(sin.join(' · '))+'</div>':'');
+  }
   function fichaChips(p, soloIG){
     var isIG=p.red==='IG', reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0);
-    var rows=[ ['📣','Alcance', isIG?p.reach:null], ['✨','Gente nueva', p.reach_nonfollower],
-      ['▶️','Reproducciones', (reel||!isIG)?p.views:null], ['❤️', isIG?'Me gusta':'Reacciones', p.likes],
-      ['💬','Comentarios', p.comments], ['🔁','Compartidos', soloIG?p.shares:fbSharesDe(p)], ['🔖','Guardados', p.saves],
-      ['👏','Interacciones', p.interacciones], ['👤','Visitas al perfil', p.profile_visits] ];
-    if(!soloIG) rows.push(['🔗','Clics al enlace', fbClicksDe(p)], ['🎯','Leads de este post', p.leads_atribuidos]);
-    return '<div class="chips ficha">'+rows.map(function(x){return chip(x[0],x[1],x[2],true);}).join('')+'</div>';
+    var rows=[ ['alcance','Alcance', isIG?p.reach:null], ['nuevos','Gente nueva', p.reach_nonfollower],
+      ['vistas','Reproducciones', (reel||!isIG)?p.views:null], ['like', isIG?'Me gusta':'Reacciones', p.likes],
+      ['coment','Comentarios', p.comments], ['compartir','Compartidos', soloIG?p.shares:fbSharesDe(p)], ['guardado','Guardados', p.saves],
+      ['inter','Interacciones', p.interacciones], ['perfil','Visitas al perfil', p.profile_visits] ];
+    if(!soloIG) rows.push(['clic','Clics al enlace', fbClicksDe(p)], ['leads','Leads de este post', p.leads_atribuidos]);
+    return chipsFiltrados(rows);
   }
   /* bloque Facebook de un post fusionado: sus propias métricas, separadas */
   function fichaChipsFB(f){
-    var rows=[ ['▶️','Reproducciones', f.views], ['❤️','Reacciones', f.likes], ['💬','Comentarios', f.comments],
-      ['🔁','Compartidos', f.shares], ['🔗','Clics al enlace', f.clicks], ['🎯','Leads de este post', f.leads_atribuidos] ];
-    return '<div class="chips ficha">'+rows.map(function(x){return chip(x[0],x[1],x[2],true);}).join('')+'</div>';
+    var rows=[ ['vistas','Reproducciones', f.views], ['like','Reacciones', f.likes], ['coment','Comentarios', f.comments],
+      ['compartir','Compartidos', f.shares], ['clic','Clics al enlace', f.clicks], ['leads','Leads de este post', f.leads_atribuidos] ];
+    return chipsFiltrados(rows);
   }
   function mergePosts(posts){
     var map={}, order=[];
@@ -815,7 +990,7 @@
     h+='<div class="pcount">Mostrando '+vis.length+' de '+total+' publicaciones.</div>';
     if(lim<total) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,1)">Ver las '+(total-lim)+' restantes</span>';
     else if(total>18) h+='<span class="pmore" onclick="pubSet(&#39;verMas&#39;,0)">Ver menos</span>';
-    h+='<p class="hint">Cada portada muestra sus métricas en íconos: 📣 alcance · ▶️ vistas · ❤️ me gusta · 💬 comentarios · 🔁 compartidos · 🔖 guardados · 🔗 clics · 🎯 leads (solo Facebook, con el link de arriba). Lo que publicas <b>en las dos redes a la vez</b> aparece UNA sola vez con doble insignia (IG + f): sus números en la tarjeta ya <b>suman las dos redes</b> (excepto 📣 alcance y 🔖 guardados, que solo los da Instagram) y al abrir la ficha ves cada plataforma por separado. Toca una para verlas TODAS (incluido lo que la plataforma no da, marcado «—»). FB no da alcance/guardados por post. Datos al '+esc(METRICS.generado||"—")+'.</p>';
+    h+='<p class="hint">Cada tarjeta muestra sus 3 métricas más fuertes — <b>toca un icono para ver su nombre</b> y toca la portada para el detalle completo. Lo publicado <b>en las dos redes a la vez</b> aparece UNA sola vez con doble insignia (IG + f): sus números ya <b>suman ambas redes</b> (excepto alcance y guardados, que solo los da Instagram) y la ficha separa cada plataforma. Datos al '+esc(METRICS.generado||"—")+'.</p>';
     return h;
   }
   /* ---- ficha (modal) con bloques ---- */
@@ -840,12 +1015,18 @@
        '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
        (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
        '<button class="pfclose" onclick="cerrarFicha()">×</button></div>';
-    /* TODAS las métricas de la publicación, mismo peso (sin héroe de guardados).
-       Post fusionado (IG+FB): cada plataforma en su propio bloque, separadas. */
+    /* la LECTURA (lo único que dice qué HACER) va PRIMERO y en grande — es el producto de la ficha */
     var dR=(isIG&&p.reach!=null&&ctx.avgReach)?Math.round((p.reach-ctx.avgReach)/ctx.avgReach*100):null;
+    if(isIG && p.reach!=null && ctx.avgReach){
+      var msgL = dR>=10?('Alcance <b>+'+dR+'%</b> sobre tu media — el ángulo funcionó, <b>repítelo</b>.')
+              : dR<=-10?('Alcance <b>−'+Math.abs(dR)+'%</b> bajo tu media — prueba otro gancho o ángulo.')
+              : 'Alcance en línea con tu media ('+(dR>=0?'+':'')+dR+'%).';
+      h+='<div class="pfrow lectura">'+msgL+(p.id===ctx.bestId?' 🏆 Tu mejor post.':'')+'<div style="font-size:11px;font-family:Manrope,sans-serif;color:var(--piedra);margin-top:4px;">'+(p.er!=null?p.er+'% de interacción (ER)':'')+(p.save_rate!=null?' · '+p.save_rate+'% guardado/alcance':'')+'</div></div>';
+    }
+    /* métricas: post fusionado (IG+FB) = cada plataforma en su propio bloque, separadas */
     if(p._fb){
-      h+='<div class="fblock">📸 Instagram · métricas</div>'+fichaChips(p,true);
-      h+='<div class="fblock">📘 Facebook · métricas</div>'+fichaChipsFB(p._fb);
+      h+='<div class="fblock">Instagram · métricas</div>'+fichaChips(p,true);
+      h+='<div class="fblock">Facebook · métricas</div>'+fichaChipsFB(p._fb);
     } else {
       h+='<div class="fblock">Métricas de la publicación</div>'+fichaChips(p);
     }
@@ -862,19 +1043,11 @@
           '<button class="chipbtn on" onclick="copiarLinkPost()" style="min-height:34px;">Copiar</button>'+
         '</div><div style="font-size:10.5px;color:var(--piedra);margin-top:6px;">Edita este post en Facebook y pega este link en el texto — no el generador general de arriba (ese es para posts nuevos, este es solo para este post).</div></div>';
     }
-    /* lectura en lenguaje llano (apoyo, sin elevar ninguna métrica) */
-    if(isIG && p.reach!=null && ctx.avgReach){
-      var msg = dR>=10?('✅ Alcance '+dR+'% sobre tu media — el ángulo funcionó, repítelo.')
-              : dR<=-10?('Alcance '+Math.abs(dR)+'% bajo tu media — prueba otro gancho o ángulo.')
-              : 'Alcance en línea con tu media ('+(dR>=0?'+':'')+dR+'%).';
-      h+='<div class="pfrow"><b>Lectura:</b> '+msg+(p.id===ctx.bestId?' · 🏆 tu mejor post':'')+(p.er!=null?' · '+p.er+'% ER':'')+(p.save_rate!=null?' · '+p.save_rate+'% guardado/alcance':'')+'</div>';
-    }
     /* crecimiento */
     var sp=sparkline(p.serie);
     if(sp) h+='<div class="pfrow"><b>Crecimiento del alcance</b>'+sp+'</div>';
     /* (el lado de Facebook ya tiene su propio bloque arriba; el renglón "También en Facebook" se retiró) */
-    /* por qué hay «—» */
-    h+='<div class="pfrow"><span class="muted">«—» = la plataforma no da ese dato para este post (FB no da alcance/guardados/compartidos; los clics al enlace solo los da FB; visitas al perfil y gente nueva requieren más permisos de la cuenta de Meta). «Leads de este post» solo aplica a Facebook (usando el link con etiqueta especial de arriba); Instagram no se puede medir por publicación — solo tienes un link en tu biografía, no uno por post.</span></div>';
+    h+='<div class="pfrow"><span class="muted">Los «leads de este post» solo se pueden medir del lado Facebook (con el link medible); Instagram no permite un link por publicación — solo el de tu biografía.</span></div>';
     h+='</div>';
     return h;
   }
@@ -925,14 +1098,17 @@
     };
   }
 
-  function semaforo(d){
+  /* el hero sale de LOS MISMOS datos que las tarjetas de "Hoy" (sinTocar, visHoy) — nunca se contradicen */
+  function semaforoGlobal(d,sinTocar,visHoy){
     var k=d.kpis||{}, g=d.gasto||{};
     var gasto=num(g.semana_actual), citas=num(k.citas), leads=num(k.leads);
     if(d.meta&&d.meta.es_snapshot) return {color:"gris",msg:"Esperando datos reales para encender el semáforo."};
+    if(sinTocar>0) return {color:"rojo",msg:sinTocar+" lead"+(sinTocar>1?"s":"")+" espera"+(sinTocar>1?"n":"")+" tu respuesta desde hace más de un día. Eso es lo primero."};
     if(gasto>0 && leads===0) return {color:"rojo",msg:"Gastaste "+money(gasto)+" y 0 leads esta semana. Revisa el anuncio o la página."};
-    if(gasto>0 && citas===0 && leads>0) return {color:"amar",msg:leads+" leads pero 0 citas. El cuestionario o el seguimiento no están cerrando."};
     if(citas>0){var cc=gasto>0?(" a "+money(gasto/citas)+" c/u"):"";return {color:"verde",msg:citas+" cita"+(citas>1?"s":"")+" agendada"+(citas>1?"s":"")+" esta semana"+cc+". Vas bien."};}
-    return {color:"amar",msg:"Sin citas todavía esta semana. Mete tráfico y vigila el embudo."};
+    if(gasto>0 && citas===0 && leads>0) return {color:"amar",msg:leads+" leads pero 0 citas. El cuestionario o el seguimiento no están cerrando."};
+    if(visHoy===0 && METRICS && num(METRICS.dias_sin_publicar)>=5) return {color:"amar",msg:"Sin visitas hoy y "+num(METRICS.dias_sin_publicar)+" días sin publicar — hora de meter tráfico."};
+    return {color:"amar",msg:"Sin citas nuevas esta semana. Mete tráfico y vigila el embudo."};
   }
 
   function guardarGasto(){
