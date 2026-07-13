@@ -23,9 +23,10 @@
   .logo-img{height:28px;width:auto;display:block;filter:brightness(0) invert(.92);}
   .logo .sub{color:var(--piedra);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border-left:1px solid var(--linea);padding-left:11px;}
   .hctrl{display:flex;align-items:center;gap:10px;}
-  #badge{display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--linea);border-radius:20px;padding:5px 11px;cursor:pointer;}
+  #badge{display:flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--linea);border-radius:20px;padding:5px 11px;cursor:pointer;background:transparent;font-family:inherit;}
   #badge .dot{width:7px;height:7px;border-radius:50%;background:#888;}
   #badge[data-s="live"] .dot{background:var(--verde);} #badge[data-s="live"]{color:var(--verde);}
+  #badge[data-s="partial"] .dot{background:var(--amar);} #badge[data-s="partial"]{color:var(--amar);}
   #badge[data-s="cache"] .dot{background:var(--amar);} #badge[data-s="error"] .dot{background:var(--rojo);}
   #badge[data-s="loading"] .dot{background:var(--oro);animation:pulse 1s infinite;}
   @keyframes pulse{50%{opacity:.3;}}
@@ -238,7 +239,7 @@
   <a class="logo" href="https://yodesarrollo.mx" target="_blank" rel="noopener"><img class="logo-img" src="img/yod-logo.png" alt="Yo Desarrollo"><span class="sub">Tablero de medición</span></a>
   <div class="hctrl">
     <span class="muted" id="periodo">—</span>
-    <div id="badge" data-s="loading" title="Toca para actualizar"><span class="dot"></span><span class="t">Cargando…</span></div>
+    <button id="badge" type="button" data-s="loading" title="Actualizar anuncios, leads y métricas desde internet"><span class="dot"></span><span class="t">Actualizar ahora</span></button>
   </div>
 </header>
 <main id="app"><p class="muted" style="padding:40px 0;text-align:center;">Cargando board…</p></main>
@@ -265,7 +266,7 @@
   var PORTERO_LSK="pyod_clave_v1";   /* credencial que escribe portero.js */
   function credencial(){ try{return localStorage.getItem(PORTERO_LSK)||"";}catch(e){return "";} }
   function credencialRechazada(){ try{localStorage.removeItem(PORTERO_LSK);sessionStorage.removeItem("pyod_rol");}catch(e){} location.reload(); }
-  var CACHE_KEY="aurum_board_cache_v1", QKEY="aurum_board_q_v1", MCACHE="aurum_metrics_cache_v1";
+  var QKEY="aurum_board_q_v1";
   var DATA=null, LAST=null, METRICS=null, DATA_POT=null;
 
   /* ============ SNAPSHOT EMBEBIDO (se ve aunque el .gs aún no esté desplegado) ============
@@ -301,56 +302,68 @@
     return '<span class="d flat">= igual</span>';
   }
 
-  /* ============ BADGE / FETCH (offline-first, igual que llave-maestra) ============ */
+  /* ============ BADGE / FETCH (siempre en línea; nunca pinta datos cacheados) ============ */
   function setBadge(s){
     var b=$("badge"); if(!b) return;
-    var labels={live:"En vivo",cache:"Cache local",error:"Sin conexión",loading:"Actualizando…",snapshot:"Ejemplo"};
+    var labels={live:"Al día",partial:"Actualización parcial",error:"No se pudo actualizar",loading:"Actualizando…",snapshot:"Sin datos en línea"};
     b.setAttribute("data-s",s); b.querySelector(".t").textContent=labels[s]||s;
   }
   function fetchData(manual){
-    if(!CONFIG.SHEET_URL){ usarCacheOSnap(); return; }
-    setBadge("loading");
+    if(!CONFIG.SHEET_URL) return Promise.resolve({ok:false,source:"leads",reason:"controlador_sin_url"});
     var url=CONFIG.SHEET_URL+(CONFIG.SHEET_URL.indexOf("?")<0?"?":"&")+"recurso=board&k="+encodeURIComponent(credencial())+"&cb="+Date.now();
     var ctrl=new AbortController(), t=setTimeout(function(){ctrl.abort();},CONFIG.FETCH_TIMEOUT);
-    fetch(url,{signal:ctrl.signal}).then(function(r){return r.json();}).then(function(j){
+    return fetch(url,{signal:ctrl.signal,cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
       clearTimeout(t);
       if(j && j.error==="liga"){ credencialRechazada(); return; }
       if(j && j.kpis){
         DATA=j; LAST=Date.now();
-        try{localStorage.setItem(CACHE_KEY,JSON.stringify(j));}catch(e){}
-        render(); setBadge("live");
-        if(manual) toast("Board actualizado");
-      } else { usarCacheOSnap(); }   /* gs aún sin recurso=board → snapshot/cache (no es "sin conexión") */
+        render(); return {ok:true,source:"leads"};
+      }
+      return {ok:false,source:"leads",reason:"respuesta_invalida"};
     }).catch(function(e){
-      clearTimeout(t); console.warn("[board] fetchData falló:",e); usarCacheOSnap();
+      clearTimeout(t); console.warn("[board] fetchData falló:",e); return {ok:false,source:"leads",reason:e.message};
     });
-  }
-  function usarCacheOSnap(){
-    var c=null; try{c=JSON.parse(localStorage.getItem(CACHE_KEY));}catch(e){}
-    if(c && c.kpis){ DATA=c; render(); setBadge("cache"); }
-    else if(!DATA){ DATA=SNAP; render(); setBadge("snapshot"); }
   }
   /* --- metricas de publicaciones (archivo del propio board, mismo origen) --- */
   function fetchMetrics(){
     var url=CONFIG.METRICS_URL+(CONFIG.METRICS_URL.indexOf("?")<0?"?":"&")+"cb="+Date.now();
-    fetch(url).then(function(r){return r.json();}).then(function(j){
-      if(j && j.posts){ METRICS=j; try{localStorage.setItem(MCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }
+    return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
+      if(j && j.posts){ METRICS=j; if(DATA) render(); return {ok:true,source:"anuncios"}; }
+      return {ok:false,source:"anuncios",reason:"respuesta_invalida"};
     }).catch(function(e){
       console.warn("[board] fetchMetrics falló:",e);
-      try{var c=JSON.parse(localStorage.getItem(MCACHE)); if(c&&c.posts&&!METRICS){METRICS=c; if(DATA) render();}}catch(e2){}
+      return {ok:false,source:"anuncios",reason:e.message};
     });
   }
   /* --- embudo Plan de Potencial (2º imán): su PROPIO Apps Script ?recurso=board --- */
-  var POTCACHE="aurum_pot_cache_v1";
   function fetchPot(){
-    if(!CONFIG.POT_URL) return;
+    if(!CONFIG.POT_URL) return Promise.resolve({ok:false,source:"potencial",reason:"controlador_sin_url"});
     var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&cb="+Date.now();
-    fetch(url).then(function(r){return r.json();}).then(function(j){
-      if(j && j.funnel){ DATA_POT=j; try{localStorage.setItem(POTCACHE,JSON.stringify(j));}catch(e){} if(DATA) render(); }   /* re-render siempre: la cabecera "Hoy" usa datos pot */
+    return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
+      if(j && j.funnel){ DATA_POT=j; if(DATA) render(); return {ok:true,source:"potencial"}; }   /* re-render siempre: la cabecera "Hoy" usa datos pot */
+      return {ok:false,source:"potencial",reason:"respuesta_invalida"};
     }).catch(function(e){
       console.warn("[board] fetchPot falló:",e);
-      try{var c=JSON.parse(localStorage.getItem(POTCACHE)); if(c&&c.funnel&&!DATA_POT){DATA_POT=c; if(DATA)render();}}catch(e2){}
+      return {ok:false,source:"potencial",reason:e.message};
     });
+  }
+
+  function actualizarTodo(manual){
+    setBadge("loading");
+    var b=$("badge"); if(b)b.disabled=true;
+    return Promise.all([fetchData(manual),fetchMetrics(),fetchPot()]).then(function(resultados){
+      var bien=resultados.filter(function(r){return r&&r.ok;}).length;
+      if(!DATA){ DATA=SNAP; render(); }
+      setBadge(bien===resultados.length?"live":(bien?"partial":"error"));
+      if(manual){
+        if(bien===resultados.length) toast("Anuncios, leads y métricas actualizados desde internet");
+        else {
+          var faltan=resultados.filter(function(r){return !r||!r.ok;}).map(function(r){return r&&r.source||"fuente";}).join(", ");
+          toast("Actualización parcial. Falta conectar: "+faltan,true);
+        }
+      }
+      return resultados;
+    }).finally(function(){if(b)b.disabled=false;});
   }
 
   /* ============ ESCRITURA (POST GASTO con cola offline, igual que tu patrón) ============ */
@@ -1147,13 +1160,10 @@
 
   /* ============ ARRANQUE ============ */
   function iniciar(){
-    $("badge").addEventListener("click",function(){fetchData(true);});
-    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&LAST&&Date.now()-LAST>CONFIG.REFRESH_MS){fetchData(false);fetchMetrics();fetchPot();}});
-    setInterval(function(){if(document.visibilityState==="visible"){fetchData(false);fetchMetrics();fetchPot();}},CONFIG.REFRESH_MS);
-    usarCacheOSnap();   /* pinta cache/snapshot al instante */
-    fetchData(false);   /* y busca datos en vivo */
-    fetchMetrics();     /* y las métricas de publicaciones */
-    fetchPot();         /* y el embudo de Plan de Potencial (2º imán) */
+    $("badge").addEventListener("click",function(){actualizarTodo(true);});
+    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&(!LAST||Date.now()-LAST>CONFIG.REFRESH_MS)){actualizarTodo(false);}});
+    setInterval(function(){if(document.visibilityState==="visible")actualizarTodo(false);},CONFIG.REFRESH_MS);
+    actualizarTodo(false);
   }
   iniciar();
 })();
