@@ -2,6 +2,18 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>
+  /* La sesión de Google debe existir antes de que arranque la primera consulta
+     del board. Se consume una sola vez y se limpia de la barra de dirección. */
+  (function(){
+    try{
+      var q=new URLSearchParams(location.search),s=q.get('sesion');
+      if(!s)return;
+      localStorage.setItem('pyod_clave_v1',s);sessionStorage.removeItem('pyod_rol');
+      q.delete('sesion');history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
+    }catch(e){}
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>Tablero · Yo Desarrollo</title>
@@ -1164,6 +1176,6 @@
 })();
 </script>
 <!-- Portero YOD: liga mágica / clave de equipo / Google + bitácora -->
-<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=8e0bcb3"></script>
+<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=e94fe1f"></script>
 </body>
 </html>
