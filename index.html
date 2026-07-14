@@ -9,7 +9,7 @@
     try{
       var q=new URLSearchParams(location.search),s=q.get('sesion');
       if(!s)return;
-      localStorage.setItem('pyod_clave_v1',s);sessionStorage.removeItem('pyod_rol');
+      window.__PYOD_BOOT=s;localStorage.setItem('pyod_clave_v1',s);sessionStorage.removeItem('pyod_rol');
       q.delete('sesion');history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
     }catch(e){}
   })();
@@ -274,7 +274,7 @@
     POT_URL: "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec"   /* Apps Script del formulario Plan de Potencial (imán 'pot') — su propio ?recurso=board */
   };
   var PORTERO_LSK="pyod_clave_v1";   /* credencial que escribe portero.js */
-  function credencial(){ try{return localStorage.getItem(PORTERO_LSK)||"";}catch(e){return "";} }
+  function credencial(){ try{return window.__PYOD_BOOT||localStorage.getItem(PORTERO_LSK)||"";}catch(e){return window.__PYOD_BOOT||"";} }
   function credencialRechazada(){ try{localStorage.removeItem(PORTERO_LSK);sessionStorage.removeItem("pyod_rol");}catch(e){} location.reload(); }
   var QKEY="aurum_board_q_v1";
   var DATA=null, LAST=null, METRICS=null, DATA_POT=null;
