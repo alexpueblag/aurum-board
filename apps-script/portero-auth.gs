@@ -21,8 +21,8 @@
  *
  *      Ojo: las rutas PÚBLICAS del cuestionario (guardar lead) siguen
  *      abiertas; la credencial se exige solo en las rutas del board.
- *      El secreto de escritura de GASTO se compara contra Script
- *      Properties (rota el anterior: estaba publicado en el HTML).
+ *      GASTO usa la misma credencial del Portero; no existe una segunda
+ *      clave de escritura en el HTML.
  *
  *   3. Implementar → Nueva implementación (el deployment viejo quedó
  *      archivado, por eso aquí SÍ es implementación nueva) ·
@@ -52,10 +52,13 @@ function credencialValida_(k) {
 
   let ok = false;
   try {
-    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&board=MK&t=' + encodeURIComponent(k),
+    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&t=' + encodeURIComponent(k),
       { muteHttpExceptions: true, followRedirects: true });
     const j = JSON.parse(r.getContentText());
-    ok = !!(j && j.ok);
+    const role = String(j && j.rol || '').toLowerCase();
+    const boards = String(j && j.boards || '');
+    ok = !!(j && j.ok && (role === 'admin' || boards.trim() === '*' ||
+      boards.split(',').map(function (v) { return v.trim().toUpperCase(); }).indexOf('MK') >= 0));
   } catch (err) {
     ok = false;  // Portero inaccesible → fail-closed
   }
