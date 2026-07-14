@@ -251,12 +251,10 @@
   /* ============ CONFIG (mismo Apps Script que el cuestionario) ============ */
   /* ⚠ SHEET_URL: pega la URL /exec de la NUEVA implementación del Apps Script
      (el deployment anterior quedó archivado en la contención 2026-07-12).
-     El acceso lo gobierna el Portero YOD: el backend exige la credencial (k),
-     y el secreto de escritura ya no vive en este HTML (se teclea al guardar
-     y lo valida el servidor contra Script Properties). */
+     El acceso lo gobierna el Portero YOD: el backend exige la credencial (k)
+     tanto para consultar el board como para registrar gasto. */
   var CONFIG = {
-    SHEET_URL: "",
-    WRITE_SECRET: "",                   /* se llena con lo que teclea el usuario al guardar GASTO */
+    SHEET_URL: "https://script.google.com/macros/s/AKfycbztAKA7K5QwO6k45PqjixYLNppLypzCpoz2KvNIkML8kciBLZVKKoais8__0DnYuEQQOg/exec",
     META_EVENTS_URL: "https://business.facebook.com/events_manager2/list/dataset/1563269895817275/overview",
     FETCH_TIMEOUT: 12000,
     REFRESH_MS: 600000,
@@ -370,7 +368,6 @@
   function postSheet(payload){
     if(!CONFIG.SHEET_URL) return Promise.reject(new Error("sin URL del Apps Script"));
     payload.k=credencial();            /* credencial del Portero */
-    payload.secret=CONFIG.WRITE_SECRET; /* clave tecleada al guardar; la valida el servidor */
     var ctrl=new AbortController(), t=setTimeout(function(){ctrl.abort();},CONFIG.FETCH_TIMEOUT);
     return fetch(CONFIG.SHEET_URL,{method:"POST",body:JSON.stringify(payload),signal:ctrl.signal})
       .then(function(r){clearTimeout(t);return r.json();})
@@ -566,7 +563,7 @@
       '</div>'+
       '<div class="frow" style="margin-top:10px;"><div class="fld"><label>Campañas (una por línea: nombre::monto)</label>'+
         '<textarea id="gCamp" placeholder="Casa Mona::1800&#10;Carrusel Terreno::1700"></textarea></div></div>'+
-      '<div class="frow" style="margin-top:10px;"><div class="fld" style="max-width:200px;"><label>Clave de escritura</label><input id="gClave" type="password" placeholder="clave del board"></div>'+
+      '<div class="frow" style="margin-top:10px;">'+
         '<button class="btn" id="gGuardar">Guardar en el Sheet</button></div>'+
       '<p class="hint">Se guarda como fila en la pestaña <code>GASTO</code>; las campañas quedan en una celda con tu formato <code>nombre::monto</code> por línea. El costo por cita se recalcula solo.</p>'+
       '</div>';
@@ -1137,10 +1134,8 @@
 
   function guardarGasto(){
     var semana=($("gSemana").value||"").trim(), monto=($("gMonto").value||"").trim(),
-        camp=($("gCamp").value||"").trim(), clave=($("gClave").value||"").trim();
+        camp=($("gCamp").value||"").trim();
     if(!semana||!monto){ toast("Pon al menos la semana y el monto",true); return; }
-    if(!clave){ toast("Falta la clave de escritura",true); return; }
-    CONFIG.WRITE_SECRET=clave; /* usa lo que el usuario teclea */
     var payload={tipo:"gasto", semana:semana, monto:num(monto), campanas:camp};
     var btn=$("gGuardar"); btn.disabled=true; btn.textContent="Guardando…";
     postSheet(payload).then(function(){
@@ -1149,7 +1144,7 @@
     }).catch(function(err){
       /* sin conexión o rechazo: encola y reintenta */
       if(!navigator.onLine){ var q=qload(); q.push(payload); qsave(q); toast("Sin conexión: guardado en cola, se sube al reconectar"); }
-      else toast("No se pudo guardar: "+(err&&err.message||"error")+" (¿clave correcta?)",true);
+      else toast("No se pudo guardar: "+(err&&err.message||"error"),true);
       btn.disabled=false; btn.textContent="Guardar en el Sheet";
     });
   }
