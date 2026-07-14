@@ -348,8 +348,9 @@
   /* --- embudo Plan de Potencial (2º imán): su PROPIO Apps Script ?recurso=board --- */
   function fetchPot(){
     if(!CONFIG.POT_URL) return Promise.resolve({ok:false,source:"potencial",reason:"controlador_sin_url"});
-    var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&cb="+Date.now();
+    var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&k="+encodeURIComponent(credencial())+"&cb="+Date.now();
     return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
+      if(j && j.error==="liga"){ credencialRechazada(); return {ok:false,source:"potencial",reason:"liga"}; }
       if(j && j.funnel){ DATA_POT=j; if(DATA) render(); return {ok:true,source:"potencial"}; }   /* re-render siempre: la cabecera "Hoy" usa datos pot */
       return {ok:false,source:"potencial",reason:"respuesta_invalida"};
     }).catch(function(e){
@@ -1054,7 +1055,7 @@
       var msgL = dR>=10?('Alcance <b>+'+dR+'%</b> sobre tu media — el ángulo funcionó, <b>repítelo</b>.')
               : dR<=-10?('Alcance <b>−'+Math.abs(dR)+'%</b> bajo tu media — prueba otro gancho o ángulo.')
               : 'Alcance en línea con tu media ('+(dR>=0?'+':'')+dR+'%).';
-      h+='<div class="pfrow lectura">'+msgL+(p.id===ctx.bestId?' 🏆 Tu mejor post.':'')+'<div style="font-size:11px;font-family:'Instrument Sans',Manrope,sans-serif;color:var(--piedra);margin-top:4px;">'+(p.er!=null?p.er+'% de interacción (ER)':'')+(p.save_rate!=null?' · '+p.save_rate+'% guardado/alcance':'')+'</div></div>';
+      h+='<div class="pfrow lectura">'+msgL+(p.id===ctx.bestId?' 🏆 Tu mejor post.':'')+'<div style="font-size:11px;font-family:\'Instrument Sans\',Manrope,sans-serif;color:var(--piedra);margin-top:4px;">'+(p.er!=null?p.er+'% de interacción (ER)':'')+(p.save_rate!=null?' · '+p.save_rate+'% guardado/alcance':'')+'</div></div>';
     }
     /* métricas: post fusionado (IG+FB) = cada plataforma en su propio bloque, separadas */
     if(p._fb){
