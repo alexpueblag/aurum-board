@@ -21,6 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css">
 <style>
   /* Identidad yodesarrollo.mx: Kefa (firma) + Poppins/Raleway, blanco/negro + acento vino #1a1818 (teal/índigo menores) */
   @font-face{font-family:'Kefa-Regular';src:local('Kefa'),url('fonts/Kefa-Regular.ttf') format('truetype');font-display:swap;}
@@ -86,10 +87,13 @@
   .card p.s{font-size:12px;color:var(--piedra);margin-bottom:14px;}
   .frow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
   .fld{flex:1;min-width:130px;} .fld label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--piedra);margin-bottom:4px;}
-  .fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--linea);border-radius:5px;font-size:14px;font-family:inherit;background:var(--crema);color:var(--negro);}
+  .fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--linea);border-radius:9px;font-size:14px;font-family:inherit;background:var(--crema);color:var(--negro);}
+  .fld input:focus,.fld textarea:focus,#lgDest:focus,#lgUrl:focus,#lgDestP:focus,#lgUrlP:focus{outline:2px solid var(--oro);outline-offset:1px;}
   .fld textarea{min-height:64px;resize:vertical;}
-  .btn{background:var(--oro);color:#17140F;border:none;border-radius:5px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
-  .btn:hover{background:#e0c590;} .btn:disabled{opacity:.5;cursor:default;}
+  .btn{background:var(--oro);color:#17140F;border:none;border-radius:9px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
+  .btn:hover{filter:brightness(1.15);} .btn:disabled{opacity:.5;cursor:default;}
+  .iconbtn{display:inline-flex;align-items:center;justify-content:center;width:39px;height:39px;flex:none;border:1px solid var(--linea);background:#16161a;color:var(--carbon);border-radius:9px;cursor:pointer;font-size:18px;line-height:1;padding:0;}
+  .iconbtn:hover{border-color:var(--oro);color:var(--oro);}
   .hint{font-size:11px;color:var(--piedra);margin-top:8px;line-height:1.5;}
   .hint code{background:var(--arena);padding:1px 5px;border-radius:3px;font-size:11px;}
   .nota{font-size:12px;color:var(--piedra);font-style:italic;line-height:1.5;}
@@ -120,7 +124,8 @@
   .pfhead .pfx{flex:1;min-width:0;}
   .pfx .pftipo{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--piedra);}
   .pfx .pftit{font-family:Instrument Serif,Georgia,serif;font-size:15px;margin:3px 0;line-height:1.3;}
-  .pfclose{cursor:pointer;font-size:22px;color:var(--piedra);background:none;border:none;line-height:1;padding:0 2px;flex:none;}
+  .pfclose{display:inline-flex;align-items:center;justify-content:center;width:39px;height:39px;flex:none;cursor:pointer;font-size:18px;color:var(--carbon);background:#16161a;border:1px solid var(--linea);border-radius:9px;line-height:1;padding:0;}
+  .pfclose:hover{border-color:var(--oro);color:var(--oro);}
   .fmgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linea);}
   .fm{background:#16161a;padding:11px 12px;}
   .fm .fk{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);}
@@ -147,7 +152,7 @@
   /* controles de orden/filtro */
   .pfilters{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:13px;}
   .pfilters .pfl{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--piedra);}
-  .chipbtn{font-size:12.5px;border:1px solid var(--linea);background:#16161a;color:var(--carbon);border-radius:20px;padding:6px 13px;cursor:pointer;}
+  .chipbtn{font-size:12.5px;border:1px solid var(--linea);background:#16161a;color:var(--carbon);border-radius:9px;padding:6px 13px;cursor:pointer;}
   .chipbtn.on{background:var(--oro);color:#17140F;border-color:var(--oro);}
   /* tarjeta: ángulo + affordance + legibilidad */
   .pcard .pt{font-size:12px;}
@@ -172,14 +177,14 @@
   .fblock{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);background:var(--arena);padding:7px 16px;}
   .fm .fk{font-size:10px;}
   .fm.gap{background:rgba(224,96,90,.14);} .fm.gap .fv{color:var(--rojo);font-size:15px;} .fm.gap .fsub{color:var(--rojo);}
-  .pfclose{font-size:24px;min-width:40px;min-height:40px;}
+  .pfclose{font-size:18px;}
   /* --- mejoras jul-11: nav de secciones, acciones, estados de lead, caja-herramienta --- */
   html{scroll-behavior:smooth;} h2.sec{scroll-margin-top:130px;}
   .secnav{display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:2px 0 4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
   .secnav::-webkit-scrollbar{display:none;}
   @media(min-width:700px){.secnav{position:sticky;top:55px;z-index:40;background:linear-gradient(#17140F 78%,rgba(10,10,12,0));}}
-  .secnav a{flex:none;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--linea);background:#16161a;border-radius:20px;padding:6px 13px;text-decoration:none;}
-  .secnav a:hover{border-color:var(--oro);color:var(--oro);}
+  .secnav a{flex:none;display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:1px;color:var(--carbon);border:1px solid var(--linea);background:#16161a;border-radius:9px;padding:6px 13px;text-decoration:none;}
+  .secnav a:hover{border-color:var(--oro);color:var(--oro);background:rgba(255,255,255,.07);}
   .num .sub{font-size:10.5px;margin-top:3px;color:var(--piedra);line-height:1.35;}
   .accion{display:flex;gap:11px;align-items:flex-start;background:#16161a;border:1px solid var(--linea);border-left:4px solid var(--oro);border-radius:6px;padding:12px 15px;margin-bottom:7px;font-size:13.5px;line-height:1.5;color:var(--carbon);}
   .accion b{color:var(--negro);} .accion a{color:var(--oro);}
@@ -435,7 +440,7 @@
     if(d.meta&&d.meta.es_snapshot) html+='<p class="nota" style="margin-bottom:10px;">Mostrando ejemplo: el board cobra vida cuando el Apps Script sirva <code>recurso=board</code> y entre tráfico.</p>';
 
     /* --- nav de secciones (un tap y llegas; la página es larga) --- */
-    html+='<nav class="secnav"><a href="#sec-hoy">Hoy</a><a href="#sec-acciones">Qué hacer</a><a href="#sec-semana">Semana</a><a href="#sec-embudo">Embudo</a><a href="#sec-trafico">Tráfico</a><a href="#sec-pubs">Publicaciones</a><a href="#sec-gasto">Gasto</a></nav>';
+    html+='<nav class="secnav"><a href="#sec-hoy"><i class="ti ti-sun"></i>Hoy</a><a href="#sec-acciones"><i class="ti ti-checklist"></i>Qué hacer</a><a href="#sec-semana"><i class="ti ti-calendar-week"></i>Semana</a><a href="#sec-embudo"><i class="ti ti-filter"></i>Embudo</a><a href="#sec-trafico"><i class="ti ti-route"></i>Tráfico</a><a href="#sec-pubs"><i class="ti ti-photo"></i>Publicaciones</a><a href="#sec-gasto"><i class="ti ti-coin"></i>Gasto</a></nav>';
 
     /* --- HOY EN TU NEGOCIO: el ESTADO decide el énfasis (una tarjeta grita, las demás susurran) --- */
     var hayUrgente=sinTocar>0;
@@ -716,9 +721,9 @@
        '<span><a class="link-meta" style="margin-top:0" href="'+cfg.verUrl+'" target="_blank" rel="noopener">'+cfg.verTxt+'</a></span></div>';
     if(hasSeg){
       h+='<div style="display:flex;align-items:center;gap:6px;margin:6px 0 8px;flex-wrap:wrap;">'+
-        '<button onclick="embMonth(-1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">◀</button>'+
+        '<button onclick="embMonth(-1)" class="iconbtn" aria-label="Mes anterior"><i class="ti ti-chevron-left"></i></button>'+
         '<span onclick="embSet(&#39;month&#39;,&#39;&#39;)" style="font-family:Instrument Serif,Georgia,serif;font-size:14px;cursor:pointer;min-width:100px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center;" title="Clic = todos los meses">'+(F.month?MES[F.month]+' 2026':'Todos los meses')+'</span>'+
-        '<button onclick="embMonth(1)" style="border:none;background:none;cursor:pointer;color:var(--carbon);font-size:14px;padding:2px 6px;min-width:44px;min-height:44px;">▶</button>'+
+        '<button onclick="embMonth(1)" class="iconbtn" aria-label="Mes siguiente"><i class="ti ti-chevron-right"></i></button>'+
         '<span style="flex:1"></span>'+
         '<span style="font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);">Ver por</span>'+
         '<button onclick="embSet(&#39;dim&#39;,&#39;simple&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='simple'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='simple'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Simple</button>'+
@@ -793,7 +798,7 @@
           '<div><div style="font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);">Detalle de la etapa</div>'+
           '<div style="font-family:Instrument Serif,Georgia,serif;font-size:22px;color:var(--negro);margin-top:2px;">'+esc(etapa)+'</div>'+
           '<div style="font-size:12px;color:var(--carbon);margin-top:2px;"><b style="color:var(--negro);">'+total+'</b> llegaron aquí · hora pico <b style="color:var(--negro);">'+fH(peak)+'</b></div></div>'+
-          '<button onclick="cerrarEtapa()" style="background:none;border:none;font-size:24px;color:var(--piedra);cursor:pointer;line-height:1;padding:0 2px;">×</button></div>'+
+          '<button onclick="cerrarEtapa()" class="iconbtn" aria-label="Cerrar"><i class="ti ti-x"></i></button></div>'+
         '<div style="padding:14px 20px 18px;">'+
           '<div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--piedra);margin-bottom:8px;">Por fecha</div>'+filF+
           '<div style="font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--piedra);margin:18px 0 8px;">Por horario</div>'+filH+
@@ -974,10 +979,10 @@
     /* ---- generador de link medible (herramienta, no alarma: antes iba en caja roja de advertencia) ---- */
     h+='<div class="toolbox"><div class="tt">🎯 Link medible para tu próximo post de Facebook</div><span class="tx">Pega este link en el texto del post y el board te dirá <b>cuántos leads trajo</b>. (Instagram no permite links por publicación — solo el de tu biografía.)'+
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:9px;">'+
-        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--linea);border-radius:5px;font-size:12px;background:#16161a;color:var(--negro);">'+
+        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:#16161a;color:var(--negro);">'+
           '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
         '</select>'+
-        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:5px;font-size:11.5px;background:#0f0f12;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
+        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:11.5px;background:#0f0f12;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
         '<button class="chipbtn on" onclick="copiarLinkFB()" style="min-height:36px;">Copiar</button>'+
       '</div>'+
       '<div style="font-size:11px;color:var(--piedra);margin-top:6px;">Genera el link el mismo día que publicas; para un post ya publicado usa el generador dentro de su ficha. Los leads pueden tardar hasta 48 h en aparecer.</div>'+
@@ -1051,7 +1056,7 @@
     h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+tipoLabel(p.tipo)+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:#B98B3C">NUEVO</span>':'')+(ang?' · '+esc(ang):'')+'</div>'+
        '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
        (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
-       '<button class="pfclose" onclick="cerrarFicha()">×</button></div>';
+       '<button class="pfclose" onclick="cerrarFicha()" aria-label="Cerrar"><i class="ti ti-x"></i></button></div>';
     /* la LECTURA (lo único que dice qué HACER) va PRIMERO y en grande — es el producto de la ficha */
     var dR=(isIG&&p.reach!=null&&ctx.avgReach)?Math.round((p.reach-ctx.avgReach)/ctx.avgReach*100):null;
     if(isIG && p.reach!=null && ctx.avgReach){
@@ -1073,10 +1078,10 @@
     if(!isIG){
       h+='<div class="fblock">Link con seguimiento para ESTE post</div>'+
         '<div class="pfrow"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+
-          '<select id="lgDestP" onchange="genLinkPost(&#39;'+esc(p.id)+'&#39;)" style="padding:7px 9px;border:1px solid var(--linea);border-radius:5px;font-size:12px;background:#16161a;color:var(--negro);">'+
+          '<select id="lgDestP" onchange="genLinkPost(&#39;'+esc(p.id)+'&#39;)" style="padding:7px 9px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:#16161a;color:var(--negro);">'+
             '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
           '</select>'+
-          '<input id="lgUrlP" readonly onclick="this.select()" style="flex:1;min-width:200px;padding:7px 9px;border:1px solid var(--linea);border-radius:5px;font-size:11px;background:var(--crema);color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
+          '<input id="lgUrlP" readonly onclick="this.select()" style="flex:1;min-width:200px;padding:7px 9px;border:1px solid var(--linea);border-radius:9px;font-size:11px;background:var(--crema);color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
           '<button class="chipbtn on" onclick="copiarLinkPost()" style="min-height:34px;">Copiar</button>'+
         '</div><div style="font-size:10.5px;color:var(--piedra);margin-top:6px;">Edita este post en Facebook y pega este link en el texto — no el generador general de arriba (ese es para posts nuevos, este es solo para este post).</div></div>';
     }
