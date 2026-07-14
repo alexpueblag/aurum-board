@@ -1168,6 +1168,10 @@
   /* ============ ARRANQUE ============ */
   function iniciar(){
     $("badge").addEventListener("click",function(){actualizarTodo(true);});
+    window.addEventListener("pyod-authenticated",function(e){
+      window.__PYOD_BOOT=e&&e.detail&&e.detail.token||window.__PYOD_BOOT||"";
+      actualizarTodo(true);
+    });
     document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&(!LAST||Date.now()-LAST>CONFIG.REFRESH_MS)){actualizarTodo(false);}});
     setInterval(function(){if(document.visibilityState==="visible")actualizarTodo(false);},CONFIG.REFRESH_MS);
     actualizarTodo(false);
@@ -1176,6 +1180,6 @@
 })();
 </script>
 <!-- Portero YOD: liga mágica / clave de equipo / Google + bitácora -->
-<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=e94fe1f"></script>
+<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=4eb7d38"></script>
 </body>
 </html>
