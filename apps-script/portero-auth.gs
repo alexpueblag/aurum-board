@@ -52,7 +52,7 @@ function credencialValida_(k) {
 
   let ok = false;
   try {
-    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&t=' + encodeURIComponent(k),
+    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&board=MK&t=' + encodeURIComponent(k),
       { muteHttpExceptions: true, followRedirects: true });
     const j = JSON.parse(r.getContentText());
     const role = String(j && j.rol || '').toLowerCase();
