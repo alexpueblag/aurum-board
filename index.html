@@ -322,7 +322,7 @@
     if(!CONFIG.SHEET_URL) return Promise.resolve({ok:false,source:"leads",reason:"controlador_sin_url"});
     var url=CONFIG.SHEET_URL+(CONFIG.SHEET_URL.indexOf("?")<0?"?":"&")+"recurso=board&k="+encodeURIComponent(credencial())+"&cb="+Date.now();
     var ctrl=new AbortController(), t=setTimeout(function(){ctrl.abort();},CONFIG.FETCH_TIMEOUT);
-    return fetch(url,{signal:ctrl.signal,cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
+    return fetch(url,{signal:ctrl.signal,cache:"no-store",credentials:"omit"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
       clearTimeout(t);
       if(j && j.error==="liga"){ credencialRechazada(); return; }
       if(j && j.kpis){
@@ -349,7 +349,7 @@
   function fetchPot(){
     if(!CONFIG.POT_URL) return Promise.resolve({ok:false,source:"potencial",reason:"controlador_sin_url"});
     var url=CONFIG.POT_URL+(CONFIG.POT_URL.indexOf("?")<0?"?":"&")+"recurso=board&k="+encodeURIComponent(credencial())+"&cb="+Date.now();
-    return fetch(url,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
+    return fetch(url,{cache:"no-store",credentials:"omit"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}).then(function(j){
       if(j && j.error==="liga"){ credencialRechazada(); return {ok:false,source:"potencial",reason:"liga"}; }
       if(j && j.funnel){ DATA_POT=j; if(DATA) render(); return {ok:true,source:"potencial"}; }   /* re-render siempre: la cabecera "Hoy" usa datos pot */
       return {ok:false,source:"potencial",reason:"respuesta_invalida"};
@@ -382,7 +382,7 @@
     if(!CONFIG.SHEET_URL) return Promise.reject(new Error("sin URL del Apps Script"));
     payload.k=credencial();            /* credencial del Portero */
     var ctrl=new AbortController(), t=setTimeout(function(){ctrl.abort();},CONFIG.FETCH_TIMEOUT);
-    return fetch(CONFIG.SHEET_URL,{method:"POST",body:JSON.stringify(payload),signal:ctrl.signal})
+    return fetch(CONFIG.SHEET_URL,{method:"POST",body:JSON.stringify(payload),signal:ctrl.signal,credentials:"omit"})
       .then(function(r){clearTimeout(t);return r.json();})
       .then(function(j){if(j&&j.ok)return j;if(j&&j.error==="liga")credencialRechazada();throw new Error((j&&j.error)||"rechazado");});
   }
@@ -1181,6 +1181,6 @@
 })();
 </script>
 <!-- Portero YOD: liga mágica / clave de equipo / Google + bitácora -->
-<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=779fed3"></script>
+<script src="https://alexpueblag.github.io/potenciales-yod/portero.js?v=credomit"></script>
 </body>
 </html>
