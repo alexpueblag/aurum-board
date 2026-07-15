@@ -52,7 +52,11 @@ function credencialValida_(k) {
 
   let ok = false;
   try {
-    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&board=MK&t=' + encodeURIComponent(k),
+    // Canjeamos SIN &board=: solo preguntamos "¿es una sesión viva?" y dejamos que el
+    // Portero devuelva rol + boards. La autorización a MK la decide ESTE backend abajo.
+    // (Pasar &board=MK hacía que el Portero respondiera {ok:false,error:'board'} para
+    //  colaboradores con acceso restringido, y el backend lo traducía a 'liga' → lockout.)
+    const r = UrlFetchApp.fetch(PORTERO_EXEC + '?recurso=canje&t=' + encodeURIComponent(k),
       { muteHttpExceptions: true, followRedirects: true });
     const j = JSON.parse(r.getContentText());
     const role = String(j && j.rol || '').toLowerCase();
