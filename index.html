@@ -262,6 +262,10 @@ main{padding-top:14px}
 #toast.warn{background:var(--rojo);color:#fff}
 @media(min-width:700px){.secnav{top:0;background:linear-gradient(#f6f3ed 78%,rgba(246,243,237,0))}}
 .pov{background:rgba(23,20,15,.5)}
+/* ===== Quick wins UX (enjambre 15-jul): foco, safe-area, 16px móvil ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+body{padding-top:env(safe-area-inset-top)}
+@media(max-width:700px){input,select,textarea{font-size:16px}}
 </style>
 </head>
 <body>
@@ -806,8 +810,8 @@ main{padding-top:14px}
           '<div style="height:9px;background:var(--arena);border-radius:3px;overflow:hidden;"><div style="height:100%;width:'+Math.round(hr[h]/maxH*100)+'%;background:'+(on?'var(--negro)':'var(--carbon)')+';"></div></div>'+
           '<div style="font-size:11.5px;text-align:right;color:var(--piedra);">'+Math.round(hr[h])+'</div></div>'; }
       if(!filH) filH='<p style="color:var(--piedra);font-size:12px;">Sin horas registradas.</p>';
-      var card='<div style="background:#121215;border-radius:12px;max-width:520px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);">'+
-        '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:18px 20px 12px;border-bottom:1px solid var(--linea);position:sticky;top:0;background:#121215;">'+
+      var card='<div style="background:var(--arena);border-radius:12px;max-width:520px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);">'+
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:18px 20px 12px;border-bottom:1px solid var(--linea);position:sticky;top:0;background:var(--arena);">'+
           '<div><div style="font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--piedra);">Detalle de la etapa</div>'+
           '<div style="font-family:Instrument Serif,Georgia,serif;font-size:22px;color:var(--negro);margin-top:2px;">'+esc(etapa)+'</div>'+
           '<div style="font-size:12px;color:var(--carbon);margin-top:2px;"><b style="color:var(--negro);">'+total+'</b> llegaron aquí · hora pico <b style="color:var(--negro);">'+fH(peak)+'</b></div></div>'+
@@ -992,7 +996,7 @@ main{padding-top:14px}
     /* ---- generador de link medible (herramienta, no alarma: antes iba en caja roja de advertencia) ---- */
     h+='<div class="toolbox"><div class="tt">🎯 Link medible para tu próximo post de Facebook</div><span class="tx">Pega este link en el texto del post y el board te dirá <b>cuántos leads trajo</b>. (Instagram no permite links por publicación — solo el de tu biografía.)'+
       '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:9px;">'+
-        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:#16161a;color:var(--negro);">'+
+        '<select id="lgDest" onchange="genLinkFB()" style="padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:var(--crema);color:var(--negro);">'+
           '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
         '</select>'+
         '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:11.5px;background:#0f0f12;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
@@ -1091,7 +1095,7 @@ main{padding-top:14px}
     if(!isIG){
       h+='<div class="fblock">Link con seguimiento para ESTE post</div>'+
         '<div class="pfrow"><div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">'+
-          '<select id="lgDestP" onchange="genLinkPost(&#39;'+esc(p.id)+'&#39;)" style="padding:7px 9px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:#16161a;color:var(--negro);">'+
+          '<select id="lgDestP" onchange="genLinkPost(&#39;'+esc(p.id)+'&#39;)" style="padding:7px 9px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:var(--crema);color:var(--negro);">'+
             '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
           '</select>'+
           '<input id="lgUrlP" readonly onclick="this.select()" style="flex:1;min-width:200px;padding:7px 9px;border:1px solid var(--linea);border-radius:9px;font-size:11px;background:var(--crema);color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
