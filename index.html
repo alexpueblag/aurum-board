@@ -708,6 +708,7 @@ body{padding-top:env(safe-area-inset-top)}
     if(!hasSeg) fAgg=pasos.map(function(p){return num(p.n);});
     var cargaron=fAgg[0]||1, empezaron=fAgg[1]||0, base=empezaron||1, activ=Math.round(empezaron/cargaron*100), reboteEntrada=100-activ;  /* base=Estilo (1ª página): UNA sola entrada, sin duplicar "Inicio" */
     var visN=hasSeg?scope.reduce(function(a,x){return a+num(x.visitas);},0):num(ec.visitas);  /* visitas del scope (mes) — para que el titular cuadre con las barras */
+    var lpVis=hasSeg?scope.reduce(function(a,x){return a+num(x.embudo&&x.embudo['lp:vista']);},0):num(ec.landing&&ec.landing.vistas);  /* beacon de la landing (lp:vista) — 0 hasta que fluya */
     var drops=fAgg.map(function(n,i){return i>1&&fAgg[i-1]>0?Math.round((fAgg[i-1]-n)/fAgg[i-1]*100):0;});  /* fugas DENTRO del cuestionario, desde la 1ª página */
     var mi=2,md=-1; for(var i=2;i<NL;i++) if(drops[i]>md){md=drops[i];mi=i;}
     if(md<0){mi=2;md=drops[2]||0;}
@@ -731,6 +732,7 @@ body{padding-top:env(safe-area-inset-top)}
     }
     /* lo clave en chips escaneables — la prosa metodológica vive colapsada al final de la sección */
     h+='<div class="kref"><span class="kt">Lo clave</span>'+
+       (lpVis>0?'<span><b>'+lpVis+'</b> vieron la landing</span>':'')+
        '<span><b>'+esc(visN||cargaron)+'</b> visitas</span>'+
        '<span>'+cargaron+' abren → <b>'+empezaron+'</b> empiezan ('+activ+'%)</span>'+
        (reboteEntrada>=25?'<span style="color:var(--rojo)">rebote de entrada <b style="color:var(--rojo)">'+reboteEntrada+'%</b></span>':'')+
