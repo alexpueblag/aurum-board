@@ -1,0 +1,27 @@
+name: Guardian - uptime de formularios
+
+# Cada 30 min: revisa que tus formularios y sus backends respondan. Abre/cierra un
+# issue de GitHub solo. Es el guardian de mayor valor: si un formulario se cae, se
+# pierden leads, y hoy nada mas lo avisaba.
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: guardian-uptime
+  cancel-in-progress: true
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.2.2
+      - name: Revisar servicios
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/guardian_uptime.py

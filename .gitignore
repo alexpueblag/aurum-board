@@ -1,0 +1,7 @@
+# El historico de metricas se reconstruye en cada entorno; no se versiona
+# (evita inflar el repo con ~1MB que cambia en cada corrida).
+metrics_history.jsonl
+__pycache__/
+*.pyc
+.DS_Store
+.playwright-mcp/

@@ -1,0 +1,27 @@
+name: Guardian - salud del token de Meta
+
+# 1 vez al dia (13:15 UTC ~ 6:15 en Hermosillo): verifica que el token de solo-lectura
+# siga vivo y avisa ANTES de que un token muerto congele el board. No-op si aun no hay Secret.
+on:
+  schedule:
+    - cron: "15 13 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: guardian-token
+  cancel-in-progress: true
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.2.2
+      - name: Verificar token
+        env:
+          GH_TOKEN: ${{ github.token }}
+          YOD_META_TOKEN: ${{ secrets.YOD_META_TOKEN }}
+        run: python3 scripts/guardian_token.py

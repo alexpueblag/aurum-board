@@ -1,0 +1,27 @@
+name: Guardian - salud del refresco
+
+# Cada hora (al minuto 30, desfasado del refresco): confirma que el refresco del board
+# haya tenido una corrida EXITOSA reciente. Si el refresco muere en silencio, avisa.
+on:
+  schedule:
+    - cron: "30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  issues: write
+
+concurrency:
+  group: guardian-salud
+  cancel-in-progress: true
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.2.2
+      - name: Revisar salud del refresco
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/guardian_salud.py
