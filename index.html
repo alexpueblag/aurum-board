@@ -985,20 +985,28 @@ body{padding-top:env(safe-area-inset-top)}
     return chipsFiltrados(rows);
   }
   function mergePosts(posts){
-    var map={}, order=[];
+    var map={}, order=[], pend={};
     posts.forEach(function(p){
-      var vid=/reel|video/i.test(p.tipo||'')?'v':'p';
       /* La misma pieza sale en FB e IG con captions distintos (en IG el enlace va
          en el 1er comentario, asi que el texto arranca diferente). Comparar los
          primeros caracteres del titulo las partia en dos tarjetas y los leads de
-         cada red no se sumaban. Se emparejan por fecha + formato, y el titulo solo
-         desempata cuando ese dia hubo VARIAS piezas del mismo formato en la red. */
-      var key=p.fecha+'|'+vid;
-      var slot=p.red==='IG'?'ig':'fb';
-      if(map[key] && map[key][slot]) key+='|'+((p.titulo||'').slice(0,24));
-      if(!map[key]){ map[key]={ig:null,fb:null}; order.push(key); }
-      if(!map[key][slot]) map[key][slot]=p;
+         cada red no se sumaban. Ahora se agrupa por fecha + formato y dentro del
+         grupo se emparejan POR ORDEN: la 1a de IG con la 1a de FB, la 2a con la
+         2a. Asi aguanta varias piezas el mismo dia sin revolverlas. */
+      var vid=/reel|video/i.test(p.tipo||'')?'v':'p';
+      var g=p.fecha+'|'+vid, slot=p.red==='IG'?'ig':'fb';
+      pend[g]=pend[g]||{ig:[],fb:[]};
+      pend[g][slot].push(p);
     });
+    Object.keys(pend).forEach(function(g){
+      var ig=pend[g].ig, fb=pend[g].fb, n=Math.max(ig.length,fb.length);
+      for(var i=0;i<n;i++){
+        var k=g+'#'+i;
+        map[k]={ig:ig[i]||null, fb:fb[i]||null};
+        order.push(k);
+      }
+    });
+    order.sort(function(a,b){ var fa=a.split('|')[0], fb2=b.split('|')[0]; return fa<fb2?1:(fa>fb2?-1:0); });
     return order.map(function(k){ var g=map[k], base=g.ig||g.fb; base._fb=(g.ig&&g.fb)?g.fb:null; return base; });
   }
   function pubSection(){

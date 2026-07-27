@@ -81,9 +81,10 @@ def fetch_leads_utm():
                 req = urllib.request.Request(u, method="GET")
                 with urllib.request.urlopen(req, timeout=30) as r:
                     j = json.loads(r.read())
-                for l in (j.get("leads_utm") or []):
-                    if l.get("utm_campaign"):
-                        out.append(l)
+                # se arma aparte y solo se suma al final: si algo truena a medio
+                # camino, el reintento no vuelve a contar lo que ya iba contado
+                parcial = [l for l in (j.get("leads_utm") or []) if l.get("utm_campaign")]
+                out.extend(parcial)
                 break
             except Exception as e:
                 if intento < 2:
@@ -340,7 +341,7 @@ def main():
 
     posts = ig_rows + fb_rows
     posts.sort(key=lambda r: r.get("fecha") or "", reverse=True)
-    stamp = time.strftime("%Y-%m-%d %H:%M")
+    stamp = datetime.datetime.now(TZ_LOCAL).strftime("%Y-%m-%d %H:%M")   # hora de Hermosillo, no la del runner
 
     prev_path = os.path.join(BASE, "metrics.json")
     prev_full, prev_n = None, 0
@@ -420,13 +421,22 @@ def main():
         inter = sum((r.get("interacciones") or 0) for r in sel)
         saves = sum((r.get("saves") or 0) for r in sel)
         return {"posts": len(sel), "reach": reach, "interacciones": inter, "guardados": saves}
-    hoy = datetime.date.today()
+    # el reloj del comparador tiene que ser el mismo que el de las fechas: en la
+    # nube el runner va en UTC, asi que entre las 5 pm y la medianoche de
+    # Hermosillo 'hoy' ya era manana y el board decia '1 dia sin publicar'
+    # una hora despues de haber publicado.
+    hoy = datetime.datetime.now(TZ_LOCAL).date()
     f_hoy, f_m7, f_m8, f_m14 = (hoy.isoformat(), (hoy - datetime.timedelta(days=6)).isoformat(),
                                  (hoy - datetime.timedelta(days=7)).isoformat(), (hoy - datetime.timedelta(days=13)).isoformat())
     semana = {"actual": semana_stats(f_m7, f_hoy), "anterior": semana_stats(f_m14, f_m8)}
     dias_sin_publicar = (hoy - datetime.date.fromisoformat(posts[0]["fecha"])).days if posts and posts[0].get("fecha") else None
 
+    # El desglose por pieza se calculaba y se tiraba: sin sacarlo, dos publicaciones
+    # del mismo dia seguian mostrando la misma bolsa de leads. Se publica aparte para
+    # que el board pueda desagregar (falta amarrar cada tarjeta con su pieza).
+    leads_por_pieza = {k.split("|", 1)[1]: v for k, v in (campanas or {}).items() if "|" in k}
     out = {"generado": stamp, "pagina": page_name, "ig_id": ig_id, "posts": posts,
+           "leads_por_pieza": leads_por_pieza, "leads_medicion_caida": bool(conservar),
            "semana": semana, "dias_sin_publicar": dias_sin_publicar, "leads_utm_activo": leads_utm_activo}
     with open(os.path.join(BASE, "metrics.json"), "w") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
