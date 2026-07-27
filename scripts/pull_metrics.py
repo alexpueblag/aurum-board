@@ -297,13 +297,19 @@ def main():
 
     def shortid(post_id):
         return str(post_id).split("_")[-1][-10:]
+    # La campana se llama <red>-<fecha> (o <red>-<shortid> para edicion retroactiva):
+    # fb-2026-07-26 en el caption de Facebook, ig-2026-07-26 en el primer comentario
+    # de Instagram. Antes solo se cruzaba FB y los leads de Instagram se tiraban
+    # aunque vinieran etiquetados; IG no permite link por post, pero el 1er comentario si.
+    PREFIJO_RED = {"FB": "fb", "IG": "ig"}
     campanas = leads_por_campana(fetch_leads_utm())
     leads_utm_activo = bool(campanas)
     for r in posts:
-        if r.get("red") == "FB" and r.get("fecha"):
+        pre = PREFIJO_RED.get(r.get("red"))
+        if pre and r.get("fecha"):
             if leads_utm_activo:
-                por_fecha = campanas.get("fb-" + r["fecha"])
-                por_id = campanas.get("fb-" + shortid(r["id"]))
+                por_fecha = campanas.get(pre + "-" + r["fecha"])
+                por_id = campanas.get(pre + "-" + shortid(r["id"]))
                 r["leads_atribuidos"] = (por_fecha["leads"] if por_fecha else 0) + (por_id["leads"] if por_id else 0)
                 r["citas_atribuidas"] = (por_fecha["citas"] if por_fecha else 0) + (por_id["citas"] if por_id else 0)
             else:
