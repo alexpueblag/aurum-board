@@ -48,6 +48,7 @@ jobs:
         if: steps.tok.outputs.hay == 'si'
         env:
           YOD_META_TOKEN: ${{ secrets.YOD_META_TOKEN }}
+          AURUM_QAA_TOKEN: ${{ secrets.AURUM_QAA_TOKEN }}   # iman Arquitectura de Autor
         run: python scripts/pull_metrics.py
 
       - name: Publicar si cambio

@@ -20,17 +20,27 @@ API = "https://graph.facebook.com/v21.0"
 BASE = str(Path(__file__).resolve().parents[1])
 
 # Imanes de leads: se les pregunta por leads_utm para cruzarlos con las publicaciones.
-# Aqui vivia tambien "cuestionario" (aurum-experiencia), pero su Apps Script responde
-# 404 desde hace tiempo y el error se tragaba en silencio: si algun dia se etiquetara
-# una liga hacia el cuestionario, esos leads nunca se atribuirian y nadie lo notaria.
-# Se quita hasta que ese Apps Script vuelva a publicarse; entonces se agrega de nuevo.
+# El cuestionario (aurum-experiencia) estuvo fuera de esta lista y no era que
+# respondiera 404: su recurso=board exige credencial de SESION del Portero (sy...,
+# caduca), y una tarea automatica no puede tener una. Como las publicaciones de
+# Aurum si llevan a ese iman, sus leads no se atribuian a ninguna pieza. Desde la
+# v25 de ese Apps Script existe recurso=leads con token de maquina, que devuelve
+# solo {fecha, utm_campaign, cita} — sin PII. El token entra por secreto porque
+# este repo es publico; sin el secreto, el iman simplemente no se consulta.
 BOARD_URLS = {
-    "potencial": "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec",
+    "potencial": "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec?recurso=board",
 }
+_QAA_TOKEN = os.environ.get("AURUM_QAA_TOKEN", "").strip()
+if _QAA_TOKEN:
+    BOARD_URLS["arquitectura"] = (
+        "https://script.google.com/macros/s/AKfycbztAKA7K5QwO6k45PqjixYLNppLypz"
+        "Cpoz2KvNIkML8kciBLZVKKoais8__0DnYuEQQOg/exec?recurso=leads&token=" + _QAA_TOKEN
+    )
 
 def _scrub(s):
     # defensa en profundidad: jamas dejar caer el access_token en un log publico
-    return re.sub(r"access_token=[^&\s\"']+", "access_token=***", str(s))
+    s = re.sub(r"access_token=[^&\s\"']+", "access_token=***", str(s))
+    return re.sub(r"token=[^&\s\"']+", "token=***", s)   # tambien el del iman del cuestionario
 
 # Meta reporta las fechas en UTC. Hermosillo va en UTC-7 todo el ano (Sonora no
 # cambia de horario), asi que a partir de las 17:00 locales el dia UTC ya avanzo.
@@ -65,7 +75,7 @@ def fetch_leads_utm():
     atribucion por un timeout borraria leads ya ganados del board."""
     out, falla = [], False
     for nombre, url in BOARD_URLS.items():
-        u = url + ("&" if "?" in url else "?") + "recurso=board"
+        u = url   # cada iman ya trae su recurso: board (abierto) o leads (con token)
         for intento in range(3):
             try:
                 req = urllib.request.Request(u, method="GET")
