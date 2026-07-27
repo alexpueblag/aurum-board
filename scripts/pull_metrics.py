@@ -85,15 +85,25 @@ def fetch_leads_utm():
     return out, falla
 
 def leads_por_campana(leads_utm):
+    """Agrupa por campana (<red>-<fecha>) y ademas por campana+pieza cuando el lead
+    trae utm_content. Lo segundo permite separar dos publicaciones del MISMO dia y
+    red: sin eso, sus leads caen en la misma bolsa y solo se separan abriendo el
+    Sheet a mano. El Apps Script que manda utm_content puede no estar desplegado
+    todavia; mientras no lo este, esta parte simplemente queda vacia."""
     agg = {}
+    def suma(clave, l):
+        agg.setdefault(clave, {"leads": 0, "citas": 0})
+        agg[clave]["leads"] += 1
+        if l.get("cita"):
+            agg[clave]["citas"] += 1
     for l in leads_utm:
         c = str(l.get("utm_campaign") or "").strip()
         if not c:
             continue
-        agg.setdefault(c, {"leads": 0, "citas": 0})
-        agg[c]["leads"] += 1
-        if l.get("cita"):
-            agg[c]["citas"] += 1
+        suma(c, l)
+        pieza = str(l.get("utm_content") or "").strip()
+        if pieza:
+            suma(c + "|" + pieza, l)
     return agg
 
 def _get(path, params, intentos=4):
