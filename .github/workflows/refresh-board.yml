@@ -61,5 +61,18 @@ jobs:
             echo "Sin cambios que subir."
           else
             git commit -m "Actualizar metricas (Action $(date -u +%Y-%m-%dT%H:%MZ)) [skip ci]"
-            git push
+            # Si otra corrida (o una edicion a mano) empujo mientras esta jalaba,
+            # el push se rechaza. Antes eso marcaba la corrida en rojo por nada.
+            # Se reintenta reacomodandose encima; metrics.json es generado, asi que
+            # ante conflicto manda lo recien jalado, que es lo mas fresco.
+            for intento in 1 2 3; do
+              if git push; then
+                echo "Publicado."; break
+              fi
+              echo "Push rechazado (intento $intento): alguien mas empujo. Reacomodando…"
+              git fetch origin main
+              git checkout --ours metrics.json 2>/dev/null || true
+              GIT_EDITOR=true git rebase -X ours origin/main || { git rebase --abort || true; git reset --hard origin/main; break; }
+              sleep $((intento * 3))
+            done
           fi
