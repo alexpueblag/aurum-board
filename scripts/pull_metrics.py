@@ -19,9 +19,12 @@ API = "https://graph.facebook.com/v21.0"
 # En la nube el script vive en <repo>/scripts/ y las salidas van a la RAIZ del repo.
 BASE = str(Path(__file__).resolve().parents[1])
 
-# Apps Script de los 2 imanes de leads (publicos; se leen para cruzar leads_utm con posts de FB).
+# Imanes de leads: se les pregunta por leads_utm para cruzarlos con las publicaciones.
+# Aqui vivia tambien "cuestionario" (aurum-experiencia), pero su Apps Script responde
+# 404 desde hace tiempo y el error se tragaba en silencio: si algun dia se etiquetara
+# una liga hacia el cuestionario, esos leads nunca se atribuirian y nadie lo notaria.
+# Se quita hasta que ese Apps Script vuelva a publicarse; entonces se agrega de nuevo.
 BOARD_URLS = {
-    "cuestionario": "https://script.google.com/macros/s/AKfycbw1Wm5wOC6XE2PcS0xBbIy-OdBbmU5vjvwnVNaHN6Fa7HHugyuk-EvkoURtr56j6dDVag/exec",
     "potencial": "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec",
 }
 
@@ -29,20 +32,57 @@ def _scrub(s):
     # defensa en profundidad: jamas dejar caer el access_token en un log publico
     return re.sub(r"access_token=[^&\s\"']+", "access_token=***", str(s))
 
+# Meta reporta las fechas en UTC. Hermosillo va en UTC-7 todo el ano (Sonora no
+# cambia de horario), asi que a partir de las 17:00 locales el dia UTC ya avanzo.
+# Cortar el timestamp crudo con [:10] le ponia a esas publicaciones la fecha del
+# DIA SIGUIENTE, y entonces dejaban de cruzar con su propia campana <red>-<fecha>:
+# la atribucion se caia en silencio y el board mostraba cero leads.
+try:
+    from zoneinfo import ZoneInfo
+    TZ_LOCAL = ZoneInfo("America/Hermosillo")
+except Exception:                                    # pragma: no cover
+    TZ_LOCAL = datetime.timezone(datetime.timedelta(hours=-7))
+
+def fecha_local(ts):
+    """AAAA-MM-DD en hora de Hermosillo a partir del timestamp de Meta.
+    Acepta '2026-07-27T20:31:06+0000', '...Z' y '...+00:00'. Si no se puede
+    interpretar, cae al recorte crudo para no perder el dato."""
+    s = (ts or "").strip()
+    if not s:
+        return ""
+    iso = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", s.replace("Z", "+00:00"))
+    try:
+        d = datetime.datetime.fromisoformat(iso)
+    except ValueError:
+        return s[:10]
+    if d.tzinfo is None:                             # sin offset = UTC, como manda Meta
+        d = d.replace(tzinfo=datetime.timezone.utc)
+    return d.astimezone(TZ_LOCAL).date().isoformat()
+
 def fetch_leads_utm():
-    out = []
+    """Devuelve (leads, hubo_falla). El segundo valor importa: si un iman se cayo
+    no podemos distinguir 'no hay leads' de 'no pude preguntar', y blanquear la
+    atribucion por un timeout borraria leads ya ganados del board."""
+    out, falla = [], False
     for nombre, url in BOARD_URLS.items():
-        try:
-            u = url + ("&" if "?" in url else "?") + "recurso=board"
-            req = urllib.request.Request(u, method="GET")
-            with urllib.request.urlopen(req, timeout=30) as r:
-                j = json.loads(r.read())
-            for l in (j.get("leads_utm") or []):
-                if l.get("utm_campaign"):
-                    out.append(l)
-        except Exception:
-            pass
-    return out
+        u = url + ("&" if "?" in url else "?") + "recurso=board"
+        for intento in range(3):
+            try:
+                req = urllib.request.Request(u, method="GET")
+                with urllib.request.urlopen(req, timeout=30) as r:
+                    j = json.loads(r.read())
+                for l in (j.get("leads_utm") or []):
+                    if l.get("utm_campaign"):
+                        out.append(l)
+                break
+            except Exception as e:
+                if intento < 2:
+                    time.sleep(2 ** intento)
+                    continue
+                falla = True
+                # antes esto se tragaba en silencio: un iman caido era invisible
+                print(f"  ! iman de leads '{nombre}' no respondio: {type(e).__name__}: {_scrub(e)}")
+    return out, falla
 
 def leads_por_campana(leads_utm):
     agg = {}
@@ -198,7 +238,7 @@ def pull_ig(ig_id, token, limit=25):
         thumb = m.get("thumbnail_url") or m.get("media_url")
         rows.append({
             "red": "IG", "tipo": tipo, "id": m["id"], "permalink": m.get("permalink"),
-            "fecha": (m.get("timestamp") or "")[:10],
+            "fecha": fecha_local(m.get("timestamp")),
             "titulo": ((m.get("caption") or "").strip().split("\n")[0])[:90],
             "thumb": thumb, "cover": download_cover(thumb, m["id"]),
             "reach": reach, "likes": likes, "comments": comments, "shares": shares, "saves": saves,
@@ -235,7 +275,7 @@ def pull_fb(page_id, page_token, limit=25):
         rows.append({
             "red": "FB", "tipo": (p.get("status_type") or "post").replace("_", " ").title(),
             "id": p["id"], "permalink": p.get("permalink_url"),
-            "fecha": (p.get("created_time") or "")[:10],
+            "fecha": fecha_local(p.get("created_time")),
             "titulo": ((p.get("message") or "").strip().split("\n")[0])[:90],
             "thumb": fp, "cover": download_cover(fp, p["id"]),
             "reach": None, "likes": react, "comments": comments, "shares": shares, "saves": None,
@@ -302,19 +342,34 @@ def main():
     # de Instagram. Antes solo se cruzaba FB y los leads de Instagram se tiraban
     # aunque vinieran etiquetados; IG no permite link por post, pero el 1er comentario si.
     PREFIJO_RED = {"FB": "fb", "IG": "ig"}
-    campanas = leads_por_campana(fetch_leads_utm())
+    leads_crudos, leads_falla = fetch_leads_utm()
+    campanas = leads_por_campana(leads_crudos)
     leads_utm_activo = bool(campanas)
+
+    # Si el iman no respondio y antes SI habia atribucion, conservamos la de la
+    # corrida anterior: un timeout no puede borrar leads ya ganados del board.
+    prev_por_id = {p.get("id"): p for p in (prev_full or {}).get("posts", [])}
+    conservar = (leads_falla and not leads_utm_activo
+                 and bool((prev_full or {}).get("leads_utm_activo")))
+    if conservar:
+        print("  ! consulta de leads fallida: conservo la atribucion de la corrida anterior")
+        leads_utm_activo = True
+
     for r in posts:
         pre = PREFIJO_RED.get(r.get("red"))
-        if pre and r.get("fecha"):
-            if leads_utm_activo:
-                por_fecha = campanas.get(pre + "-" + r["fecha"])
-                por_id = campanas.get(pre + "-" + shortid(r["id"]))
-                r["leads_atribuidos"] = (por_fecha["leads"] if por_fecha else 0) + (por_id["leads"] if por_id else 0)
-                r["citas_atribuidas"] = (por_fecha["citas"] if por_fecha else 0) + (por_id["citas"] if por_id else 0)
-            else:
-                r["leads_atribuidos"] = None
-                r["citas_atribuidas"] = None
+        if not (pre and r.get("fecha")):
+            continue
+        if not leads_utm_activo:
+            r["leads_atribuidos"] = r["citas_atribuidas"] = None
+        elif conservar:
+            ant = prev_por_id.get(r.get("id")) or {}
+            r["leads_atribuidos"] = ant.get("leads_atribuidos") or 0
+            r["citas_atribuidas"] = ant.get("citas_atribuidas") or 0
+        else:
+            por_fecha = campanas.get(pre + "-" + r["fecha"])
+            por_id = campanas.get(pre + "-" + shortid(r["id"]))
+            r["leads_atribuidos"] = (por_fecha["leads"] if por_fecha else 0) + (por_id["leads"] if por_id else 0)
+            r["citas_atribuidas"] = (por_fecha["citas"] if por_fecha else 0) + (por_id["citas"] if por_id else 0)
 
     def _norm_posts(ps):
         return json.dumps([{k: v for k, v in p.items() if k != "serie"} for p in ps],

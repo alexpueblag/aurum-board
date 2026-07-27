@@ -988,9 +988,16 @@ body{padding-top:env(safe-area-inset-top)}
     var map={}, order=[];
     posts.forEach(function(p){
       var vid=/reel|video/i.test(p.tipo||'')?'v':'p';
-      var key=p.fecha+'|'+vid+'|'+((p.titulo||'').slice(0,24));
+      /* La misma pieza sale en FB e IG con captions distintos (en IG el enlace va
+         en el 1er comentario, asi que el texto arranca diferente). Comparar los
+         primeros caracteres del titulo las partia en dos tarjetas y los leads de
+         cada red no se sumaban. Se emparejan por fecha + formato, y el titulo solo
+         desempata cuando ese dia hubo VARIAS piezas del mismo formato en la red. */
+      var key=p.fecha+'|'+vid;
+      var slot=p.red==='IG'?'ig':'fb';
+      if(map[key] && map[key][slot]) key+='|'+((p.titulo||'').slice(0,24));
       if(!map[key]){ map[key]={ig:null,fb:null}; order.push(key); }
-      var slot=p.red==='IG'?'ig':'fb'; if(!map[key][slot]) map[key][slot]=p;
+      if(!map[key][slot]) map[key][slot]=p;
     });
     return order.map(function(k){ var g=map[k], base=g.ig||g.fb; base._fb=(g.ig&&g.fb)?g.fb:null; return base; });
   }
