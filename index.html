@@ -328,19 +328,24 @@ body{padding-top:env(safe-area-inset-top)}
     recientes:[]
   };
 
-  /* Arquitectura de Autor (cuestionario QAA) EN PAUSA desde 2026-07-22: Alejandro retiró el
-     formulario de Google; se reactivará para llenarlo en las videollamadas con los prospectos.
-     El board NO inventa números: muestra "en pausa" y se apoya en Plan de Potencial (vivo).
-     Para reactivarlo: poner ARQ_PAUSADO=false y devolver la URL /exec viva a CONFIG.SHEET_URL. */
-  var ARQ_PAUSADO = true;
+  /* Arquitectura de Autor (cuestionario QAA): Alejandro retiró el formulario de Google
+     el 2026-07-22 y se reactivará para llenarlo en las videollamadas con los prospectos.
+     Del 22 al 28 de julio el board estuvo en pausa DURA (no preguntaba nada), y eso
+     escondía lo que sí estaba medido: el backend siempre sirvió el histórico del imán
+     (embudo del Pixel y actividad_por_dia). Retirar el imán no borra lo que ya trajo.
+     Ahora el board LEE de verdad y además dice la fecha del retiro, para que un número
+     congelado no se lea como un número de hoy.
+     El SNAP de ejemplo sigue prohibido: si la lectura falla se dice, no se inventa. */
+  var ARQ_PAUSADO = false;
+  var ARQ_RETIRO = "22 de julio de 2026";   /* el día que se retiró el cuestionario */
+  /* Respaldo honesto para cuando NO se pudo leer: ceros y un letrero que lo dice. */
   var PAUSA = {
-    meta:{actualizado:null, periodo:"En pausa", semana:"", es_snapshot:false, arq_pausado:true},
+    meta:{actualizado:null, periodo:"Sin lectura", semana:"", es_snapshot:false, sin_lectura:true},
     kpis:{leads:0, citas:0, clientes:0, nuevos_sin_tocar_24h:0},
     prev:{}, gasto:{semana_actual:0, total:0, por_campana:[]},
     funnel:[], por_estado:[], por_fuente:[], por_dia:[],
     embudo_cuestionario:null, alertas:[], recientes:[], actividad_por_dia:[]
   };
-  if(ARQ_PAUSADO && !DATA) DATA = PAUSA;   /* arranca en pausa: nunca se ve el SNAP de ejemplo */
 
   /* ============ HELPERS ============ */
   function $(id){return document.getElementById(id);}
@@ -366,7 +371,7 @@ body{padding-top:env(safe-area-inset-top)}
     b.setAttribute("data-s",s); b.querySelector(".t").textContent=labels[s]||s;
   }
   function fetchData(manual){
-    if(ARQ_PAUSADO) return Promise.resolve({ok:true,source:"leads",reason:"arq_pausado"});   /* imán retirado a propósito: no es error, es un no-op sano */
+    if(ARQ_PAUSADO) return Promise.resolve({ok:true,source:"leads",reason:"arq_pausado"});   /* interruptor: ponlo en true para que el board deje de preguntarle a este imán */
     if(!CONFIG.SHEET_URL) return Promise.resolve({ok:false,source:"leads",reason:"controlador_sin_url"});
     var url=CONFIG.SHEET_URL+(CONFIG.SHEET_URL.indexOf("?")<0?"?":"&")+"recurso=board&k="+encodeURIComponent(credencial())+"&cb="+Date.now();
     var ctrl=new AbortController(), t=setTimeout(function(){ctrl.abort();},CONFIG.FETCH_TIMEOUT);
@@ -412,7 +417,7 @@ body{padding-top:env(safe-area-inset-top)}
     var b=$("badge"); if(b)b.disabled=true;
     return Promise.all([fetchData(manual),fetchMetrics(),fetchPot()]).then(function(resultados){
       var bien=resultados.filter(function(r){return r&&r.ok;}).length;
-      if(!DATA){ DATA=ARQ_PAUSADO?PAUSA:SNAP; render(); }
+      if(!DATA){ DATA=PAUSA; render(); }   /* no se pudo leer: ceros y letrero — nunca el SNAP de ejemplo */
       setBadge(bien===resultados.length?"live":(bien?"partial":"error"));
       if(manual){
         if(bien===resultados.length) toast("Anuncios, leads y métricas actualizados desde internet");
@@ -499,7 +504,7 @@ body{padding-top:env(safe-area-inset-top)}
     var acc=[];
     if(sinTocar>0) acc.push({t:'Contesta a los <b>'+sinTocar+' leads NUEVO</b> que llevan más de 24 h esperando. <a href="'+CRM_URL+'" target="_blank" rel="noopener">Abrir CRM →</a>', rojo:true});
     if(METRICS && METRICS.dias_sin_publicar!=null && METRICS.dias_sin_publicar>=3) acc.push({t:'Publica hoy: llevas <b>'+METRICS.dias_sin_publicar+' días</b> sin post nuevo. <a href="#sec-pubs">Ver qué formato conviene ↓</a>'});
-    if(num(g.semana_actual)===0 && !(d.meta&&d.meta.es_snapshot) && !(d.meta&&d.meta.arq_pausado)) acc.push({t:'Registra el <b>gasto de pauta</b> de la semana — sin él no se puede calcular el costo por cita. <a href="#sec-gasto">Ir al formulario ↓</a>'});
+    if(num(g.semana_actual)===0 && !(d.meta&&d.meta.es_snapshot) && !(d.meta&&d.meta.sin_lectura)) acc.push({t:'Registra el <b>gasto de pauta</b> de la semana — sin él no se puede calcular el costo por cita. <a href="#sec-gasto">Ir al formulario ↓</a>'});
     var yaCubiertas=/NUEVO sin tocar|gasto registrado|sin etiqueta UTM/i;
     var resto=(d.alertas||[]).filter(function(a){return !yaCubiertas.test(a.texto||'');});
     if(acc.length||resto.length){
@@ -512,10 +517,10 @@ body{padding-top:env(safe-area-inset-top)}
     var totCitasH=((d.funnel&&d.funnel[1])?num(d.funnel[1].n):0), totCliH=((d.funnel&&d.funnel[2])?num(d.funnel[2].n):0);
     var _semVacia = num(g.semana_actual)===0 && num(k.leads)===0 && num(k.citas)===0 && num(k.clientes)===0;
     html+='<h2 class="sec" id="sec-semana">Esta semana · Arquitectura de Autor</h2>';
-    if(d.meta&&d.meta.arq_pausado){
-      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;"><b style="color:var(--negro)">Arquitectura de Autor está en pausa desde el 22 de julio de 2026.</b> Ese día retiraste el cuestionario de Google; se reactivará para llenarlo <b style="color:var(--negro)">en las videollamadas</b> con los prospectos. Ojo: la página del imán <b style="color:var(--negro)">sigue en línea</b> y las publicaciones de Aurum siguen llevando ahí — lo apagado es la lectura de sus números en este tablero. Mientras, el movimiento vivo está en <a href="#sec-trafico" style="color:var(--oro)">Plan de Potencial ↓</a>.</div>';
+    if(d.meta&&d.meta.sin_lectura){
+      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;"><b style="color:var(--negro)">No se pudieron leer los números de Arquitectura de Autor.</b> Esto <b style="color:var(--negro)">no</b> quiere decir que estén en cero: quiere decir que el tablero no pudo preguntar. Vuelve a entrar desde YOD OS (tu acceso pudo caducar) o dale a <b style="color:var(--negro)">Actualizar</b>.</div>';
     } else if(_semVacia && !(d.meta&&d.meta.es_snapshot)){
-      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;">Semana en blanco para <b style="color:var(--negro)">Arquitectura de Autor</b> — sin gasto, leads ni citas nuevas. Históricos: <b style="color:var(--negro)">'+totArq+'</b> leads · <b style="color:var(--negro)">'+totCitasH+'</b> citas · <b style="color:var(--negro)">'+totCliH+'</b> clientes. El movimiento está en <a href="#sec-trafico" style="color:var(--oro)">Plan de Potencial ↓</a> · <a href="#sec-gasto" style="color:var(--carbon)">registrar gasto →</a></div>';
+      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;">El cuestionario se <b style="color:var(--negro)">retiró el '+ARQ_RETIRO+'</b> y ahora se llena <b style="color:var(--negro)">en las videollamadas</b>, así que no hay semana nueva que contar. Lo que alcanzó a traer: <b style="color:var(--negro)">'+totArq+'</b> leads · <b style="color:var(--negro)">'+totCitasH+'</b> citas · <b style="color:var(--negro)">'+totCliH+'</b> clientes. La página del imán <b style="color:var(--negro)">sigue en línea</b> y las publicaciones de Aurum siguen llevando ahí. El movimiento vivo está en <a href="#sec-trafico" style="color:var(--oro)">Plan de Potencial ↓</a></div>';
     } else {
       html+='<div class="nums">';
       html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "histórico "+money(g.total));
@@ -543,8 +548,8 @@ body{padding-top:env(safe-area-inset-top)}
       });
       if(_cI>0&&_cD>0) html+='<div class="cuello">Tu cuello está en <b>'+esc((d.funnel[_cI-1]||{}).etapa)+' → '+esc((d.funnel[_cI]||{}).etapa)+'</b> · ahí se pierde el '+_cD+'%</div>';
       html+='</div>';
-    } else if(d.meta&&d.meta.arq_pausado){
-      html+='<p class="nota">El embudo del cuestionario está en pausa (se reactivará para las videollamadas).</p>';
+    } else if(d.meta&&d.meta.sin_lectura){
+      html+='<p class="nota">No se pudo leer el embudo del cuestionario (no es un cero: es una lectura que no llegó).</p>';
     } else {
       html+='<p class="nota">Aún sin leads en el CRM del cuestionario.</p>';
     }
@@ -707,9 +712,12 @@ body{padding-top:env(safe-area-inset-top)}
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#16161a')+';color:'+(on?'#17140F':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
       '<div style="font-family:Instrument Serif,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
-    var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · en pausa')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
+    var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario retirado')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
     if(mag==='arq' && (!ec || !ec.pasos || !ec.pasos.length)){
-      return sel+'<div class="card" style="text-align:center;padding:28px 22px;"><p style="font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);">Arquitectura de Autor · en pausa desde el 22 de julio de 2026</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.5;">Ese día retiraste el cuestionario de Google; se reactivará para llenarlo <b style="color:var(--carbon)">en las videollamadas</b> con los prospectos. La página del imán <b style="color:var(--carbon)">sigue en línea</b> (las publicaciones de Aurum siguen llevando ahí); lo que está apagado es la lectura de sus números aquí. El imán con datos en vivo es <b style="color:var(--carbon)">Plan de Potencial</b>.</p></div>';
+      var _sl = DATA && DATA.meta && DATA.meta.sin_lectura;
+      return sel+'<div class="card" style="text-align:center;padding:28px 22px;"><p style="font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);">Arquitectura de Autor · '+(_sl?'no se pudo leer':'sin pasos registrados')+'</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.5;">'+(_sl
+        ? 'El tablero no pudo preguntarle a su Apps Script. <b style="color:var(--carbon)">No es un cero</b>, es una lectura que no llegó: vuelve a entrar desde YOD OS o dale a Actualizar.'
+        : 'El cuestionario se retiró el <b style="color:var(--carbon)">'+ARQ_RETIRO+'</b> y ahora se llena en las videollamadas, así que ya no entra actividad nueva. Si tampoco ves la anterior, es que el Pixel no alcanzó a escribir pasos en la hoja <b style="color:var(--carbon)">ACTIVIDAD</b> del Sheet. La página del imán sigue en línea.')+'</p></div>';
     }
     /* imán Plan de Potencial: su propia fuente de datos (DATA_POT, de su Apps Script). Si aún no llega, muestra cargando. */
     if(mag==='pot'){
@@ -863,7 +871,10 @@ body{padding-top:env(safe-area-inset-top)}
   function serieTiempoHTML(serie, magLbl){
     var h='<h2 class="sec">Comportamiento en el tiempo'+(magLbl?' · '+esc(magLbl):'')+'</h2>';
     if(!serie || !serie.length){
-      return h+'<p class="nota">Se enciende al actualizar tu Apps Script (expone <code>actividad_por_dia</code> — te paso el código de 2 pasos). Mientras, el embudo de arriba es el <b>acumulado</b> de todos los días.</p>';
+      /* La nota vieja decia "se enciende al actualizar tu Apps Script": ya no era
+         cierto — el backend expone actividad_por_dia desde hace tiempo. Si aqui no
+         hay serie es que no hay dias con actividad que dibujar. */
+      return h+'<p class="nota">Sin días con actividad que dibujar todavía. El embudo de arriba es el <b>acumulado</b> de todo lo registrado.</p>';
     }
     var s=serie.slice(-30);
     var maxV=Math.max.apply(null,s.map(function(x){return num(x.visitas);}).concat([1]));
