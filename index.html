@@ -298,7 +298,10 @@ body{padding-top:env(safe-area-inset-top)}
   var CONFIG = {
     SHEET_URL: "https://script.google.com/macros/s/AKfycbztAKA7K5QwO6k45PqjixYLNppLypzCpoz2KvNIkML8kciBLZVKKoais8__0DnYuEQQOg/exec",
     META_EVENTS_URL: "https://business.facebook.com/events_manager2/list/dataset/1563269895817275/overview",
-    FETCH_TIMEOUT: 12000,
+    /* 12 s no alcanzaba en frío: Apps Script tarda en despertar y, cuando toca
+       revalidar la credencial, además consulta al Portero. Un tablero que se
+       rinde antes de tiempo dice "no se pudo leer" sobre datos que sí estaban. */
+    FETCH_TIMEOUT: 20000,
     REFRESH_MS: 600000,
     METRICS_URL: "metrics.json",   /* metricas de publicaciones (lo genera pull_metrics.py) */
     POT_URL: "https://script.google.com/macros/s/AKfycbw3EB-6Q9Mq-ouDU-JvKMrRUaw4auYVeGkKja783yJ7_dEpCOW8xoMhs8IQMDojmlDB3A/exec"   /* Apps Script del formulario Plan de Potencial (imán 'pot') — su propio ?recurso=board */
