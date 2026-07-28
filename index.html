@@ -902,7 +902,9 @@ body{padding-top:env(safe-area-inset-top)}
     var maxV=Math.max.apply(null,s.map(function(x){return num(x.visitas);}).concat([1]));
     var peak=s.reduce(function(a,b){return num(b.visitas)>num(a.visitas)?b:a;},s[0]);
     var totV=s.reduce(function(a,b){return a+num(b.visitas);},0), totL=s.reduce(function(a,b){return a+num(b.lead);},0), totA=s.reduce(function(a,b){return a+num(b.agenda);},0);
-    h+='<div class="kref"><span class="kt">Últimos '+s.length+' días</span><span>Visitas <b>'+totV+'</b></span><span>Leads <b>'+totL+'</b></span><span>Citas <b>'+totA+'</b></span><span>Día pico <b>'+esc(peak.fecha.slice(5))+'</b> ('+peak.visitas+')</span></div>';
+    /* con la línea de arranque lo normal es tener 1 o 2 días: "Últimos 1 días" se leía mal */
+    var _lbl = (s.length===1) ? 'Hoy' : ('Últimos '+s.length+' días');
+    h+='<div class="kref"><span class="kt">'+_lbl+'</span><span>Visitas <b>'+totV+'</b></span><span>Leads <b>'+totL+'</b></span><span>Citas <b>'+totA+'</b></span><span>Día pico <b>'+esc(peak.fecha.slice(5))+'</b> ('+peak.visitas+')</span></div>';
     /* barras por día */
     h+='<div style="overflow-x:auto;padding-bottom:4px;"><div style="display:flex;align-items:flex-end;gap:3px;height:130px;min-width:100%;">';
     s.forEach(function(x){
