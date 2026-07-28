@@ -738,7 +738,17 @@ body{padding-top:env(safe-area-inset-top)}
       ec={pasos:DATA_POT.funnel,visitas:DATA_POT.visitas}; d={actividad_por_dia:DATA_POT.actividad_por_dia||[]};
     }
     var pasos=ec.pasos, NL=pasos.length, labelsE=pasos.map(function(p){return p.etiqueta;});
-    var apd=(d.actividad_por_dia||[]).slice();
+    /* LÍNEA DE ARRANQUE: el embudo ya se arma día por día (scope -> fAgg), así que
+       recortar los días recorta TODO el embudo sin tocar los backends ni borrar nada.
+       Lo de antes del arranque sigue completo en el Sheet. */
+    var apdCruda=(d.actividad_por_dia||[]).slice();
+    var apd=desdeArranque(apdCruda);
+    var _antes=diasAntes(apdCruda);
+    if(ARRANQUE && !apd.length){
+      var _visAntes=apdCruda.reduce(function(a,x){return a+num(x.visitas);},0);
+      return sel+'<div class="card" style="text-align:center;padding:28px 22px;"><p style="font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);">'+esc(cfg.titulo)+' · contando desde el '+arranqueLargo()+'</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:470px;margin-left:auto;margin-right:auto;line-height:1.5;">Todavía no hay actividad registrada desde el arranque. Aquí va a aparecer el efecto de las publicaciones nuevas.'+
+        (_antes?' Lo de antes (<b style="color:var(--carbon)">'+_antes+'</b> día'+(_antes===1?'':'s')+', <b style="color:var(--carbon)">'+_visAntes+'</b> visitas) no se borró: sigue completo en el Sheet.':'')+'</p></div>';
+    }
     var aggEmp=num(pasos[1].n)||1, ratio=pasos.map(function(p){return num(p.n)/aggEmp;});
     function stageKey(i){ return i<NL-2?('p'+i):(i===NL-2?'lead':'agenda'); }
     function dayFunnel(x){ var f=[],emb=x.embudo;
@@ -756,9 +766,11 @@ body{padding-top:env(safe-area-inset-top)}
     var scope=F.month?apd.filter(function(x){return x._mm===F.month;}):apd, hasSeg=scope.length>0;
     var exacto=hasSeg&&scope.every(function(x){return x.embudo;});  /* embudo por día del Sheet ya desplegado => desglose por etapa EXACTO */
     var fAgg=[]; for(var i=0;i<NL;i++) fAgg.push(scope.reduce(function(a,x){return a+x._f[i];},0));
-    if(!hasSeg) fAgg=pasos.map(function(p){return num(p.n);});
+    /* Sin días en el scope: antes se caía a los totales de por vida. Con línea de
+       arranque eso desharía el reseteo en silencio, así que ahí van ceros. */
+    if(!hasSeg) fAgg = ARRANQUE ? pasos.map(function(){return 0;}) : pasos.map(function(p){return num(p.n);});
     var cargaron=fAgg[0]||1, empezaron=fAgg[1]||0, base=empezaron||1, activ=Math.round(empezaron/cargaron*100), reboteEntrada=100-activ;  /* base=Estilo (1ª página): UNA sola entrada, sin duplicar "Inicio" */
-    var visN=hasSeg?scope.reduce(function(a,x){return a+num(x.visitas);},0):num(ec.visitas);  /* visitas del scope (mes) — para que el titular cuadre con las barras */
+    var visN=hasSeg?scope.reduce(function(a,x){return a+num(x.visitas);},0):(ARRANQUE?0:num(ec.visitas));  /* visitas del scope — cuadra con las barras; con arranque nunca cae al total de por vida */
     var lpVis=hasSeg?scope.reduce(function(a,x){return a+num(x.embudo&&x.embudo['lp:vista']);},0):num(ec.landing&&ec.landing.vistas);  /* beacon de la landing (lp:vista) — 0 hasta que fluya */
     var drops=fAgg.map(function(n,i){return i>1&&fAgg[i-1]>0?Math.round((fAgg[i-1]-n)/fAgg[i-1]*100):0;});  /* fugas DENTRO del cuestionario, desde la 1ª página */
     var mi=2,md=-1; for(var i=2;i<NL;i++) if(drops[i]>md){md=drops[i];mi=i;}
@@ -768,10 +780,8 @@ body{padding-top:env(safe-area-inset-top)}
     var C=F.dim==='hora'?HRAMP:WRAMP;
     window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
     var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · ¿cuántos llegan y dónde se caen?</h2>';
-    /* Honestidad con la línea de arranque: este embudo viene ACUMULADO del backend
-       (totales por paso), no día por día, así que no se puede recortar aquí. Si se
-       dejara sin aviso, contradiría a la serie de arriba, que sí arranca en la línea. */
-    if(ARRANQUE) h+='<p class="hint" style="margin:-4px 0 10px;">Acumulado histórico — incluye lo anterior al '+arranqueLargo()+'. La medición nueva se ve en <b>Comportamiento en el tiempo</b> y en los leads atribuidos por publicación.</p>';
+    if(ARRANQUE) h+='<p class="hint" style="margin:-4px 0 10px;">Contando desde el <b>'+arranqueLargo()+'</b>'+
+      (_antes?' · quedan atrás <b>'+_antes+'</b> día'+(_antes===1?'':'s')+', que no se borraron y siguen en el Sheet':'')+'.</p>';
     if(mag==='pot'&&DATA_POT&&DATA_POT.kpis){ var K=DATA_POT.kpis;
       var fAg=(DATA_POT.funnel||[]).filter(function(p){return p.paso==='agenda';})[0]; fAg=fAg?num(fAg.n):0;
       h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px;align-items:stretch;">'+
