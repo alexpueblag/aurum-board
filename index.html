@@ -338,6 +338,26 @@ body{padding-top:env(safe-area-inset-top)}
      El SNAP de ejemplo sigue prohibido: si la lectura falla se dice, no se inventa. */
   var ARQ_PAUSADO = false;
   var ARQ_RETIRO = "22 de julio de 2026";   /* el día que se retiró el cuestionario */
+
+  /* LÍNEA DE ARRANQUE (28-jul-2026). Alejandro pidió empezar a medir desde los
+     esfuerzos nuevos, sin cargar con meses de tráfico que nunca tuvo liga y que
+     por eso no se puede atribuir a nada. En vez de BORRAR (irreversible), se
+     traza una línea: lo de aquí en adelante manda la vista, lo anterior sigue
+     entero en el Sheet y se dice cuánto quedó atrás. Para mover la línea o
+     apagarla, cambia esta fecha o ponla en "". */
+  var ARRANQUE = "2026-07-28";
+  function desdeArranque(serie){
+    if(!ARRANQUE || !serie || !serie.length) return serie||[];
+    return serie.filter(function(x){ return String(x.fecha||"") >= ARRANQUE; });
+  }
+  function diasAntes(serie){
+    if(!ARRANQUE || !serie) return 0;
+    return serie.filter(function(x){ return String(x.fecha||"") < ARRANQUE; }).length;
+  }
+  function arranqueLargo(){
+    var p=String(ARRANQUE).split("-"), M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+    return p.length===3 ? (parseInt(p[2],10)+" de "+M[parseInt(p[1],10)-1]+" de "+p[0]) : ARRANQUE;
+  }
   /* Respaldo honesto para cuando NO se pudo leer: ceros y un letrero que lo dice. */
   var PAUSA = {
     meta:{actualizado:null, periodo:"Sin lectura", semana:"", es_snapshot:false, sin_lectura:true},
@@ -554,18 +574,11 @@ body{padding-top:env(safe-area-inset-top)}
       html+='<p class="nota">Aún sin leads en el CRM del cuestionario.</p>';
     }
 
-    /* --- últimos leads (ambos imanes): quién llegó y en qué va — el dato ya venía del Sheet y no se mostraba --- */
-    function estChip(e){ var s=String(e||'').toUpperCase();
-      var c=/NUEVO/.test(s)?'nuevo':(/AGENDADA|QAA/.test(s)?'agendada':(/CLIENTE/.test(s)?'cliente':(/DESCART/.test(s)?'descartado':'')));
-      return '<span class="est '+c+'">'+esc(e||'—')+'</span>'; }
-    var recPot=((DATA_POT&&DATA_POT.recientes)||[]).filter(function(r){return String(r.tipo||'')!=='lead_interes';}).slice(0,5);
-    var recArq=(d.recientes||[]).slice(0,5);
-    if(recPot.length||recArq.length){
-      html+='<h2 class="sec">Últimos leads · quién llegó y en qué va</h2><table><tr><th>Imán</th><th>Lead</th><th>Estado</th><th>Fuente</th></tr>';
-      recPot.forEach(function(r){ html+='<tr><td><span class="magchip">Terreno</span></td><td>'+esc(r.apodo||r.folio||'—')+'</td><td>'+estChip(r.estado)+'</td><td>'+esc(r.fuente||'(directo)')+'</td></tr>'; });
-      recArq.forEach(function(r){ html+='<tr><td><span class="magchip">Cuestionario</span></td><td>'+esc(r.folio||'—')+'</td><td>'+estChip(r.estado)+'</td><td>'+esc(r.fuente||'(directo)')+'</td></tr>'; });
-      html+='</table><p class="hint">Los más recientes de cada imán, directo del CRM (solo folio/apodo, sin datos personales). El detalle completo vive en el Sheet.</p>';
-    }
+    /* La tabla "Últimos leads · quién llegó y en qué va" se quitó a pedido de Alejandro
+       (28-jul-2026): mezclaba los dos imanes, todos los renglones decían "(directo)"
+       porque ninguna publicación traía liga, y no había nada que hacer con ella desde
+       aquí — el detalle accionable vive en el CRM. El dato sigue llegando del Sheet
+       (d.recientes / DATA_POT.recientes) por si alguna vez vuelve a pintarse. */
 
     var ec=d.embudo_cuestionario;
     var _magSer=(window.__EMBF||{}).mag;
@@ -610,8 +623,8 @@ body{padding-top:env(safe-area-inset-top)}
       html+='<h2 class="sec" id="sec-trafico">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="nota" style="margin-top:10px;">Aparece cuando el Apps Script registre actividad (pestaña ACTIVIDAD). Mientras, <a class="link-meta" href="'+CONFIG.META_EVENTS_URL+'" target="_blank" rel="noopener">en Meta →</a></p>';
     }
 
-    var _serie=(_magSer==='pot'&&DATA_POT)?(DATA_POT.actividad_por_dia||[]):d.actividad_por_dia;
-    html+=serieTiempoHTML(_serie, _magSer==='pot'?'Plan de Potencial':'Arquitectura de Autor');
+    var _serieCruda=(_magSer==='pot'&&DATA_POT)?(DATA_POT.actividad_por_dia||[]):d.actividad_por_dia;
+    html+=serieTiempoHTML(desdeArranque(_serieCruda), _magSer==='pot'?'Plan de Potencial':'Arquitectura de Autor', diasAntes(_serieCruda));
 
     /* --- canal de agenda: una línea compacta (dos tarjetones para 0/1 eran puro aire) --- */
     var can=ec&&ec.canal;
@@ -755,6 +768,10 @@ body{padding-top:env(safe-area-inset-top)}
     var C=F.dim==='hora'?HRAMP:WRAMP;
     window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
     var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · ¿cuántos llegan y dónde se caen?</h2>';
+    /* Honestidad con la línea de arranque: este embudo viene ACUMULADO del backend
+       (totales por paso), no día por día, así que no se puede recortar aquí. Si se
+       dejara sin aviso, contradiría a la serie de arriba, que sí arranca en la línea. */
+    if(ARRANQUE) h+='<p class="hint" style="margin:-4px 0 10px;">Acumulado histórico — incluye lo anterior al '+arranqueLargo()+'. La medición nueva se ve en <b>Comportamiento en el tiempo</b> y en los leads atribuidos por publicación.</p>';
     if(mag==='pot'&&DATA_POT&&DATA_POT.kpis){ var K=DATA_POT.kpis;
       var fAg=(DATA_POT.funnel||[]).filter(function(p){return p.paso==='agenda';})[0]; fAg=fAg?num(fAg.n):0;
       h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px;align-items:stretch;">'+
@@ -868,9 +885,14 @@ body{padding-top:env(safe-area-inset-top)}
     };
   }
 
-  function serieTiempoHTML(serie, magLbl){
+  function serieTiempoHTML(serie, magLbl, ocultos){
     var h='<h2 class="sec">Comportamiento en el tiempo'+(magLbl?' · '+esc(magLbl):'')+'</h2>';
+    if(ARRANQUE){
+      h+='<p class="hint" style="margin:0 0 10px;">Contando desde el <b>'+arranqueLargo()+'</b>'+
+         (ocultos?' · quedan atrás <b>'+ocultos+'</b> día'+(ocultos===1?'':'s')+' de antes (no se borraron: siguen en el Sheet)':'')+'.</p>';
+    }
     if(!serie || !serie.length){
+      if(ARRANQUE) return h+'<p class="nota">Todavía no hay días con actividad <b>desde la línea de arranque</b>. Aquí es donde vas a ver el efecto de las publicaciones nuevas, en cuanto lleven liga medible.</p>';
       /* La nota vieja decia "se enciende al actualizar tu Apps Script": ya no era
          cierto — el backend expone actividad_por_dia desde hace tiempo. Si aqui no
          hay serie es que no hay dias con actividad que dibujar. */
