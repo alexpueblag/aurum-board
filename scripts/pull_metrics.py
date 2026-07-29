@@ -165,6 +165,45 @@ def resolve(token, want_name=None):
         ig_id = (info.get("instagram_business_account") or {}).get("id")
     return pg["id"], pg.get("access_token", token), pg.get("name"), ig_id
 
+def resolve_todas(token):
+    """TODAS las cuentas que el token alcanza, no solo Yo Desarrollo.
+
+    El iman es el mismo (el cuestionario); lo que cambia es quien lo promueve.
+    Asi que el tablero junta las publicaciones de Yo Desarrollo y de Aurum en una
+    sola galeria, cada una etiquetada con su cuenta.
+
+    Ojo con el orden de operaciones en Meta: aprobar la solicitud mete la pagina
+    al portafolio, pero el usuario del sistema (el dueno de este token) NO la ve
+    hasta que se le ASIGNA la pagina como activo. Si Aurum no aparece aqui
+    despues de que Sayri apruebe, eso es lo que falta.
+    """
+    me = _get("me/accounts", {"access_token": token,
+                              "fields": "id,name,access_token,instagram_business_account"})
+    if "_error" in me:
+        raise SystemExit("ERROR token/cuenta: " + _scrub(me["_error"].get("message") or "desconocido"))
+    cuentas = []
+    for pg in me.get("data", []):
+        ig_id = (pg.get("instagram_business_account") or {}).get("id")
+        if not ig_id:
+            info = _get(pg["id"], {"access_token": pg.get("access_token", token),
+                                   "fields": "instagram_business_account"})
+            ig_id = (info.get("instagram_business_account") or {}).get("id")
+        nombre = (pg.get("name") or "").strip()
+        cuentas.append({
+            "clave": "aurum" if "aurum" in nombre.lower() else ("yod" if "desarrollo" in nombre.lower() else
+                     re.sub(r"[^a-z0-9]+", "-", nombre.lower()).strip("-") or pg["id"]),
+            "nombre": nombre or pg["id"],
+            "page_id": pg["id"],
+            "page_token": pg.get("access_token", token),
+            "ig_id": ig_id,
+        })
+    if not cuentas:
+        raise SystemExit("El token no administra ninguna pagina.")
+    # Yo Desarrollo primero: es la cuenta con historia, y asi la galeria no cambia
+    # de orden el dia que entre una cuenta nueva.
+    cuentas.sort(key=lambda c: (c["clave"] != "yod", c["nombre"]))
+    return cuentas
+
 def _insights(node_id, token, metrics):
     out = {}
     r = _get(f"{node_id}/insights", {"access_token": token, "metric": ",".join(metrics)})
@@ -331,15 +370,24 @@ def main():
     if not token:
         raise SystemExit("Falta el token (env YOD_META_TOKEN o ~/.yod_meta_token).")
 
-    page_id, page_token, page_name, ig_id = resolve(token, "Yo Desarrollo")
-    print(f"OK Pagina: {page_name} (id {page_id}) | IG: {ig_id or 'NO VINCULADO'}")
+    cuentas = resolve_todas(token)
+    print("Cuentas que alcanza el token: " + ", ".join(
+        f"{c['nombre']} (FB {c['page_id']} · IG {c['ig_id'] or 'no vinculado'})" for c in cuentas))
 
-    fb_rows, fb_err = pull_fb(page_id, page_token)
-    ig_rows, ig_err = ([], "sin IG") if not ig_id else pull_ig(ig_id, token)
-    if fb_err: print("Aviso FB:", _scrub(fb_err))
-    if ig_err: print("Aviso IG:", _scrub(ig_err))
+    posts = []
+    for c in cuentas:
+        fb_rows, fb_err = pull_fb(c["page_id"], c["page_token"])
+        ig_rows, ig_err = ([], "sin IG") if not c["ig_id"] else pull_ig(c["ig_id"], token)
+        if fb_err: print(f"  Aviso FB [{c['nombre']}]:", _scrub(fb_err))
+        if ig_err: print(f"  Aviso IG [{c['nombre']}]:", _scrub(ig_err))
+        # cada publicacion carga de que cuenta salio: la galeria las junta pero el
+        # tablero tiene que poder decir cual trajo que
+        for r in (ig_rows + fb_rows):
+            r["cuenta"] = c["clave"]
+            r["cuenta_nombre"] = c["nombre"]
+        posts.extend(ig_rows + fb_rows)
+        print(f"  {c['nombre']}: {len(ig_rows)} de IG + {len(fb_rows)} de FB")
 
-    posts = ig_rows + fb_rows
     posts.sort(key=lambda r: r.get("fecha") or "", reverse=True)
     stamp = datetime.datetime.now(TZ_LOCAL).strftime("%Y-%m-%d %H:%M")   # hora de Hermosillo, no la del runner
 
@@ -435,7 +483,10 @@ def main():
     # del mismo dia seguian mostrando la misma bolsa de leads. Se publica aparte para
     # que el board pueda desagregar (falta amarrar cada tarjeta con su pieza).
     leads_por_pieza = {k.split("|", 1)[1]: v for k, v in (campanas or {}).items() if "|" in k}
-    out = {"generado": stamp, "pagina": page_name, "ig_id": ig_id, "posts": posts,
+    # "pagina"/"ig_id" quedan por compatibilidad (apuntan a la cuenta principal);
+    # "cuentas" es la lista completa, que es lo que la galeria usa para filtrar.
+    out = {"generado": stamp, "pagina": cuentas[0]["nombre"], "ig_id": cuentas[0]["ig_id"],
+           "cuentas": [{"clave": c["clave"], "nombre": c["nombre"]} for c in cuentas], "posts": posts,
            "leads_por_pieza": leads_por_pieza, "leads_medicion_caida": bool(conservar),
            "semana": semana, "dias_sin_publicar": dias_sin_publicar, "leads_utm_activo": leads_utm_activo}
     with open(os.path.join(BASE, "metrics.json"), "w") as f:

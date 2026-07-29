@@ -1064,7 +1064,8 @@ body{padding-top:env(safe-area-inset-top)}
     return order.map(function(k){ var g=map[k], base=g.ig||g.fb; base._fb=(g.ig&&g.fb)?g.fb:null; return base; });
   }
   function pubSection(){
-    var F=window.__PUBF||(window.__PUBF={orden:'reciente',red:'todas',verMas:false});
+    var F=window.__PUBF||(window.__PUBF={orden:'reciente',red:'todas',cuenta:'todas',verMas:false});
+    if(F.cuenta==null) F.cuenta='todas';
     var h='<h2 class="sec" id="sec-pubs">Publicaciones · toca una portada para ver su detalle</h2>';
     if(!METRICS || !(METRICS.posts||[]).length){
       return h+'<p class="nota">Aún sin métricas. Corre <code>pull_metrics.py</code> y sube <code>metrics.json</code> + <code>covers/</code> al board.</p>';
@@ -1130,12 +1131,19 @@ body{padding-top:env(safe-area-inset-top)}
     /* ---- D) controles de orden / filtro ---- */
     function cb(grp,val,lbl){ return '<button class="chipbtn'+(F[grp]===val?' on':'')+'" onclick="pubSet(&#39;'+grp+'&#39;,&#39;'+val+'&#39;)">'+lbl+'</button>'; }
     h+='<div class="pfilters"><span class="pfl">Orden</span>'+cb('orden','reciente','Más reciente')+cb('orden','alcance','Más alcance')+cb('orden','interaccion','Más interacción')+
-       '<span class="pfl" style="margin-left:6px">Red</span>'+cb('red','todas','Todas')+cb('red','IG','Instagram')+cb('red','FB','Facebook')+'</div>';
+       '<span class="pfl" style="margin-left:6px">Red</span>'+cb('red','todas','Todas')+cb('red','IG','Instagram')+cb('red','FB','Facebook')+
+       /* Filtro por CUENTA: el iman es el mismo, lo que cambia es quien lo promueve.
+          Solo aparece cuando de verdad hay mas de una cuenta conectada — con una
+          sola seria una fila de chips que no separa nada. */
+       (function(){ var cs=(METRICS.cuentas||[]); if(cs.length<2) return '';
+         var s='<span class="pfl" style="margin-left:6px">Cuenta</span>'+cb('cuenta','todas','Ambas');
+         cs.forEach(function(c){ s+=cb('cuenta',c.clave,c.nombre); }); return s; })()+'</div>';
     /* ---- galería ---- */
     var merged=mergePosts(posts);
     /* el filtro Facebook TAMBIÉN muestra los posts fusionados (publicados en las dos redes):
        antes quedaban etiquetados IG y "desaparecían" del filtro FB aunque sí están en Facebook */
     if(F.red!=='todas') merged=merged.filter(function(p){return p.red===F.red || (F.red==='FB' && p._fb);});
+    if(F.cuenta&&F.cuenta!=='todas') merged=merged.filter(function(p){var c=p.cuenta||(p._fb&&p._fb.cuenta)||(p._ig&&p._ig.cuenta); return c===F.cuenta;});
     if(F.orden==='alcance') merged.sort(function(a,b){return num(b.reach)-num(a.reach);});
     else if(F.orden==='interaccion') merged.sort(function(a,b){return num(b.interacciones)-num(a.interacciones);});
     var total=merged.length, lim=F.verMas?total:Math.min(18,total);
@@ -1148,7 +1156,11 @@ body{padding-top:env(safe-area-inset-top)}
                    :'<span class="pnet '+(p.red==="IG"?"ig":"fb")+'">'+(p.red==="IG"?"IG":"f")+'</span>';
       var ang=anguloDe(p);
       h+='<div class="pcard" onclick="abrirFicha(&#39;'+p.id+'&#39;)">'+nuevo+net+covHTML(p)+
-         '<div class="ph"><div class="pt"><span>'+esc(tipoLabel(p.tipo))+'</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
+         '<div class="ph"><div class="pt"><span>'+esc(tipoLabel(p.tipo))+
+           /* con dos cuentas conectadas, la galeria las junta pero cada portada dice
+              de quien es: si no, no se puede leer si algo lo trajo Aurum o Yo Desarrollo */
+           ((METRICS.cuentas||[]).length>1 && p.cuenta_nombre ? ' <span style="color:var(--oro);font-size:9px;letter-spacing:.5px;text-transform:uppercase;">· '+esc(p.cuenta_nombre.split(" ")[0])+'</span>' : '')+
+         '</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
          cardChips(p)+
          '<div class="pfoot">'+(ang?'<span class="pang">'+esc(ang)+'</span>':'<span></span>')+'<span class="pgo">ver →</span></div>'+
          '</div></div>';
@@ -1230,7 +1242,7 @@ body{padding-top:env(safe-area-inset-top)}
       document.body.appendChild(o);
       if(window.genLinkPost && $("lgUrlP")) window.genLinkPost(p.id, p.red==='IG'?'ig':'fb');
     };
-    window.pubSet=function(grp,val){ window.__PUBF=window.__PUBF||{orden:'reciente',red:'todas',verMas:false}; window.__PUBF[grp]=(grp==='verMas')?!!val:val; if(grp!=='verMas') window.__PUBF.verMas=false; if(typeof render==='function') render(); };
+    window.pubSet=function(grp,val){ window.__PUBF=window.__PUBF||{orden:'reciente',red:'todas',cuenta:'todas',verMas:false}; window.__PUBF[grp]=(grp==='verMas')?!!val:val; if(grp!=='verMas') window.__PUBF.verMas=false; if(typeof render==='function') render(); };
     document.addEventListener('keydown',function(e){ if(e.key==='Escape') window.cerrarFicha(); });
     /* ---- generador de link con UTM para la proxima publicacion (FB en el texto, IG en el 1er comentario) ---- */
     /* ÚNICO lugar donde vive el dominio público de los imanes. Cambiar aquí al migrar
