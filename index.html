@@ -348,7 +348,7 @@ body{padding-top:env(safe-area-inset-top)}
      traza una línea: lo de aquí en adelante manda la vista, lo anterior sigue
      entero en el Sheet y se dice cuánto quedó atrás. Para mover la línea o
      apagarla, cambia esta fecha o ponla en "". */
-  var ARRANQUE = "2026-07-28";
+  var ARRANQUE = "2026-07-29";
   function desdeArranque(serie){
     if(!ARRANQUE || !serie || !serie.length) return serie||[];
     return serie.filter(function(x){ return String(x.fecha||"") >= ARRANQUE; });
@@ -547,14 +547,22 @@ body{padding-top:env(safe-area-inset-top)}
     } else {
       html+='<div class="nums">';
       html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "histórico "+money(g.total));
-      html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false, totArq+" históricos");
-      html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), false, totCitasH+" históricas");
+      /* con línea de arranque no se cuelgan los acumulados de meses atrás: el
+         tablero dice contar desde hoy y esos "N históricos" lo desmentían */
+      html+=numHTML("Leads", k.leads, flechaHTML(k.leads,(d.prev||{}).leads), false, ARRANQUE?"":totArq+" históricos");
+      html+=numHTML("Citas agendadas", k.citas, flechaHTML(k.citas,(d.prev||{}).citas), false, ARRANQUE?"":totCitasH+" históricas");
       html+=numHTML("Costo por cita", costoCita, "", false, num(g.semana_actual)>0?"":"registra el gasto para calcularlo");
-      html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false, totCliH+" históricos");
+      html+=numHTML("Clientes", k.clientes, flechaHTML(k.clientes,(d.prev||{}).clientes), false, ARRANQUE?"":totCliH+" históricos");
       html+='</div>';
     }
 
-    /* --- embudo de negocio CON FORMA (barras proporcionales + cuello nombrado; antes eran 3 cajas gemelas) --- */
+    /* --- embudo de negocio CON FORMA (barras proporcionales + cuello nombrado; antes eran 3 cajas gemelas) ---
+       Este embudo es ACUMULADO del CRM (leads de meses atrás) y el backend no lo da
+       por día, así que no se puede recortar con la línea de arranque. Mientras la
+       línea esté puesta se oculta: era la fuente de los "leads viejos" que ensuciaban
+       un tablero que dice contar desde hoy. El dato no se toca, vive en el CRM. */
+    var _ocultarCRM = !!ARRANQUE;
+    if(!_ocultarCRM){
     html+='<h2 class="sec" id="sec-embudo">Embudo de negocio · del lead al cliente <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· histórico CRM</span></h2>';
     var fb0=totArq||0;
     if(fb0>0){
@@ -576,6 +584,7 @@ body{padding-top:env(safe-area-inset-top)}
     } else {
       html+='<p class="nota">Aún sin leads en el CRM del cuestionario.</p>';
     }
+    }   /* fin _ocultarCRM */
 
     /* La tabla "Últimos leads · quién llegó y en qué va" se quitó a pedido de Alejandro
        (28-jul-2026): mezclaba los dos imanes, todos los renglones decían "(directo)"
@@ -728,7 +737,8 @@ body{padding-top:env(safe-area-inset-top)}
     function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#16161a')+';color:'+(on?'#17140F':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
       '<div style="font-family:Instrument Serif,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
-    var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario retirado')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>';
+    var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · cuestionario retirado')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>'+
+      (ARRANQUE?'<p class="hint" style="margin:-6px 0 12px;">Contando desde el '+arranqueLargo()+'.</p>':'');
     if(mag==='arq' && (!ec || !ec.pasos || !ec.pasos.length)){
       var _sl = DATA && DATA.meta && DATA.meta.sin_lectura;
       return sel+'<div class="card" style="text-align:center;padding:28px 22px;"><p style="font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);">Arquitectura de Autor · '+(_sl?'no se pudo leer':'sin pasos registrados')+'</p><p style="color:var(--piedra);font-size:12px;margin-top:6px;max-width:460px;margin-left:auto;margin-right:auto;line-height:1.5;">'+(_sl
@@ -783,8 +793,8 @@ body{padding-top:env(safe-area-inset-top)}
     var C=F.dim==='hora'?HRAMP:WRAMP;
     window.__EMBD={rows:scope.map(function(x){return {fecha:x.fecha,f:x._f,h:x._h};}),labels:labelsE,fAgg:fAgg};  /* datos por día para el drill-down de cada etapa (clic) */
     var h=sel+'<h2 class="sec">Embudo · '+esc(cfg.titulo)+' · ¿cuántos llegan y dónde se caen?</h2>';
-    if(ARRANQUE) h+='<p class="hint" style="margin:-4px 0 10px;">Contando desde el <b>'+arranqueLargo()+'</b>'+
-      (_antes?' · quedan atrás <b>'+_antes+'</b> día'+(_antes===1?'':'s')+', que no se borraron y siguen en el Sheet':'')+'.</p>';
+    /* el aviso de la línea va UNA sola vez, arriba en sel — repetirlo en cada
+       sección era ruido y Alejandro no entendía por qué se lo decían tres veces */
     if(mag==='pot'&&DATA_POT&&DATA_POT.kpis){ var K=DATA_POT.kpis;
       var fAg=(DATA_POT.funnel||[]).filter(function(p){return p.paso==='agenda';})[0]; fAg=fAg?num(fAg.n):0;
       h+='<div style="display:flex;gap:10px;flex-wrap:wrap;margin:0 0 8px;align-items:stretch;">'+
@@ -900,10 +910,6 @@ body{padding-top:env(safe-area-inset-top)}
 
   function serieTiempoHTML(serie, magLbl, ocultos){
     var h='<h2 class="sec">Comportamiento en el tiempo'+(magLbl?' · '+esc(magLbl):'')+'</h2>';
-    if(ARRANQUE){
-      h+='<p class="hint" style="margin:0 0 10px;">Contando desde el <b>'+arranqueLargo()+'</b>'+
-         (ocultos?' · quedan atrás <b>'+ocultos+'</b> día'+(ocultos===1?'':'s')+' de antes (no se borraron: siguen en el Sheet)':'')+'.</p>';
-    }
     if(!serie || !serie.length){
       if(ARRANQUE) return h+'<p class="nota">Todavía no hay días con actividad <b>desde la línea de arranque</b>. Aquí es donde vas a ver el efecto de las publicaciones nuevas, en cuanto lleven liga medible.</p>';
       /* La nota vieja decia "se enciende al actualizar tu Apps Script": ya no era
