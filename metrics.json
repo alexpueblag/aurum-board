@@ -1,11 +1,15 @@
 {
-  "generado": "2026-07-30 11:24",
+  "generado": "2026-07-30 12:29",
   "pagina": "Yo Desarrollo",
   "ig_id": "17841450186275686",
   "cuentas": [
     {
       "clave": "yod",
       "nombre": "Yo Desarrollo"
+    },
+    {
+      "clave": "aurum",
+      "nombre": "Aurum Arquitectos"
     }
   ],
   "posts": [
@@ -16,7 +20,7 @@
       "permalink": "https://www.instagram.com/p/DbT1Al6Gdfc/",
       "fecha": "2026-07-27",
       "titulo": "Si ya te ofrecieron por tu terreno, tuviste razón en no contestar de inmediato.",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t39.30808-6/757331141_1073535645184439_1425165073915939983_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=g44dGJjML5gQ7kNvwELmqD8&_nc_oc=AdqWEGRAW2kzBISmg6qJ-KZ4mLZLxAzdRLJL1M5TNPfjVc94bilyXbcuTgkLZIoqmW4&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQFSJsa5VJZbku_QwzefJ81GFU4T2KwCrl4t15Evmoiqhw&oe=6A7179CF",
+      "thumb": "https://scontent.cdninstagram.com/v/t39.30808-6/757331141_1073535645184439_1425165073915939983_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=g44dGJjML5gQ7kNvwG5Ltf8&_nc_oc=AdpswI8moW3og0y_PvYe61waExYyOIovyffApcAacvRuT_wezvGoOrCK-wfW3j9UuHbCwSurRgckMlfNOLcZDJXO&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQGyRdk3F5WN2RYLiU_DZj34kkCnGqt6a4-2FIky_ARm9Q&oe=6A7179CF",
       "cover": "covers/18107732636047488.jpg",
       "reach": 11,
       "likes": 3,
@@ -39,7 +43,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 4,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 4,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 6,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 11,
+          "inter": 4
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 11,
+          "inter": 4
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 11,
           "inter": 4
         }
@@ -52,7 +81,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/1074294318441905",
       "fecha": "2026-07-27",
       "titulo": "Si alguien ya te ofreció por tu terreno, tuviste razón en no contestar de inmediato.",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/757331141_1073535645184439_1425165073915939983_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=g44dGJjML5gQ7kNvwELmqD8&_nc_oc=AdqWEGRAW2kzBISmg6qJ-KZ4mLZLxAzdRLJL1M5TNPfjVc94bilyXbcuTgkLZIoqmW4&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQG2yutrkMcqdaDsUJguBgArViPVlJyH3OZrbnbyMFhSC8rwMcocygWRAyQ5xWlBC2v-4HtPm3MYOQ&oh=00_AQHJDGdRZaHOlgZOUoh9-FNqTB9C8A5DiEGVQXwLEWgP-g&oe=6A7179CF",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/757331141_1073535645184439_1425165073915939983_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=g44dGJjML5gQ7kNvwG5Ltf8&_nc_oc=AdpswI8moW3og0y_PvYe61waExYyOIovyffApcAacvRuT_wezvGoOrCK-wfW3j9UuHbCwSurRgckMlfNOLcZDJXO&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEnD3cOdijEkSVWpunRF4zfq3GTTEAzI6Lee_BpyXFObEHQe17945BpJEqxubuMzouQWJtyg6sIRg&oh=00_AQFnb38XiZpZQfVBeVftVz3MMrDY-yUdHkt1FLLcKzVJ0w&oe=6A7179CF",
       "cover": "covers/103075448823440_1074294318441905.jpg",
       "reach": null,
       "likes": null,
@@ -74,9 +103,70 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
           "reach": null,
           "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
+          "reach": null,
+          "inter": 0
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Reel",
+      "id": "17890524651393940",
+      "permalink": "https://www.instagram.com/reel/DaxtXikh3a_/",
+      "fecha": "2026-07-14",
+      "titulo": "En Aurum también hacemos espacios comerciales.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.71878-15/746745167_1583858993297293_7100965485197668126_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=ghU0wyV4w68Q7kNvwF1KsTs&_nc_oc=AdooNA3QHLIyWMfzPmsiI14t1gqA0CKXaMSZXf6AbnVorxHEZ22CZFajDulIwFkSStPNPGiBjkmWIxWwc3B5TYbG&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&_nc_tpa=Q5bMBQGcyYRjefaplFKp_V36xZH0vpgH7wZFmzW6gaK4AvDf9nBO3WEiimKqVEeud73y4gizhYgUVDJ6DQ&oh=00_AQGvJA0jQefDfSraQDjbJSUnOZbhyph4TuFS8yEw_6QDTQ&oe=6A71693E",
+      "cover": "covers/17890524651393940.jpg",
+      "reach": 142,
+      "likes": 2,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": 177,
+      "watch_avg": 3284,
+      "watch_total": 476181,
+      "profile_visits": null,
+      "follows": null,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 2,
+      "er": 1.41,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 142,
+          "inter": 2
         }
       ]
     },
@@ -87,7 +177,7 @@
       "permalink": "https://www.instagram.com/reel/DaTh_VeMOr1/",
       "fecha": "2026-07-02",
       "titulo": "No dejes tu idea de desarrollo en el olvido, en Yodesarrollo estudiamos la vialidad de tu ",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/733330344_18077698850672876_2552051316712834833_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=Ii_-aSWIFbIQ7kNvwHOrzHo&_nc_oc=AdpUoW5Ge-j-Fl7piLhWW5E-Id6kp6l3d1fAi3e3QdoQaN2sZOe66l0z8auherzcoSA&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&_nc_tpa=Q5bMBQFJLU9Ye_tzdAXkskT9zgHwDF-qw6SHFjOzeFu-lMRwu7hVXvEA4Q6RVJRIfgNxzUrvjaJFV1VF7A&oh=00_AQFzuTTaF4AXJ9En4uMtTWuNqf-JFFw1V_XCwYPrtMHlPw&oe=6A717A75",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/733330344_18077698850672876_2552051316712834833_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=Ii_-aSWIFbIQ7kNvwGYY2pH&_nc_oc=AdpYcEJazONV0jjhQ0Bdkb8cHUSZ9xxQltEFK8gt03LIR-uYIly1P5lWpJTE4NgmWdWxAgbRITYKFyUFdFitYzsh&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&_nc_tpa=Q5bMBQFwoTe_wCNiglArrpaNiEmoPm8BfoU220wBrMullRn10UYSeywTykKirh5zrAs54lAfW65suCXxCw&oh=00_AQH6Cny9os3pw-eskIFRRK-kScSdxcC7zKWCGilIr3sk7Q&oe=6A717A75",
       "cover": "covers/17889525945569175.jpg",
       "reach": 156,
       "likes": 11,
@@ -110,7 +200,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 156,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 156,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 156,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 156,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 156,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 156,
           "inter": 15
         }
@@ -123,7 +238,7 @@
       "permalink": "https://www.facebook.com/reel/991143690411878/",
       "fecha": "2026-07-02",
       "titulo": "No dejes tu idea de desarrollo en el olvido, en Yodesarrollo estudiamos la vialidad de tu ",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t51.82787-10/732435593_18077698298672876_2747023425188430239_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=NuNg9WLaMhkQ7kNvwGJbZGL&_nc_oc=Adrz1rbhL3quaLOfhr1X8Ln90xldrFUz0ZAi8pNywWSTadClnqEI-4-cr5kwW91_jnc&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQE6o5i75FcS9F_vRihzP5J6WgLW-8o4-eNlT8okKD_hxdCsf8hJidcJ7lJhNopgoKWmKOcmkRwNOw&oh=00_AQFKh2qvtGx1q7m7OwNkT6B6Gk55BJCdMO8Wv3cR5QI1Tw&oe=6A716F44",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t51.82787-10/732435593_18077698298672876_2747023425188430239_n.jpg?_nc_cat=102&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=NuNg9WLaMhkQ7kNvwG_Nszx&_nc_oc=AdpgIiMRVu9Zrl78S_PfNVUde1uDs47-79l5i24IeOmgOE9-mADfMMZfhNfV4pW6yC1pr4X8pL2iKw1sox70OVMn&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQGbAyTTdYXCXb5KEZULzZQDP7_LyElCJk4P47E0WnUZ09_CEvwhtGy85o4swOtcYFnxagH5H_E5Tw&oh=00_AQGRlirPYaA2tbzoLsT33Xf6O1LDEIosHnCcngpsDDToBQ&oe=6A716F44",
       "cover": "covers/103075448823440_1053765810494756.jpg",
       "reach": null,
       "likes": null,
@@ -145,7 +260,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -158,7 +298,7 @@
       "permalink": "https://www.instagram.com/reel/DaIzYVsswLw/",
       "fecha": "2026-06-28",
       "titulo": "¿Qué es el Plan Potencial Personalizado?",
-      "thumb": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-15/731022987_18077057057672876_9102535282404027773_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=SPhiPetR0k8Q7kNvwE_AtZX&_nc_oc=Adr-acQxeUAdwSgm92xQU_5wswuRF_ioDcP3xwxQUAKQFFPQfbqgrmYXKXGoSoXGBzc&_nc_zt=23&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&_nc_tpa=Q5bMBQG9uiQWrb9cAST1NeN9RGsoN4t6m_qOT4ElP_aWPhaXZev2Zb1SK9H-oproBqQ15bWRFbEpS_E8EA&oh=00_AQFVcJQEuLkU6aGTOfevWaLKsXTT9cRFxPvANCVgqhGESw&oe=6A717D4E",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/731022987_18077057057672876_9102535282404027773_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=SPhiPetR0k8Q7kNvwHPwxIr&_nc_oc=Adp_M7X2z3pMyoYF4VBsvmjkVKlacpiLJAoviuReeaHKdGHci3yYxmG6YC-P6BlNb_GLU0uoYVKLCEpwLC1cufSO&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&_nc_tpa=Q5bMBQGCaGKPeQNqWNanNW1eX7fBGzua8Zolx0qDyGlBl7ltRws6NfznoMeENhMRYPO_81b6AgU3zcfOEA&oh=00_AQFe4DP73QF_lqmfZVQfLGLpQgupo9HcM1iWPQ4J9k-m-g&oe=6A717D4E",
       "cover": "covers/18071719469352654.jpg",
       "reach": 171,
       "likes": 13,
@@ -181,7 +321,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 171,
+          "inter": 17
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 171,
+          "inter": 17
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 171,
+          "inter": 17
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 171,
+          "inter": 17
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 171,
+          "inter": 17
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 171,
           "inter": 17
         }
@@ -194,7 +359,7 @@
       "permalink": "https://www.facebook.com/reel/1405116274864839/",
       "fecha": "2026-06-28",
       "titulo": "¿Qué es el Plan Potencial Personalizado?",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t51.82787-10/731022987_18077057057672876_9102535282404027773_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=SPhiPetR0k8Q7kNvwE_AtZX&_nc_oc=Adr-acQxeUAdwSgm92xQU_5wswuRF_ioDcP3xwxQUAKQFFPQfbqgrmYXKXGoSoXGBzc&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHtljnhJc2F5qmdQ1gmHATXwQPv2IYLbUvrEEd3xXBKyh_vhtbfVwxkl0JTPI0OcI2OrT70UM_PVg&oh=00_AQGQMTPY4OjdZK_CnPO1wjxPZyqSiAa6o7ONGIntS1NifA&oe=6A714FDE",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t51.82787-10/731022987_18077057057672876_9102535282404027773_n.jpg?_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=SPhiPetR0k8Q7kNvwHPwxIr&_nc_oc=Adp_M7X2z3pMyoYF4VBsvmjkVKlacpiLJAoviuReeaHKdGHci3yYxmG6YC-P6BlNb_GLU0uoYVKLCEpwLC1cufSO&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQF8eRjx3vppLFjwkRbW_0uLat73PAcEoEOimnUSnx4NntXuZzAPqWaNuCgdavkluFPMgkfqGKVYcQ&oh=00_AQGmDGm4cSZaxqLiX8xqavpJtX_VCojHnO-jrla3frRdIw&oe=6A71881E",
       "cover": "covers/103075448823440_1050157917522212.jpg",
       "reach": null,
       "likes": null,
@@ -202,7 +367,7 @@
       "shares": null,
       "saves": null,
       "clicks": 0,
-      "views": 62,
+      "views": 63,
       "profile_visits": null,
       "follows": null,
       "reach_follower": null,
@@ -216,7 +381,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -229,7 +419,7 @@
       "permalink": "https://www.instagram.com/reel/DaECMuOsXer/",
       "fecha": "2026-06-26",
       "titulo": "Bienvenidos a YoDesarollo 🏠",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/731580348_18076758197672876_6133050676008644844_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=jPgy_SUlbs4Q7kNvwEflM5j&_nc_oc=AdpEaDTsavXHHGbmGu_-foevM26I_-XccFeKuWspx5_fqQ_bKG-ayAwExCjfWNfSrsw&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&_nc_tpa=Q5bMBQFScb0-CrKiKEwgCpy3r0eZIQuBK_9ZodVIdIowrE1NJAANPXToHk5vR4q9KuB6-83eUyXzkLDzPw&oh=00_AQG2hmOxvJr8UFUsBsmxP9Ms9D7MYldTtSx1fyvPqsm5kQ&oe=6A715B58",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/731580348_18076758197672876_6133050676008644844_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=jPgy_SUlbs4Q7kNvwFZ9EMV&_nc_oc=Adot6WDJYpciOgNhG24n7f84aO0CIlDXVmi6pHwVQaiIJC-lKic-XsGJof6l1S3lpxgcm2V-7D9qR3VuZwg0hSSB&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&_nc_tpa=Q5bMBQF19XEoFQ873KPnfURITqo-NHKAVpNC7t2M55qOXIC2XpuZTXgz_zaWgw6sEa50tYskkBerafKvmQ&oh=00_AQFYd9NyD2H5c-fc-QEBx018ZgNLAPuGSShHkLS1xEYuEg&oe=6A719398",
       "cover": "covers/18018117722892425.jpg",
       "reach": 133,
       "likes": 13,
@@ -252,7 +442,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 133,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 133,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 133,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 133,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 133,
+          "inter": 15
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 133,
           "inter": 15
         }
@@ -265,7 +480,7 @@
       "permalink": "https://www.facebook.com/reel/1036354295635543/",
       "fecha": "2026-06-26",
       "titulo": "Bienvenidos a YoDesarollo 🏠",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t51.82787-10/731580348_18076758197672876_6133050676008644844_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=jPgy_SUlbs4Q7kNvwEflM5j&_nc_oc=AdpEaDTsavXHHGbmGu_-foevM26I_-XccFeKuWspx5_fqQ_bKG-ayAwExCjfWNfSrsw&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQEQBr_U7GzfArO6q0OkACvCWcBWjDdyazTls1CB8VgtbcMtRIzXxKPFFm6_bT1vzbiJtdpZPWYWVg&oh=00_AQEQrwLdTDH9tuzkKQN8xvUWHgfVkZU_Iv6pOWpk9v6yhw&oe=6A716948",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t51.82787-10/731580348_18076758197672876_6133050676008644844_n.jpg?_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=jPgy_SUlbs4Q7kNvwFZ9EMV&_nc_oc=Adot6WDJYpciOgNhG24n7f84aO0CIlDXVmi6pHwVQaiIJC-lKic-XsGJof6l1S3lpxgcm2V-7D9qR3VuZwg0hSSB&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQGsk3IxZi9cXBCvji5423u9rDXYKIqXk2AehXMcyQjiuxHhGNOCi367HuNqTl6etdPsOk95N7xs9Q&oh=00_AQFHZRWsr-pn1DX17kKJIk97zo5AxYJWKBGEqifyAj9rzQ&oe=6A716948",
       "cover": "covers/103075448823440_1048557904348880.jpg",
       "reach": null,
       "likes": null,
@@ -287,7 +502,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -300,7 +540,7 @@
       "permalink": "https://www.instagram.com/p/DZ0ad4UgQt0/",
       "fecha": "2026-06-20",
       "titulo": "Tu terreno baldío te cobra predial cada año y nunca te ha devuelto un solo peso.",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/727057600_18075854531672876_8438703086343894837_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=eWGFkMyx1SYQ7kNvwH3n-UV&_nc_oc=AdqPfqbi3JBn1IzYNhyJXNQXHDoyGP1wTUjz7q3XmmeiLAlA49Epmu7INogz931V1DE&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQEn-J2kIhnlpS1KvKVYcMznxkgB_gmo2mPUVq0YfjTTmw&oe=6A718230",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/727057600_18075854531672876_8438703086343894837_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=eWGFkMyx1SYQ7kNvwFwIjmJ&_nc_oc=AdodVbXkLS1GrSSX4TFL7edkx7BLwtLOzmkLFogzXXO-iuv96JB44cqDvhreH90YLbC3zl5UJ1okZP1E-2BZe4lq&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQGa05Wpda43Afgf-L2ufT5-IXhP6Q0fUBpdHY69dSIyZQ&oe=6A718230",
       "cover": "covers/18133908502570382.jpg",
       "reach": 19,
       "likes": 2,
@@ -323,7 +563,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 19,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 19,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 19,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 19,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 19,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 19,
           "inter": 3
         }
@@ -336,7 +601,7 @@
       "permalink": "https://www.facebook.com/reel/1781011099726192/",
       "fecha": "2026-06-20",
       "titulo": "Tu terreno baldío te cobra predial cada año y nunca te ha devuelto un solo peso.",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t15.5256-10/728453624_1021876090298869_8091848552281637074_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=dLxy7nHwC2MQ7kNvwFRWljz&_nc_oc=AdqpzjVvWcKQUkdta05mXkouuG6BqqsHqBy-rpLrL7I370eO1Ecbn3csgUKTftoS2GM&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGFuGQbWYzsMAJ8yag9kH4FB_7tyuR0JwkvmF58REoZNRkqpBA_VTWb80AAsaBD6U3eoLw3C8Ph_w&oh=00_AQF6IQ4Oj-VEAuBj8N7o_yPeE-JVGRXkx_7K0Ff9uoQh4A&oe=6A717237",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t15.5256-10/728453624_1021876090298869_8091848552281637074_n.jpg?_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=dLxy7nHwC2MQ7kNvwFn8Vie&_nc_oc=AdojtmLrpDay7zRBaHEVKjY09GFnFxrjzkOytJduMwmYn50jM3tims0tdGt6_K-KeFVIDgq6r9iBbnh6z2GTW1dv&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEErTb1EAjwKj6lmRKMv038_0Y_7OaKTCK5JcsBQYrXvHQzecZhKyGl3jDCqkUKi1nNxgeFOq5NuA&oh=00_AQEhmLRBYGItDSgrOxGpuYhbKYP6LgAzhlFM0SA7oggImQ&oe=6A717237",
       "cover": "covers/103075448823440_1043357574868913.jpg",
       "reach": null,
       "likes": null,
@@ -358,7 +623,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -371,7 +661,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/1043349818203022",
       "fecha": "2026-06-20",
       "titulo": "Tu terreno baldío te cobra predial cada año y nunca te ha devuelto un solo peso.",
-      "thumb": "https://scontent-lhr6-2.xx.fbcdn.net/v/t39.30808-6/727323235_1043349424869728_5096695921689810818_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Ur_HjPHKsrIQ7kNvwG6mDIO&_nc_oc=AdqL-Fc64dzZZgR_OmrKvwqg-9SPR6w7sI48gOAtOeHOaNykIbFo3k35CNBKMAt93r8&_nc_zt=23&_nc_ht=scontent-lhr6-2.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHH_ol_42xAx07fihr9ZrkICVrM5b4M7oiWp0qlVv1vJ9VQ9yKpvjq5VvB1GjQTRZeW8DwBDjevBA&oh=00_AQEFwB0OM1U_L519b805za4nJVubuc1-z2Y0EdownKE0QA&oe=6A717B93",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t39.30808-6/727323235_1043349424869728_5096695921689810818_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Ur_HjPHKsrIQ7kNvwEBy0Oi&_nc_oc=AdpKyqQIci4hWm9LB8tKjni3aJi0w6-okd0XckDxTfvpGJ9qCEyStUbko8QrCQaSaHH65JOGtKfEOQgDbIqb-rAr&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEM36EphI7SDYB3MT9Z8BgrNPKb8GOgdtSUiiS_9KupbspEVCuMoBOwyP8qbZg6dFCLeKGr96lcYg&oh=00_AQFS-YGiyfB1ZyhPh9ULTJOKVYKKkDf_5oixLCuLpgLyEg&oe=6A717B93",
       "cover": "covers/103075448823440_1043349818203022.jpg",
       "reach": null,
       "likes": null,
@@ -393,9 +683,178 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
           "reach": null,
           "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
+          "reach": null,
+          "inter": 0
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18105990452033595",
+      "permalink": "https://www.instagram.com/p/DZqCsasGcp-/",
+      "fecha": "2026-06-16",
+      "titulo": "Antes de hablar de metros cuadrados, queremos saber cómo quieres sentirte en casa.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/725205477_17934165654285298_4541669680102895949_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=Q9hSt2o1JXEQ7kNvwHZZUvC&_nc_oc=AdrNgc81NV5ipJIdffxVYFsoWoo45ZJ11a53mO49HkJmqbv3vMcfe0Npbg8jSdsnmg3PCwFfoGWoSGo2NYq_0Nex&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQHGJtarP3ShokMYd36ySb7Df6529iUb5M52lcteI3rX_Q&oe=6A71636E",
+      "cover": "covers/18105990452033595.jpg",
+      "reach": 40,
+      "likes": 5,
+      "comments": 1,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 0,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 6,
+      "er": 15.0,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 40,
+          "inter": 6
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18121032370738242",
+      "permalink": "https://www.instagram.com/p/DZn9u4CjfMP/",
+      "fecha": "2026-06-15",
+      "titulo": "A esta familia le encanta recibir. Pero también son cinco personas con intereses muy disti",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/722224555_17934036978285298_5498790879008289381_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=KFg4LRgJJCUQ7kNvwEFPoN6&_nc_oc=Adp5amG2St4jmXF9QzvyXg2S_NDnDCk8o0eh8VrjvE4KSnsJfcY7r5maEV9S5rJ6eagbYIyBQi-W-Ir9l4eDmp6n&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQGbqKcACitxv0eaVyhR4bItc0h9K4rsjGZqBx9hySrr5g&oe=6A718333",
+      "cover": "covers/18121032370738242.jpg",
+      "reach": 146,
+      "likes": 7,
+      "comments": 1,
+      "shares": 1,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 10,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 9,
+      "er": 6.16,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 146,
+          "inter": 9
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18109466642299981",
+      "permalink": "https://www.instagram.com/p/DZXvHQOlCwT/",
+      "fecha": "2026-06-09",
+      "titulo": "Ésta casa contiene mundos. ",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/720408040_17933032281285298_4462399519601531966_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=adhiZl5PiiUQ7kNvwE2NdU3&_nc_oc=AdqY5fMVc-lmC7tQAIVI7D9TE6nwLPG-dSN4ymg97bRxCYl6rsLUbgYZVMa9E6iZvkbF3BKIyPL2LvgZS6H37NKF&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQFyheIy7qRecyrdhbPuNTml1NzALyY3d1ho3RRky71oDA&oe=6A716BD4",
+      "cover": "covers/18109466642299981.jpg",
+      "reach": 72,
+      "likes": 11,
+      "comments": 0,
+      "shares": 1,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 8,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 12,
+      "er": 16.67,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 72,
+          "inter": 12
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Reel",
+      "id": "18124856254716785",
+      "permalink": "https://www.instagram.com/reel/DZLWqaXyQhm/",
+      "fecha": "2026-06-04",
+      "titulo": "La familia de Casa Zara es de las que reciben seguido y disfrutan tener gente en casa — pe",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.71878-15/711709605_1011258861378951_4095318302783290289_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=NAvCY83uoOcQ7kNvwEqas1V&_nc_oc=AdqdZ9BYb5bw9KExlY1-OwQgThWLNv4M9hwOTOdOj_WKTxNeFMC_BTxcHZRvF4_cBaYGYdOkJSO5ljpY5M8FcRXL&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&_nc_tpa=Q5bMBQE3EM_QsQrkZQQ4rQ3mHUg30s4XaseLzt24HbTSDOn4ubivLSlyF75v4tMj5pZBaj8hgJL3nS4aNQ&oh=00_AQHavglO7iDkhkAtnNZ4_AgBjvXrFvfhs0lCQ-TKRhylfQ&oe=6A717658",
+      "cover": "covers/18124856254716785.jpg",
+      "reach": 206,
+      "likes": 3,
+      "comments": 0,
+      "shares": 2,
+      "saves": 1,
+      "views": 282,
+      "watch_avg": 4845,
+      "watch_total": 1066046,
+      "profile_visits": null,
+      "follows": null,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 6,
+      "er": 2.91,
+      "save_rate": 0.49,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 206,
+          "inter": 6
         }
       ]
     },
@@ -406,7 +865,7 @@
       "permalink": "https://www.instagram.com/reel/DZGFUOIsm8L/",
       "fecha": "2026-06-02",
       "titulo": "Cuando el inmueble se convierte en arte: eso es un INMOBILIARTE. ",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.71878-15/715550207_1292780755909062_1878024402869908764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=VGE_gIwoGpcQ7kNvwHE3_1K&_nc_oc=Adp_ItMMhpbNQNvw6YP21vBTfH4s6orLG9elyOiTT4JAe9x6i-rCyDg_f9O4cF2YGcI&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&_nc_tpa=Q5bMBQFtaLQq6Ovhmf0pTrRGcHm4p-uMjjIwnC6np4jTVAnqGukBZuvaWY5yWEznBDDDDkNrG37hBVViNQ&oh=00_AQEz5a2bPfv_jheaG1NoS7WXXU_4Kr-v7o1kT-dnkhx4Cg&oe=6A716434",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.71878-15/715550207_1292780755909062_1878024402869908764_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=VGE_gIwoGpcQ7kNvwGJD2wW&_nc_oc=AdpKtE-XW7uSeyHVBFvao_hle0FFEuYLbpgDMRldH9yrayQ1-QMos1mI7o9ZzxuxiJOyzwMb1SJ8aA_3hcdGqK8v&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&_nc_tpa=Q5bMBQEQwG8RoqZkBmSe4eONkiw0mMcOlw-Y0ZxIFgem-Dx0bSsV4meMLSPBz1gY09y7FaBd-t4gbBA02A&oh=00_AQFtMsCDICXdadn0fd47u0iqXiXuWphY1ljOXWEcKgoA5Q&oe=6A716434",
       "cover": "covers/18116567470831363.jpg",
       "reach": 101,
       "likes": 1,
@@ -429,7 +888,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 101,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 101,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 101,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 101,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 101,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 101,
           "inter": 3
         }
@@ -442,7 +926,7 @@
       "permalink": "https://www.facebook.com/reel/1322193596552116/",
       "fecha": "2026-06-02",
       "titulo": "Cuando el inmueble se convierte en arte: eso es un INMOBILIARTE. ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t51.71878-10/711249674_2531954080600044_3852685510744005785_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=5lBPaQzFFqUQ7kNvwG1Wz52&_nc_oc=Adp1UgA-zwXn6xB4kPd3Wdb2Gi39tyGyU64GNQt5ykKwULCFrTINVMZrT65fjfz5uR8&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGlM2PbcC3NFMSO6YwhwPR8ENJW6J1xUPrd3UoEZM9cYAD_59FIJ-QYQA3p2xFSjZEqpssiAxXhaQ&oh=00_AQHdRKJDi_HwOUdAq2MHhE8LdLPSIZXiYr2f950_PQKnWQ&oe=6A7169E1",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t51.71878-10/711249674_2531954080600044_3852685510744005785_n.jpg?_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=5fad0e&_nc_ohc=5lBPaQzFFqUQ7kNvwHLRQXH&_nc_oc=AdqZCs1-53TmjbYPIQCM7IcdP5K8AmaenJ0WYn5OpZ09X9HP-mMeg_tjMwwHchFUnmOwiHIlFMTvlK-ias9FWISD&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQECe6EPz-eeAUr0n15yNJM65leDeN995CrQlebLUHBCGsr4Ol3WJWO-Wfvz-0dq8bXIsHfj8CPwYA&oh=00_AQFVA1LXu8Thw8TyzpxRxcBhG-tCeUCnfqzA2AsgjM-Gww&oe=6A7169E1",
       "cover": "covers/103075448823440_1027726609765343.jpg",
       "reach": null,
       "likes": null,
@@ -464,9 +948,70 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
           "reach": null,
           "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
+          "reach": null,
+          "inter": 0
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Image",
+      "id": "18130855747598600",
+      "permalink": "https://www.instagram.com/p/DYqVf8tNX9R/",
+      "fecha": "2026-05-22",
+      "titulo": "Para este proyecto, la familia buscaba un sentimiento de hogar desde afuera, que fuera una",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/706035797_17930164578285298_3331477044177351835_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=id71JSErmQQQ7kNvwFJJNh5&_nc_oc=AdopJ9qKDJPUCo7esTSI4f0Xx5U6aX4Z-s-jHIxL95wJLPn57l5SBBUMIEbwBE8GxkoRUhghH9hTIUhQ9OYYfeSB&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQFQjtZr6PCjLrMKN_aQtxwA2tyM9uCEqxvfSwyVFyVVuQ&oe=6A7165FD",
+      "cover": "covers/18130855747598600.jpg",
+      "reach": 74,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 2,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 4,
+      "er": 5.41,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 74,
+          "inter": 4
         }
       ]
     },
@@ -477,7 +1022,7 @@
       "permalink": "https://www.instagram.com/p/DYmx9a1nAFv/",
       "fecha": "2026-05-21",
       "titulo": "¿Y si tu casa terminara siendo un elefante blanco? 🐘",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/704972197_18071674565672876_4349429814434119374_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=Z3J_rpqJiEwQ7kNvwGJhL0V&_nc_oc=AdoXU_nE9WUDylNxa2ccjF2WYic3etwtnppM-T5edm3suSuu7cMWB2N7YFcPv2txvoA&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQH1pYjjUPUQqB6FaW7Xd1L2h-JPv6OkSLogKIS3_BrwUg&oe=6A715421",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/704972197_18071674565672876_4349429814434119374_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=Z3J_rpqJiEwQ7kNvwExi4KY&_nc_oc=AdpvIDs792x_rEoIUHZ9Jd0X6wy2OyDcbfQOGr1WQ-OrcGD-r3dz0fePzKkZtc1SHBjDVAHQR2UnKBC59F6CuZBj&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQF0TglFRun3zTT_p9OE_KktCJJXq8Ra2vdHGo8hb7Hwnw&oe=6A718C61",
       "cover": "covers/17891387412494707.jpg",
       "reach": 56,
       "likes": 2,
@@ -500,7 +1045,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 56,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 56,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 56,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 56,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 56,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 56,
           "inter": 2
         }
@@ -513,7 +1083,7 @@
       "permalink": "https://www.instagram.com/reel/DYmqSDgsLN5/",
       "fecha": "2026-05-21",
       "titulo": "¿Y si tu casa terminara siendo un elefante blanco? 🐘",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/703157652_18071666435672876_7128530492763649071_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=yG8vmAhaqWgQ7kNvwEaUMnu&_nc_oc=AdoY_lSpW-vjT5v8RaAcz0bV1FIWjQLqI6u68-mCOaLRylFLeQIgG9_nObSnHcIXyLA&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&_nc_tpa=Q5bMBQFPRfhrBQtSMNze4Z-JGvRw4IXvWIRYyw5qD1F6836GE8p-kSQaVg2ldrzcoIdP1-G0FIlo9qK93Q&oh=00_AQFzGb6MvzCbN4rZSnC6SUtyPKH-Nl_28Q05EdzmVW-TNA&oe=6A7152B0",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/703157652_18071666435672876_7128530492763649071_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=D9LAoi8uk0gQ7kNvwHlyyEz&_nc_oc=AdoqaeKSS2fU3TnqSzDvHeZEDHo2WSPEtJZVTd_lnhtTcYk1xaGpfVhM0ZmtB1-gtAClHkz3lGvETIijYwJRXqHy&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&_nc_tpa=Q5bMBQEUAOZxWdZTIPdYORhCyb12oyL0PWcVhZmMRVRin0sUZOABD_Rwu7Kr-OY8zLWmqDavBKZJ0CBw_Q&oh=00_AQEzq5fJov0XJIROAwugX-wSoc3kPrkbRDHmVVorde1r6Q&oe=6A718AF0",
       "cover": "covers/18109704826912272.jpg",
       "reach": 44,
       "likes": 2,
@@ -536,9 +1106,394 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 43,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 43,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 43,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 43,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 43,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 44,
           "inter": 3
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18083347436420614",
+      "permalink": "https://www.instagram.com/p/DYNExB0lIkc/",
+      "fecha": "2026-05-11",
+      "titulo": "Antes de hablar de metros cuadrados, queremos entender cómo vives.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/696759389_17928436014285298_4096187264086779624_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=NsJEfJozijwQ7kNvwFf7b_A&_nc_oc=AdobzilRWZSIj5uChYVfWQeJntr-ZbgFk0GOP2gVWIoZSTcyNeTngTxYPDiUwHSCi651tAsvNCNKO35E5gkG7f4K&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQG04Gr33DTLbyeVbqxPhF-pQQdEApjerqyZ6LP589WbwQ&oe=6A716BFF",
+      "cover": "covers/18083347436420614.jpg",
+      "reach": 50,
+      "likes": 3,
+      "comments": 1,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 1,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 5,
+      "er": 10.0,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 50,
+          "inter": 5
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18113426998844425",
+      "permalink": "https://www.instagram.com/p/DYBdTd9FQbH/",
+      "fecha": "2026-05-06",
+      "titulo": "Cuando Él y Ella llegaron al terreno, lo primero que hicieron fue señalar el parque al nor",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/688627897_17927727117285298_138870974399888562_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=r3SN4cIDrb4Q7kNvwGGVHTO&_nc_oc=AdrFnK7GBMfbyezwhmcYZnVLdW5gBXjabGrTf05AQoFg5ldLJ-ATWKfsYtGtw6mLlQ16L0bMH_bebJ_GEjtc13_Y&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQFMaHalGt2s7w24uFk0wq6ioW9dZoBuiWw2oRm5UaYcqw&oe=6A716C5C",
+      "cover": "covers/18113426998844425.jpg",
+      "reach": 83,
+      "likes": 10,
+      "comments": 1,
+      "shares": 0,
+      "saves": 3,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 2,
+      "follows": 1,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 15,
+      "er": 18.07,
+      "save_rate": 3.61,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 83,
+          "inter": 15
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "18088766621239285",
+      "permalink": "https://www.instagram.com/p/DWUHttiFMv-/",
+      "fecha": "2026-03-25",
+      "titulo": "Desde el inicio sabíamos que la casa tenía que abrirse hacia la vista al lago, sin perder ",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/656447900_17921146341285298_4214840514439039893_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=6JkfkNnbw2oQ7kNvwGxVklV&_nc_oc=AdoZt6iAE6QiECJwnk-GooW0R6qZLUVoOHvTLaCFXMPyfQiV0tKkygqKAo0ck3ZIxnquXaYzqTorPp3ZrUALPYRh&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQHzX3BSyZiyI2IAgFTHJw50FNiHGTGvrg66eJx3EPWc2Q&oe=6A717037",
+      "cover": "covers/18088766621239285.jpg",
+      "reach": 199,
+      "likes": 12,
+      "comments": 1,
+      "shares": 1,
+      "saves": 2,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 5,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 17,
+      "er": 8.54,
+      "save_rate": 1.01,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 199,
+          "inter": 17
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Reel",
+      "id": "17864510145528441",
+      "permalink": "https://www.instagram.com/reel/DWFAdqgAYAx/",
+      "fecha": "2026-03-19",
+      "titulo": "El principal reto del proyecto fue aprovechar la vista al lago con una fachada principal h",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.71878-15/655947266_1623477665750837_4225092013047551085_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=TS6yItd_SysQ7kNvwGROBnJ&_nc_oc=Adqo-h1m6QX3cNECLTEl-Sh88RVWi97L4thqxthfyD6XDfsU1EyvyJZ61bHd5rGBItAQ3Nnzj0k0_l56fWT3xiqv&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&_nc_tpa=Q5bMBQH8XxrnAa2HyEM-O937HaFMbAZAhSz8hHdzHJW8_zdDTSjmPgObT3fvYJgLed8BkWYPjH4tcUKZ_Q&oh=00_AQF-1Skz_WfNRAEOP6h-DDDu15Z1KafVrIQTksybehScbw&oe=6A717AF3",
+      "cover": "covers/17864510145528441.jpg",
+      "reach": 81,
+      "likes": 5,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": 150,
+      "watch_avg": 6042,
+      "watch_total": 568035,
+      "profile_visits": null,
+      "follows": null,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 6,
+      "er": 7.41,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 81,
+          "inter": 6
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Image",
+      "id": "18098033881953692",
+      "permalink": "https://www.instagram.com/p/DV1GhbyDdLk/",
+      "fecha": "2026-03-13",
+      "titulo": "Un diseño que se organiza a partir de su vista principal: el lago.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/649671814_17918579631285298_2751087388919935295_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=_oPt3BBeAo4Q7kNvwH1LvOC&_nc_oc=AdrGmpyLMiKTWE9qGwPBCZc3tv6dH-G61aSl5ZWPRKTeMLjn9GZ4VMIR7W30P7cqiW0_OlJG4SOVmeUtFp_Ae7X1&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQGVpKyrN7aIYH0lFEee-HQy3tOrgSKIfeHJ6RFfznDisg&oe=6A71943A",
+      "cover": "covers/18098033881953692.jpg",
+      "reach": 84,
+      "likes": 5,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 0,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 5,
+      "er": 5.95,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 84,
+          "inter": 5
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Image",
+      "id": "18004045742854571",
+      "permalink": "https://www.instagram.com/p/DV1J7EcjeO1/",
+      "fecha": "2026-03-11",
+      "titulo": "Aurum Arquitectos",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/649967769_17918575794285298_6943710406458823793_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=XdBxqX05SMAQ7kNvwFTN_O4&_nc_oc=AdoipNQlpPdwCUgTw4nJJham0kVQtrAWOmTLl3gB8KzNsEniJGmGxtMU_b4j_zmayYuB9iYIi3O33ouSzXcKRqAg&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQF9wXelmcqrD_NdOEhaM-0Lvj4wVgyuSrWojOgGS5DVdg&oe=6A717F63",
+      "cover": "covers/18004045742854571.jpg",
+      "reach": 90,
+      "likes": 4,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 1,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 4,
+      "er": 4.44,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 90,
+          "inter": 4
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "17849292414659967",
+      "permalink": "https://www.instagram.com/p/DVsh2-tjVbH/",
+      "fecha": "2026-03-10",
+      "titulo": "Mejorar una casa no significa necesariamente hacer los espacios más grandes, sino hacerlos",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/650280502_17918605044285298_925277570421157284_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=WuBnnM2KYF4Q7kNvwFtOrUK&_nc_oc=AdoPyV6OL470V4GT5dNsSGf3GGE8jICGJkYdIYJG2OYSNlrHifbTgJvOz8Vg73OnC606d71M_qF3CnUBV2Fh-A4W&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQF7eDMHIIR5A3JuLnBmI2ldEOEp4HYJ74hVdkq0aJjcgQ&oe=6A718F4A",
+      "cover": "covers/17849292414659967.jpg",
+      "reach": 97,
+      "likes": 5,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 0,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 5,
+      "er": 5.15,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 97,
+          "inter": 5
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Carrusel",
+      "id": "17906720001179646",
+      "permalink": "https://www.instagram.com/p/DUtNrx9meyb/",
+      "fecha": "2026-02-13",
+      "titulo": "La arquitectura también se siente.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/632249090_17915032170285298_6108370159403446284_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=GDHjVJvwjEIQ7kNvwGUcoQK&_nc_oc=Adp0h8hxuHBYquAXbn-sP9qI3wr2gHf8ruZ6uI9NpiIAUdM5tEgOrHxY8rJOWrjXbwwqpedv8N1PUGA8Mj-hFQN7&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQFI5yDTYPR-9mgHcQR_Fo424sVFzYjl82QIg5ckVQIPsQ&oe=6A717250",
+      "cover": "covers/17906720001179646.jpg",
+      "reach": 94,
+      "likes": 7,
+      "comments": 0,
+      "shares": 1,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 0,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 8,
+      "er": 8.51,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 94,
+          "inter": 8
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Reel",
+      "id": "17847940893648185",
+      "permalink": "https://www.instagram.com/reel/DUlR5Lqkmm0/",
+      "fecha": "2026-02-10",
+      "titulo": "Espacios pensados para vivirse, recorrerse y disfrutarse todos los días.",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.71878-15/630416686_1613488669992375_303293892401956773_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=9CyT_qd1HS4Q7kNvwGttARQ&_nc_oc=AdpYr5IjIEVQh83ms4B-ic_07d9YRSdEHhXkNvLk32BcCZ0tfO7xgBejZ9rilgaETrmc5TF2MoWmYvZ2kfllrCZp&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&_nc_tpa=Q5bMBQGh7i14spJSdTGxT9F6BmCRql8JJ5EoDct6zQ7I2idVYApBe9SK72P56wzpAgJrvoC36XGosiDzVA&oh=00_AQEcCtz6EWvI_rV0cChDfGyE5FHH3Y85ZGL4HalMr3Dx0g&oe=6A7168A4",
+      "cover": "covers/17847940893648185.jpg",
+      "reach": 245,
+      "likes": 13,
+      "comments": 0,
+      "shares": 1,
+      "saves": 1,
+      "views": 478,
+      "watch_avg": 5897,
+      "watch_total": 1757579,
+      "profile_visits": null,
+      "follows": null,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 15,
+      "er": 6.12,
+      "save_rate": 0.41,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 245,
+          "inter": 15
+        }
+      ]
+    },
+    {
+      "red": "IG",
+      "tipo": "Image",
+      "id": "18090080087032440",
+      "permalink": "https://www.instagram.com/p/DUdix-6DYCo/",
+      "fecha": "2026-02-07",
+      "titulo": "Proyecto residencial diseñado desde el terreno y la experiencia diaria de vivir un espacio",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/631391218_17914206135285298_5808204445084195751_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=-KAxWCfcZGAQ7kNvwFaG-8_&_nc_oc=Adq3LjmXEn4C9pyn7HUa6KG5Lu_L5ivsd3Z4yJusXTdfzrJSR1CyU8F4Y17Cf-C6kcIrtH3o9YeLEwgr-SylJ8k3&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=KAUD_Zm4PhQkJvz1dHV9DA&oh=00_AQHi5Xx8ZnwTiVde0AdKiEn1RZAxOrP6sw6UJZv-8ON2Yg&oe=6A71704C",
+      "cover": "covers/18090080087032440.jpg",
+      "reach": 130,
+      "likes": 17,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "views": null,
+      "watch_avg": null,
+      "watch_total": null,
+      "profile_visits": 1,
+      "follows": 0,
+      "reach_follower": null,
+      "reach_nonfollower": null,
+      "interacciones": 17,
+      "er": 13.08,
+      "save_rate": 0.0,
+      "cuenta": "aurum",
+      "cuenta_nombre": "Aurum Arquitectos",
+      "leads_atribuidos": 0,
+      "citas_atribuidas": 0,
+      "serie": [
+        {
+          "t": "2026-07-30 12:29",
+          "reach": 130,
+          "inter": 17
         }
       ]
     },
@@ -549,7 +1504,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/275555734908743",
       "fecha": "2023-05-17",
       "titulo": "¿Está buscando una oportunidad para invertir su dinero y comprar su hogar de ensueño?",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/480172003_656878350109811_466986128864793914_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HbsJIhdOpHYQ7kNvwEbKvjm&_nc_oc=Adq8v4spYhAziicn_SFh_t_C_-0C9yLzJSrQonGJNlvTjvW35bB0HqmhS8OCtC8OV8o&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQFwhrz6yJv9iI6XWIe-42PYAU53l9g_5IhV1t2ewHuowbwPGHWfcJHKTZgVAa6OOrZhIU4d9y7zkA&oh=00_AQFSSrurmPHRKe0vV3md1PjdY2ojsn7GDvWHvv60kZIUoQ&oe=6A7171F4",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480172003_656878350109811_466986128864793914_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HbsJIhdOpHYQ7kNvwH7oSm4&_nc_oc=AdqcJNdZuS3KNGzk3VtOnieX7avijeFJourTUknhvq194eBsJvn2B7AcF2SoCO1LYDoRsHhlPydTQAmiNJQ3PlZR&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQGHTjrWJxxp67MfykVgHgh_XDBiRlx8n6L-GLNgdHFBxoFH_h6K1xH5Y5tkb3cZFVKzhHkJIBE4xg&oh=00_AQEBW35ZlCIL9ZC3wwc1Ksdi5IrkvzRpVkkqzOStshwCSQ&oe=6A7171F4",
       "cover": "covers/103075448823440_275555734908743.jpg",
       "reach": null,
       "likes": null,
@@ -571,7 +1526,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -584,7 +1564,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/274481031682880",
       "fecha": "2023-05-15",
       "titulo": "¡Desconecta del mundo y encuentra la armonía perfecta en Altozano Residencial! Practica yo",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/479145914_656878500109796_5268506053912722047_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ZRzptzIdr7UQ7kNvwEVqcGa&_nc_oc=Adr4fMhI-eSz_l_g5Vgy0ol3wsn_nxL9jPJjwaNrduHOOMbYs_o-9JuaMZttgtZFiLg&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGBpeUUr90Tzc9s43B2d7jefE2LmUtnR2SNRCFzM2DeZLEcObFAG_0h5jT61k6DKBdsPdVMyXdXUA&oh=00_AQESixFbezSNEnR-hC6OgNmiL3CI-3wJe_pBdWNEl3M_KQ&oe=6A715EFC",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t39.30808-6/479145914_656878500109796_5268506053912722047_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=ZRzptzIdr7UQ7kNvwHPdH_J&_nc_oc=AdpVOBpxCl-Z0NBg5lMlHqVvYQA-uBwMQ12YhMUhZu3vnklRWjOlDDMhmL-RyOlBCKf_Hug8dsGjtX1vobgSfoTP&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQHXuRO2aTIa3sp0RFGQ79xlKJrnZwXcS88HxCZ8-ENLGH_KkTcu_dGqoBjcqO7Ikc4G255TBGS4bg&oh=00_AQHJyL1tAILkSZiCXhlgguqj3JJLUDTDB9rgxZsqazRZjg&oe=6A715EFC",
       "cover": "covers/103075448823440_274481031682880.jpg",
       "reach": null,
       "likes": null,
@@ -606,7 +1586,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -619,7 +1624,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/272159698581680",
       "fecha": "2023-05-11",
       "titulo": "Buscas una casa en venta en tu estado pero no sabes por dónde empezar? ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/478469758_656878583443121_2452048261610629501_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HdMvRn-hMusQ7kNvwH3Oy1K&_nc_oc=AdrOtlZs9H_zOIqWxzlHw3fEfc-gnfvCpC5lLrkZYUc0iZvdG4lWksZkffBGVEHNWrE&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQEaIyl4de0FHLWsfl5qpVv6wHKJiZAKDVTY2qDQVZ70aqfEcXaht_s4km-gwvJq5LpZ2nzoNfokBQ&oh=00_AQHRHWbP7Es2dEZO9cYp9o-0pwCh9GxoD05_HL0pMcJLCQ&oe=6A7178C2",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t39.30808-6/478469758_656878583443121_2452048261610629501_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HdMvRn-hMusQ7kNvwEDTu7f&_nc_oc=AdrgDLCP-zQUR_4YpYlaAkkSi_Chte4hCWIkohOm6qhM4Ssf9_MCDyhQPKirY6jb67cMscxCoXJDYv9Fyvh4sDyO&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQG8ouVr04ShS3ccG-cwDDNi_0yn-KFb6DbzGSYmBw_-IaF6g2KHbqTUHTCR9bcm7dr-G5ltA2IkrA&oh=00_AQH7Ihbu6xlLickdZdGy138qOHxB-I3ny437DTPoYZ8pAg&oe=6A7178C2",
       "cover": "covers/103075448823440_272159698581680.jpg",
       "reach": null,
       "likes": null,
@@ -641,7 +1646,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -654,7 +1684,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/271623005302016",
       "fecha": "2023-05-10",
       "titulo": "No te conformes con una casa que no cumple con tus necesidades. ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480214651_656878380109808_1305036296896667990_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=H3Lt6-RRNDUQ7kNvwFTSn8Q&_nc_oc=AdrWCAid3hgGHMJqXksXrxTc4boJWYtcjNIhP_JMFL-u6YlWCLrDAcDEUch-Ojkdc7c&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQFlNHCwZn1fnoHmiH_xRpngnf58L8WWwrFcABxxRfYTEjJpO5WXpPUo2ShAdUCUSvUpZhgCDmywtg&oh=00_AQF96cBajtfuGw6M6rvxWeXvDm1CtbYnCmevtc9HzUK1gw&oe=6A716EF9",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480214651_656878380109808_1305036296896667990_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=H3Lt6-RRNDUQ7kNvwFAzg0E&_nc_oc=AdrZkGI1JYH9bklIBFKnNSdbjPxgtScmqRAs1X3z1fOPeBJaJpOyiR-PBGwrdhdjIORn8AGAIhbFoNQDoV93-Uc4&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQF5ynbngow0vhT1TGa3yOxgJtVO9JHK8JPzkHyeQW3lLeQb19wB6lT40Nskl71nT3psM3iSPBEoWA&oh=00_AQF-emrQxfSLNt5Gn7AFmAe3iItjQQQ0bc_2m9t-acTd4Q&oe=6A716EF9",
       "cover": "covers/103075448823440_271623005302016.jpg",
       "reach": null,
       "likes": null,
@@ -676,7 +1706,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -689,7 +1744,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/268259332305050",
       "fecha": "2023-05-04",
       "titulo": "No pierdas la oportunidad de invertir en propiedades con alto potencial de plusvalía. ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480279385_656878643443115_5950618157186552740_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=qgXWvyCzQ_MQ7kNvwFqOxBZ&_nc_oc=Adq38ENmRlN0Z-3S6YG2KNmO4yP7Q-PIXeWNNnGI6gzShabUVmDjJoigfeWszMZbPdc&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQF3hstK-kjOKAnQjMbVpSJ2fF977O8obWAGdDXjartRKkohl_wk9LHGHc7e3y_PrI9Db-Kr7VlqRw&oh=00_AQEy9nNCBUBwXfJHRLmQZLd3B32mDMEtV00MG9dGty-sNQ&oe=6A716201",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480279385_656878643443115_5950618157186552740_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=qgXWvyCzQ_MQ7kNvwG5XuQN&_nc_oc=Ado3B99xcfFUJKbtiJPxEhAFiKzNCI7a8-orDLTt0IUe17TvQVbS3ZKA3ztoqnudNtfTt7Pa6N6hR5G4837AkynT&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQHcDO5wcLOX7UtgFeX6VQD--APFsFDejaASvwKH99qdhMVVWucGZBZ0MiGKcnenKXeSBn-HMx15KA&oh=00_AQEXIc76Bd8rc-LZfsQA_fbD7E2fTBMkdxatf3-3LD49Eg&oe=6A716201",
       "cover": "covers/103075448823440_268259332305050.jpg",
       "reach": null,
       "likes": null,
@@ -711,7 +1766,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -724,7 +1804,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/267566629040987",
       "fecha": "2023-05-03",
       "titulo": "Disfruta de la serenidad que ofrece un hogar frente al lago en Altozano Residencial. Despi",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480171829_656878546776458_8486516513562218623_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=v38ZrkgL3U8Q7kNvwFGDsRu&_nc_oc=AdpE-_2p61X5noBUxX1QJ4QrKpZ4AiOczSzh_H_tNn6CVjT7jUdm7Njj4vh4D-Z-2pw&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHgXkfUzwiHqZH6n5Mo4OC8qBpI8lnVhcZiIylEFqNEUG6hhc-trPYrLQkY32Ri7PTpqjr1347Raw&oh=00_AQF7KBMYmm_CEMiJpVq1j923eSI9dOlSoW5wT6inclxJig&oe=6A716C15",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480171829_656878546776458_8486516513562218623_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=v38ZrkgL3U8Q7kNvwFU2fhF&_nc_oc=Adr10_alya27ewJc3I9UIOLwoqYBdUWjQbEYJyoslZTcP3cXumKp0YP7H_xXxeg842NIp-91BXWsXdh8QwuidHjC&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQFfpyLQ7vzjc81qviY6TF8TzKhtDV7oj9KWOkIdrIYEK77igHemy--MbMZpdPQMPTDZN3VGS3xQjw&oh=00_AQEmSarXP8pVaYwtEGLRr_TdurF_w03P7KmymklCYytaTw&oe=6A716C15",
       "cover": "covers/103075448823440_267566629040987.jpg",
       "reach": null,
       "likes": null,
@@ -746,7 +1826,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -759,7 +1864,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/266409285823388",
       "fecha": "2023-05-01",
       "titulo": "¡Descubre una nueva forma de invertir y hacer crecer tu dinero! Nuestros proyectos inmobil",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/480205630_656878563443123_9099944364471319657_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=pcg3AZ17fJoQ7kNvwFMK1Dr&_nc_oc=AdrKmSiC4h50aic3v9T3vdfiIfOKVNhWfl1QCh2wBzVYEHyOIOuvwaRjV6FCQBEjH3A&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGACFUX4N2IIYxxRIK1ZMBW21xb2Ec2TO1ysozLeQdwm5wtQJfEjeuLRYMAx_RYJ5mSccmtPVrCAA&oh=00_AQFiyULc_EByyI-q539E9cAo7SiqcLi8ZyAQnDVjUunDWA&oe=6A7177C7",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480205630_656878563443123_9099944364471319657_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=pcg3AZ17fJoQ7kNvwGMpgBj&_nc_oc=AdrdrMc7FTAYAa5SUSg7phdQYWRQQvWXVHwB1YyD30K1RqucRPbpAomUcOEjJOHqG5wr-SaYSHTJQbDklJBlySHf&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQF7MkyChxxvafKH_H_XcV606OyascaQSsBGJK9VQqY-QPODrfTIsG17II-JTw9BBGmlg70Y5fHDBg&oh=00_AQEJMgXtStX8iczRIjtZANFi53dTWhV05sFPrD5xEYIKhg&oe=6A7177C7",
       "cover": "covers/103075448823440_266409285823388.jpg",
       "reach": null,
       "likes": null,
@@ -781,7 +1886,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -794,7 +1924,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/264669542664029",
       "fecha": "2023-04-28",
       "titulo": "¿Estás pensando en comprar una casa? Asegúrate de tomar una decisión informada que se adap",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/479899942_656878740109772_5932461923331783978_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=mrGQwHc_rw0Q7kNvwHh9AwO&_nc_oc=Ado-ytNa2_12hD5WKzoH_s9x59XniEundYz6BNViTeT0vOS5y28VPFILKVPC-hUkJ_o&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHmyCBDCWaqA1UljH2Yre5H6fEJwwA-OkNQSBXpY7d5AeTkXK7gGDY6d77sKProQm6vz-AVVv_CRw&oh=00_AQGKtPybgM_U21v8TLa_O7ztRTGELUIx-xVdtv4fz_ItcA&oe=6A7163FA",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/479899942_656878740109772_5932461923331783978_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=mrGQwHc_rw0Q7kNvwGbq3yO&_nc_oc=AdrRGGrRV-qqTKbpi7r7bZARtxwhi8R7luWCRqsA7_VIixjeQNHwpNmNLUtYC9poyJEdmYRBl3-Aca6IbbCrXqVn&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEVPV8dzkYSQqHwpe10NNunae7dHW_XMdbWO7gEq6d2_NuGhRL1WouFsh6TNpWBYTugKGLX0juxjg&oh=00_AQHHUNs9c6-Cjn-KIDTwe41M8Yp0ECy2rneWEpVUzuADYw&oe=6A7163FA",
       "cover": "covers/103075448823440_264669542664029.jpg",
       "reach": null,
       "likes": null,
@@ -816,7 +1946,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -829,7 +1984,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/262592929538357",
       "fecha": "2023-04-24",
       "titulo": "Si estás buscando una inversión segura y rentable, ¡Altozano Residencial es la respuesta! ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480178196_656878353443144_3903971609155200765_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XrwDNBeWY7EQ7kNvwFpwsqT&_nc_oc=AdqvLUzMRHVU1cWWMVe2yY1uCPGJ3wu8DMZvBKV3kCJrGbYU3aU_gAG_d6LTiEVR9RQ&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQE9-aWaeHEAg37phkjGjWd7Jrmw7e1SdrX6rAMht-5CHI45OiOd1n0c_SB1U-g3KqOnAp__uicxPA&oh=00_AQFkEq04WFJu-MuypSTL8aEnjd1_O2Z1a7VCt-Ptja8XFQ&oe=6A7169CF",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480178196_656878353443144_3903971609155200765_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XrwDNBeWY7EQ7kNvwFqVtg5&_nc_oc=AdpmQuIPFBQlTJL5FiBlBzAJOwofWcITYEcl2YApOJ042JiTu04G3JObDnz1oCcw6yV7bA9E6XwBsmKuntOzszRE&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQGZA-LvkYooeyz9nvoQE-5rVMBdEYfU6my7Ag7WCCWi2MzJRYixLuqz7yy3xus5wrMUWCnDzFqwyQ&oh=00_AQGhLzHcbjeMegJ1UmxgXRB01Xyu5cMIwPYvU2KJ7ftZ6A&oe=6A7169CF",
       "cover": "covers/103075448823440_262592929538357.jpg",
       "reach": null,
       "likes": null,
@@ -851,7 +2006,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -864,7 +2044,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/255985726865744",
       "fecha": "2023-04-12",
       "titulo": "Alcanza tus metas financieras 📈",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480150936_656857110111935_2364683958052407952_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eBVjp1Ohy24Q7kNvwFuQ2iG&_nc_oc=AdpVYF6JTH8aGZE65zf7p71WjshQDoxVA3a7ybvq6hlv6eci4Ty4-EU9uyfghDPTfDA&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQFx7uW1aipBVYBYVdWFgTnWG68zqOQIZyKYZSaztWLvipb-Hm6h5Xby1X_RpzzUqxsahju4uStwRQ&oh=00_AQESpyhdekPZUc7BzqmHyQL4mGkjVmAiUqfCd8ELK7eSQg&oe=6A715266",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480150936_656857110111935_2364683958052407952_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=eBVjp1Ohy24Q7kNvwGpVIac&_nc_oc=Adr6QJGhjWdP1dgWc2JxPNnfLZaB_j9PmA-lc_KgZykMA8ZX4EudNqfp8BPw__HguDaOTDNNq88JJjB0jKb4WCvX&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQHoR4m-kF4xlTXhxRaVr0GqiCJXbm3royoOL106JpLwoGEYUp3AuQ5aP2mGyFcPqxKW4DRrZmQLrA&oh=00_AQH2YQoypgBDc_tNNcyuetHOuj0-3I7HWxuweMq4pr6LQQ&oe=6A718AA6",
       "cover": "covers/103075448823440_255985726865744.jpg",
       "reach": null,
       "likes": null,
@@ -886,7 +2066,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -899,7 +2104,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/254960616968255",
       "fecha": "2023-04-10",
       "titulo": "¿Cuál es tu razón para invertir en Hermosillo? ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480103538_656857180111928_5890527433358295606_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Bx-PL4-sL2MQ7kNvwFOSbrN&_nc_oc=Ado8TDF2CQoEyQoUGPCQqLfUyeHAfqzO-202yziuEchrP5czoT5kO3cJoM9717jDjeo&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQFMox2B4swYWH6nLz25KorvUlfEycprEL7TxY4COMBTp6BXGKy-nvb6Y_8Rkx_rLGBVM97DHJMfDA&oh=00_AQFP3BhsNweBpiRZB77yQ5-EXqSu8Zg5Do6xwuDmFe_38g&oe=6A716497",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480103538_656857180111928_5890527433358295606_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=Bx-PL4-sL2MQ7kNvwHDcc1n&_nc_oc=Adr40akgS0nLPdvGFGvB3HRqCofR9nbm50xcU3zi91DdBUnkA4ML79TPbCnYMgY6wGpm5PEDmVnZkty1h7kdkqE4&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQFzmJWuszXfQft4tvpCCr__E1v5yLRxWpRH1q6dtJYLnvC2o89r_ZG9g-FGnYNg2uCIqba7Xfz0Kw&oh=00_AQGUGC5wSaw1KTG9QiMbC-Y-3RAMm2DXlGUg2QgsFKd4wQ&oe=6A716497",
       "cover": "covers/103075448823440_254960616968255.jpg",
       "reach": null,
       "likes": null,
@@ -921,7 +2126,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -934,7 +2164,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/251738410623809",
       "fecha": "2023-04-04",
       "titulo": "¡Conozca el nuevo Hermosillo! ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480221033_656857066778606_1117239125545196943_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=YDkO0RSz1P0Q7kNvwElIF9K&_nc_oc=Adq8QUnw1o1ZCkfoZBAoK16FMqEW5kBKz3jScZoDZBtLM0GbAKtt81c4DKrlLiB3HsI&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHoF0s3Qlt7oF2mSOGWR8uP_17iHoFJaklNrgX-td9wAqVXO8CoSkTL15qZ8WKxFr0Ye1JYNcrBCg&oh=00_AQH-QUkHh5gu3NxDyjfmiZRNL4LoqYqXdqsi4D6qd6pO_Q&oe=6A717A62",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480221033_656857066778606_1117239125545196943_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=YDkO0RSz1P0Q7kNvwFzdw4-&_nc_oc=Adq2tTVaG3y4sAciDylxRFQKkg8L-Khyx2LHORFEhLLZdM0hHiF4ierGNcY1avreD9OV7hOeb2jG3g-Y07vqKR2T&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEZmEooquGjXDNcFFghB7bKvjAeG2C6-pWuIhvwQ5CtabH7s94w0xces0lyD-mJ584gL4zaBih2ng&oh=00_AQE4Cq-J3Xu2NZK3__uMkvN7d_W4TmrpGv5QfQC77Ey25g&oe=6A717A62",
       "cover": "covers/103075448823440_251738410623809.jpg",
       "reach": null,
       "likes": null,
@@ -956,7 +2186,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -969,7 +2224,7 @@
       "permalink": "https://www.instagram.com/p/CqlmP1ctL1V/",
       "fecha": "2023-04-03",
       "titulo": "¿Estás buscando comprar una propiedad? Si es así, te recomendamos encarecidamente que te a",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t39.30808-6/480154110_656857090111937_5465243980251546621_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=aQwl9-EttQ8Q7kNvwEB9FMF&_nc_oc=AdrtosowMCNZqW1wnVDwd9pdLDjR8mud_jCpEiCJcVb8dzcwyTowzwGtH_RQjJhW3ac&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQHtWEBezMJ7_wdPT-A1dZSEtoPJe5xp13wrDlSq8ZrPQA&oe=6A715CE1",
+      "thumb": "https://scontent.cdninstagram.com/v/t39.30808-6/480154110_656857090111937_5465243980251546621_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=aQwl9-EttQ8Q7kNvwEsXH93&_nc_oc=AdpQngRaVu5HqnwofBP6OdVfVTHGv3cN6bL9CdLj4KeynbS7CXmCF2N7OqF1ZT75kP3LjmXMFtVXIa2PEY57hv_N&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQGdfNf7HhF3vTKGG9Hz7yuk6sGUi7AU9sQeVqisxNAcdg&oe=6A715CE1",
       "cover": "covers/17932843610536698.jpg",
       "reach": 12,
       "likes": 2,
@@ -992,7 +2247,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 12,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 12,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 12,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 12,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 12,
+          "inter": 2
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 12,
           "inter": 2
         }
@@ -1005,7 +2285,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/251227080674942",
       "fecha": "2023-04-03",
       "titulo": "¿Estás buscando comprar una propiedad? Si es así, te recomendamos encarecidamente que te a",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480154110_656857090111937_5465243980251546621_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=aQwl9-EttQ8Q7kNvwEB9FMF&_nc_oc=AdrtosowMCNZqW1wnVDwd9pdLDjR8mud_jCpEiCJcVb8dzcwyTowzwGtH_RQjJhW3ac&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGtaZttMbcuee6zoblThOoG2yg4ncSSS3S8ZLz0smbY6eUZBbULJhEcuEcV3aWwcOGzhTzsyqFjqw&oh=00_AQEQB4tJdyn8HEXFDduWwq49x_R7Z1sybzOJGWazajBdmg&oe=6A715CE1",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480154110_656857090111937_5465243980251546621_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=aQwl9-EttQ8Q7kNvwEsXH93&_nc_oc=AdpQngRaVu5HqnwofBP6OdVfVTHGv3cN6bL9CdLj4KeynbS7CXmCF2N7OqF1ZT75kP3LjmXMFtVXIa2PEY57hv_N&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQEMIf0tV9SjZ47atXcfrNqN4N9PaX2G9szkaHV8LTIu9s-rgVhrisisvPEO7PDBd_5vDl9Ivlkw1g&oh=00_AQHTdRgbJs6SpyLzUkQqEUHq2qhCvk186z6KIbxMzdpMfw&oe=6A715CE1",
       "cover": "covers/103075448823440_251227080674942.jpg",
       "reach": null,
       "likes": null,
@@ -1027,7 +2307,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1040,7 +2345,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/248078110989839",
       "fecha": "2023-03-28",
       "titulo": "¡Ven y conoce al modelo Alyssa en Altozano Residencial! Disfruta de una hermosa vista y un",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/480141035_656319793499000_1790055683463541914_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XBGpv6SxXyEQ7kNvwGfVaXr&_nc_oc=Adql4Ab-JKETehW78SQU0wCHh3pIKyVCFYUXSYKl8mpUU9carkDdYmct8sn_XLIb8hs&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHqH_dDZEDr_nD1ax63wfGV2VO86jo2leHICGUumpabJXote8v4CbsFPElmxe2W-diEWGtrWtx9VA&oh=00_AQFjkqrxtrtP8nFcDmYjiQ0P0fRJN_wOI_8x4s3SGePrIw&oe=6A716CBF",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480141035_656319793499000_1790055683463541914_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=XBGpv6SxXyEQ7kNvwHq7JSm&_nc_oc=AdoqQyxccklsRkFjkeeVJWjpGujeesb-uIcLw3wunDqt6H1CFCafVhsCkBwdtxg0xl-Yma80L_3IaHiRdzJBAG82&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQFO5pWLEYcZcZ42Njgs-zpkITUhmrxGYWbrRjPPwzsPaq1-vSTf0J4BIABpDwv3qrXTnDO2NesSuA&oh=00_AQHeuS55HnR0JBONcHe9rfnvhshcqePJZ5OVvEAqJyoU4A&oe=6A716CBF",
       "cover": "covers/103075448823440_248078110989839.jpg",
       "reach": null,
       "likes": null,
@@ -1062,7 +2367,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1075,7 +2405,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/244399718024345",
       "fecha": "2023-03-21",
       "titulo": "¡Bienvenido al residencial de tus sueños! Aquí encontrarás opciones para todas las necesid",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/480092715_656306383500341_6265312583105736170_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=108&ccb=1-7&_nc_sid=127cfc&_nc_ohc=uCNKrblNUsMQ7kNvwFw5GKk&_nc_oc=AdrpGkope149LKME2vXn69LaK4QD6p1Idt2WZf-cPbhdil1CngZN7bqJaEf4jl_yxtc&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQHIPsIuVmpqg-RZ8SZ6hVXx-Ox2RhcW-WFIO9hkCB_wumFC6Zv0AFOPlG0YggWQWDhZ5Kq1tBWxhg&oh=00_AQEq1px2qa5dGVgAmmWyvUicRTSmdMVXXmbkSVgGv-iGzA&oe=6A7160C3",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/480092715_656306383500341_6265312583105736170_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=uCNKrblNUsMQ7kNvwE6f4K8&_nc_oc=AdqTk2KDyW7B2bPw0frN20Jrhb4FOS15u1DuB2Q-oKRahFUcfzBixhZ-YEZsYH5k9g2dDIkVCTHWKP2ULKrJ4WsL&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQE3Fl1RmBraKOD4C9ebKfCBM81qDw-DokP7X4TPmm3Y-YihNfSmid83qLp606rHMphom1-PSGDTfg&oh=00_AQEjrsTZwvTrFPUVx2CiGHGXGY7MKIfOe2Nc_fRuzTMllw&oe=6A7160C3",
       "cover": "covers/103075448823440_244399718024345.jpg",
       "reach": null,
       "likes": null,
@@ -1097,7 +2427,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1110,7 +2465,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/242172251580425",
       "fecha": "2023-03-17",
       "titulo": "Las casas dentro de Altozano Residencial cuentan con diseños modernos y acabados de alta c",
-      "thumb": "https://scontent-lhr6-1.xx.fbcdn.net/v/t39.30808-6/477572930_656306413500338_4594988173757868074_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=F8iTRtHk3u4Q7kNvwGbwNQs&_nc_oc=AdpF01JR5cojJZc_NpLGIZiDz7Mzg9XZMtR_Xp8csqyuKfxAw5-zhMiJBTMeku8NuD4&_nc_zt=23&_nc_ht=scontent-lhr6-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQEhf3LdOt_7hu4_CqW1rwWJW-PVbEwuPP0mrc9QZklk9WwhfSHLDAybh5sn6wn4q8m2MyCalzZAgg&oh=00_AQG6QTAhMpYI0v6LIIRy4sXAn0mVdKO88lB42wWHwvIJww&oe=6A71607F",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t39.30808-6/477572930_656306413500338_4594988173757868074_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=F8iTRtHk3u4Q7kNvwEKX_SB&_nc_oc=AdpK0nyj-9pn6YRrmdNk9ZmB2YUdVSwCIzmemhwBTsLvzkVNtg7bO2AhY06dNmdrwt_sZBq4VVP6VeZoP6eSflKO&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQFYphLydp2ElFVmRHalGVdu-eCsTzB0-_zqq7qGz0nMnGoZMDDy6SOUwKTJJj5uHZv3H2Owsl8cJw&oh=00_AQFJl6ITq8sywaOcJ4gCDsmT2CokVd0-irSDLaxdtbh_AA&oe=6A71607F",
       "cover": "covers/103075448823440_242172251580425.jpg",
       "reach": null,
       "likes": null,
@@ -1132,7 +2487,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1145,7 +2525,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/241628091634841",
       "fecha": "2023-03-16",
       "titulo": "En Altozano Residencial encontrarás una gran variedad de servicios y comodidades cerca de ",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/336357432_1199939327299648_2218768866599454595_n.png?stp=dst-jpg_s720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KTlYMJBqwBoQ7kNvwE5YqA1&_nc_oc=AdrdmNz9xXQ-__NuGnILE4Y6hZxM3oIlx68p3pWIdOKtcOMk2N1kSUazD2b4qtVhJXY&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGAt-OM6kTpCA7ey19zVDtJ53ug8lCrGNWfU9EkE8awFtRs2k93sa1VpKht7TJkTiPaNTq6L-WYNg&oh=00_AQFxMpfYi2szD8SoDWyz4mtajWODbGkAdFbbSK4No-mMyg&oe=6A717FE0",
+      "thumb": "https://scontent.fhmo2-4.fna.fbcdn.net/v/t39.30808-6/336357432_1199939327299648_2218768866599454595_n.png?stp=dst-jpg_s720x720_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=KTlYMJBqwBoQ7kNvwEYUmt5&_nc_oc=AdoN50xMfFUtVpbqlvGLh9oxg2SEqfbTteDQ9xKGtwJ38GfVxIELf-d2y2J9te7r6zbp-s12NKI_2TyZoIJHoEgm&_nc_zt=23&_nc_ht=scontent.fhmo2-4.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQGgNae90MKymA9_GtJ8TusKmWORXwwgfUcTW-tMq-QuicdTBUq3q2TFEK2dqNq3mk_vp5qv_LhiXg&oh=00_AQGDmyB3UOwuwPtpeHdOnxb0PkwokLNY1xN37WKN5UiqcQ&oe=6A717FE0",
       "cover": "covers/103075448823440_241628091634841.jpg",
       "reach": null,
       "likes": null,
@@ -1167,7 +2547,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1180,7 +2585,7 @@
       "permalink": "https://www.facebook.com/1051195277418476/posts/240392928425024",
       "fecha": "2023-03-14",
       "titulo": "¡Te invitamos a conocer Valle del Conejo, en el hermoso Residencial Altozano! Aquí encontr",
-      "thumb": "https://scontent-lhr11-1.xx.fbcdn.net/v/t39.30808-6/479915675_656306376833675_1866053281313273855_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_ohc=72uEplZi2bsQ7kNvwEkpDhI&_nc_oc=AdqnAozl-cbMUvc1EX5wpdiMehLOFIHt6g2n5UjGHveZCKVkaPWVYLTr7xHIAl2qw0I&_nc_zt=23&_nc_ht=scontent-lhr11-1.xx&edm=APyxFHYEAAAA&_nc_gid=YydU7Bw3KFk2ZnYEFPPe5g&_nc_tpa=Q5bMBQGdimtSovCVz0sP_3NvNNqtQ6WnxH5WD2sRO3RO6_2sKDAFZDLpjIVGZuSQstA7hnmZqKFRLKQsyA&oh=00_AQERMrhidwerq3e0KYKbFGtv3ZWsX-OY3XG9prT_-5DLbQ&oe=6A71528F",
+      "thumb": "https://scontent.fhmo2-2.fna.fbcdn.net/v/t39.30808-6/479915675_656306376833675_1866053281313273855_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=72uEplZi2bsQ7kNvwFuLixy&_nc_oc=AdpYXgbdecqQEg_KzpjyrrFe-exzHKVxVu6UTXnCbz16_KpbxJImwoIoTae6S-Q5DYcY97mEJy3bysZELBegIiGS&_nc_zt=23&_nc_ht=scontent.fhmo2-2.fna&edm=APyxFHYEAAAA&_nc_gid=CS8krkMKzHqOUW-uMkksNQ&_nc_tpa=Q5bMBQHnvdDqt-f3opXJer_4y3q_T1FYKJTxuQArikTyk3L7pwPA1h5fc-KWPzrVH6egHKJdq1oguSktDA&oh=00_AQFBDodW2icJm0F510ikh4pyubMe2kA4DMla60uPmlngrQ&oe=6A718ACF",
       "cover": "covers/103075448823440_240392928425024.jpg",
       "reach": null,
       "likes": null,
@@ -1202,7 +2607,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": null,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": null,
           "inter": 0
         }
@@ -1215,7 +2645,7 @@
       "permalink": "https://www.instagram.com/p/Co8BqEBJVFY/",
       "fecha": "2023-02-21",
       "titulo": "En palabras sencillas el crowdfunding varias personas forman un fondo para cumplir con su ",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t39.30808-6/477803793_655585060239140_6655236284460691740_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=X2Z_5BoRLWMQ7kNvwElmVYH&_nc_oc=AdrMFlC3ILAlQEunsR3bHnZeVFe4SMMbxSEXKCc9PL7uk9NR0y1X6tPgQx-tPxqJ-QI&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQGrPAEmSdpRK4Gp9zcrMImSe_gF-fmmtiCOK0aJJY-zQg&oe=6A71709A",
+      "thumb": "https://scontent.cdninstagram.com/v/t39.30808-6/477803793_655585060239140_6655236284460691740_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=X2Z_5BoRLWMQ7kNvwEHEoaO&_nc_oc=AdpPKJhDlw5EAPGxEJoT-3r9nsF3Gc73qm9Wq7VkKgYxRkYMSr5uz7MvUU8j6BU7Y6S361Ze8BCAkhsKcu3_tYES&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQGs2T6Vip_Vx5HU8TPVSWAU0iGZlu36u8P49B4pXosvKw&oe=6A71709A",
       "cover": "covers/17960256176344515.jpg",
       "reach": 8,
       "likes": 3,
@@ -1238,7 +2668,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 8,
+          "inter": 5
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 8,
+          "inter": 5
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 8,
+          "inter": 5
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 8,
+          "inter": 5
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 8,
+          "inter": 5
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 8,
           "inter": 5
         }
@@ -1251,7 +2706,7 @@
       "permalink": "https://www.instagram.com/p/Cky3qitJNWx/",
       "fecha": "2022-11-10",
       "titulo": "Los inversionistas saben que nunca es demasiado pronto para empezar a preparar tu retiro.",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t39.30808-6/476898353_653259230471723_7499575087658536842_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qAt_nAJUDBQQ7kNvwGeMatR&_nc_oc=AdrFJQulf7zGyqVUTV8L8U6hHkeajX9abI7lLIQfPdDvw9iJI16URLyt4MQirmcutLw&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQF0CNNaknKtzBlKIN1MZe_N2eu-WUyr-vU1GN74Xl5wGA&oe=6A715693",
+      "thumb": "https://scontent.cdninstagram.com/v/t39.30808-6/476898353_653259230471723_7499575087658536842_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qAt_nAJUDBQQ7kNvwGzVYQ8&_nc_oc=Adq_hWWzqDLChR_W-KMHosl8MHJoxKAjnc3wqYg2ZetvG4hBjtbACHWFfQ7z4ivxP1OvB0r3svOk3D_Sq8Wyoz-1&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQFY_NmDTZk7kaPUngGmMFpWJdfwVM_xfL34IgRGy5unnw&oe=6A718ED3",
       "cover": "covers/18231053002196386.jpg",
       "reach": 27,
       "likes": 3,
@@ -1274,7 +2729,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 27,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 27,
           "inter": 3
         }
@@ -1287,7 +2767,7 @@
       "permalink": "https://www.instagram.com/p/CktYj5ANPGg/",
       "fecha": "2022-11-08",
       "titulo": "¿Sabías que invertir en desarrollos inmobiliarios puede convertirse en una gran alternativ",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t39.30808-6/476633248_653259207138392_623041377466386625_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3ehvGq76mb8Q7kNvwEYZf5X&_nc_oc=Adp7O8mn0XGx5L1_cN5eR2zJx9Q0bdk8RKJTw8pp7-o8seGZEQmhP-kMOL6Jidg1-cg&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQEWbKWVrq7V2uUQouJPfWYYRF-5Pgv6cq78cyyioldvCw&oe=6A7166AE",
+      "thumb": "https://scontent.cdninstagram.com/v/t39.30808-6/476633248_653259207138392_623041377466386625_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=3ehvGq76mb8Q7kNvwHm3kuU&_nc_oc=AdqAYLag00PSODRKwIe_aWBmYN2Vlam_rrud2Q3RIbSv7M771BXAnH8imsFIuoOHovKD8St6NYg43VJwr_OtQndr&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQFgjO0UzuGU3KpugPMOuXLGThe43mCn2RV2FFPQQx23Pg&oe=6A7166AE",
       "cover": "covers/18095815288307290.jpg",
       "reach": 28,
       "likes": 1,
@@ -1310,7 +2790,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 28,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 28,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 28,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 28,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 28,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 28,
           "inter": 1
         }
@@ -1323,7 +2828,7 @@
       "permalink": "https://www.instagram.com/p/Cc8XsmYLLXl/",
       "fecha": "2022-04-29",
       "titulo": "🏡 Casa Aria es un proyecto de casa innovador en donde el diseño, la naturaleza y la tranqu",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/652783765_18109293130768841_1772637427059002679_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qygQXh4f1zQQ7kNvwGaXRzx&_nc_oc=AdquI6AL5Y-qRL-oDxJamDjr9yWt6iDd3pwGOfK9ETaCJB5cqK98DNnATQgvEXQpNEI&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQHfEus6vpJVMmoI-hIldXfWo5K2zqkMzGtYFDS3F_2C6w&oe=6A716EE5",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/652783765_18109293130768841_1772637427059002679_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=qygQXh4f1zQQ7kNvwHXUAif&_nc_oc=Adplrhc-pxct7rCGa55kB_czcf4l55IoJHOi9ZkgXHVDpUfPeKVP85NujpFIeOUWLZC3_9Ji9VRfORVWimoIK4rm&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQFY6w3jyAwL4Nl1Vo4ezIXZohXZog-Hkfs0QCtz8z7rMg&oe=6A716EE5",
       "cover": "covers/18057868579309362.jpg",
       "reach": 7,
       "likes": 1,
@@ -1346,7 +2851,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 7,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 7,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 7,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 7,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 7,
+          "inter": 1
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 7,
           "inter": 1
         }
@@ -1359,7 +2889,7 @@
       "permalink": "https://www.instagram.com/p/CcyKtScLKF_/",
       "fecha": "2022-04-25",
       "titulo": "🏗 Comprar una casa o terreno suele ser de suma importancia para tomar la decisión financie",
-      "thumb": "https://scontent-lhr6-2.cdninstagram.com/v/t51.82787-15/624328123_18036448073549925_52717675392803998_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=rfR_TtZaFS8Q7kNvwFxAlvu&_nc_oc=AdriH2BbNxEzutr71KnMCLc8dew7corBugSV58vehdAgadUzAUI2HmV2m6xiQmk41fM&_nc_zt=23&_nc_ht=scontent-lhr6-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQHzpl0rWFIXytLVN7T9v43KzcurNS0saxD6l-59t596yw&oe=6A7177C7",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/624328123_18036448073549925_52717675392803998_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=rfR_TtZaFS8Q7kNvwH8Seqy&_nc_oc=AdpZK5n3gmN2UiiJRlM-PJYZUZQVJ3STSbgRHQlnXSI0lMVHfvKqb6f451Is0GHsbz4LCvlB0Ntu1JSqulzczTmj&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQE43EQ60_ZnI0guiHUkCKNcQf7jzSD0OhB0suS_5FGn0A&oe=6A7177C7",
       "cover": "covers/17891175533549925.jpg",
       "reach": 34,
       "likes": 0,
@@ -1382,7 +2912,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 34,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 34,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 34,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 34,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 34,
+          "inter": 0
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 34,
           "inter": 0
         }
@@ -1395,7 +2950,7 @@
       "permalink": "https://www.instagram.com/p/CaaIJJAvwGj/",
       "fecha": "2022-02-25",
       "titulo": "Esta moderna casa se encuentra frente al lago y se destaca por sus amplios, luminosos y co",
-      "thumb": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-15/651872620_18093905749864021_5996516214186007548_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=2hEFZCajq0oQ7kNvwGjTV5m&_nc_oc=Adp8tNlx0lDpBkrrGn9JK6e3QPDO5hRWK5RvEJt3FT0BErK9bcCABIC3EMcd7iYLXgI&_nc_zt=23&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=IvWwZ9fBCNAH8EzN0bGGtw&oh=00_AQEbUhdgpV_dis880RiD4KnitqzZbBcZX-cdybpEiCmVHg&oe=6A717A04",
+      "thumb": "https://scontent.cdninstagram.com/v/t51.82787-15/651872620_18093905749864021_5996516214186007548_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=2hEFZCajq0oQ7kNvwGJ-Qv9&_nc_oc=AdoSxugUxTUg_DcMJD3DP1ZJhPVFJewhjvO8YxHe7bLk9sctUbkzAi6PMVNd4T3ibZ0DQHpAAoYvE5mKWgNcuXJJ&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=oZ1DlP6B0GrVIR2K_R75FQ&oh=00_AQG8jGZZQGrN4mA8XkXvHKG73egWD6mD7Agv0p2xP2z0iw&oe=6A717A04",
       "cover": "covers/17880562991578378.jpg",
       "reach": 9,
       "likes": 2,
@@ -1418,7 +2973,32 @@
       "citas_atribuidas": 0,
       "serie": [
         {
-          "t": "2026-07-30 11:24",
+          "t": "2026-07-27 14:39",
+          "reach": 9,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 14:50",
+          "reach": 9,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-27 16:04",
+          "reach": 9,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:11",
+          "reach": 9,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-29 16:15",
+          "reach": 9,
+          "inter": 3
+        },
+        {
+          "t": "2026-07-30 12:29",
           "reach": 9,
           "inter": 3
         }
