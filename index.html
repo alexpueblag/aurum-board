@@ -26,8 +26,10 @@
   /* Identidad yodesarrollo.mx: Kefa (firma) + Poppins/Raleway, blanco/negro + acento vino #1a1818 (teal/índigo menores) */
   @font-face{font-family:'Kefa-Regular';src:local('Kefa'),url('fonts/Kefa-Regular.ttf') format('truetype');font-display:swap;}
   /* Acento = NEGRO (como los bloques/botones de yodesarrollo.mx). Blanco + gris claro. Verde/rojo SOLO como señal de dato, mínimos. */
-  :root{--negro:#231d14;--oro:#9a7b3f;--crema:#f6f3ed;--arena:#ffffff;--sup:#ffffff;--piedra:#766f62;--carbon:#8a8272;--linea:#e1dacb;
-    --verde:#39744b;--amar:#9a6a1e;--rojo:#a94438;--tinta:#231d14;}
+  :root{--negro:#231d14;--oro:#9a7b3f;--crema:#f6f3ed;--arena:#ffffff;--sup:#ffffff;--piedra:#6d6455;--carbon:#6d6455;--linea:#e1dacb;
+    --verde:#39744b;--amar:#8a5f18;--rojo:#a94438;--tinta:#231d14;
+    /* pasada de contraste ago-2026: oro-TEXTO AA (5.4:1 claro), oro-FONDO fijo (no voltea) + texto fijo encima, crema fija p/ zonas siempre-oscuras */
+    --oro-texto:#7d5f1e;--oro-fill:#B98B3C;--sobre-fill:#17140F;--sobre-estado:#ffffff;--crema-fija:#F1EDE3;--apagado-osc:#9A9182;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:linear-gradient(rgba(35,29,20,.02) 1px,transparent 1px) 0 0/60px 60px,linear-gradient(90deg,rgba(35,29,20,.02) 1px,transparent 1px) 0 0/60px 60px,var(--crema);color:var(--negro);font-family:'Instrument Sans','Manrope','Helvetica Neue',Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;color-scheme:light;}
   .serif{font-family:Instrument Serif,Georgia,serif;}
@@ -48,7 +50,7 @@
   /* semaforo */
   .semaforo{border-radius:6px;padding:17px 22px;color:var(--crema);margin-bottom:8px;background:var(--sup);border-left:5px solid var(--piedra);}
   .semaforo.verde{border-left-color:var(--verde);} .semaforo.amar{border-left-color:var(--amar);} .semaforo.rojo{border-left-color:var(--rojo);} .semaforo.gris{border-left-color:var(--carbon);}
-  .semaforo .lbl{color:#B5AC99;}
+  .semaforo .lbl{color:var(--piedra);}
   .semaforo .lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.85;}
   .semaforo .msg{font-family:Instrument Serif,Georgia,serif;font-size:clamp(18px,3vw,24px);margin-top:4px;line-height:1.3;}
   /* numerotes */
@@ -76,7 +78,7 @@
   .bar{background:var(--sup);border:1px solid var(--linea);border-radius:5px;padding:8px 4px;text-align:center;}
   .bar .bd{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--piedra);}
   .bar .bn{font-family:Instrument Serif,Georgia,serif;font-size:18px;color:var(--negro);margin-top:2px;}
-  .bar .bc{font-size:9.5px;color:var(--oro);}
+  .bar .bc{font-size:9.5px;color:var(--oro-texto);}
   /* alertas */
   .alert{display:flex;align-items:center;gap:9px;background:var(--sup);border:1px solid var(--linea);border-left-width:4px;border-radius:5px;padding:10px 14px;margin-bottom:7px;font-size:13px;}
   .alert.verde{border-left-color:var(--verde);} .alert.amar{border-left-color:var(--amar);} .alert.rojo{border-left-color:var(--rojo);}
@@ -90,7 +92,7 @@
   .fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--linea);border-radius:9px;font-size:14px;font-family:inherit;background:var(--crema);color:var(--negro);}
   .fld input:focus,.fld textarea:focus,#lgDest:focus,#lgUrl:focus,#lgDestP:focus,#lgUrlP:focus{outline:2px solid var(--oro);outline-offset:1px;}
   .fld textarea{min-height:64px;resize:vertical;}
-  .btn{background:var(--oro);color:var(--crema);border:none;border-radius:9px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
+  .btn{background:var(--oro-fill);color:var(--sobre-fill);border:none;border-radius:9px;padding:11px 22px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;cursor:pointer;}
   .btn:hover{filter:brightness(1.15);} .btn:disabled{opacity:.5;cursor:default;}
   .iconbtn{display:inline-flex;align-items:center;justify-content:center;width:39px;height:39px;flex:none;border:1px solid var(--linea);background:var(--sup);color:var(--carbon);border-radius:9px;cursor:pointer;font-size:18px;line-height:1;padding:0;}
   .iconbtn:hover{border-color:var(--oro);color:var(--oro);}
@@ -111,9 +113,9 @@
   .pcard .pt{font-size:11px;color:var(--carbon);display:flex;justify-content:space-between;align-items:center;}
   .pcard .pmain{font-family:Instrument Serif,Georgia,serif;font-size:17px;color:var(--negro);margin-top:2px;}
   .pcard .pmain small{font-size:11px;color:var(--piedra);font-family:inherit;}
-  .pbadge{position:absolute;top:8px;left:8px;background:var(--oro);color:var(--crema);font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:20px;text-transform:uppercase;}
+  .pbadge{position:absolute;top:8px;left:8px;background:var(--oro-fill);color:var(--sobre-fill);font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 7px;border-radius:20px;text-transform:uppercase;}
   .pnet{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--sup);font-family:Instrument Serif,Georgia,serif;}
-  .pnet.ig{background:var(--oro);color:var(--crema);} .pnet.fb{background:#6a6459;}
+  .pnet.ig{background:var(--oro-fill);color:var(--sobre-fill);} .pnet.fb{background:#6a6459;color:var(--crema-fija);}
   .pcov-ph{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;background:linear-gradient(135deg,var(--arena),#eee9df);color:var(--carbon);font-size:11px;line-height:1.35;}
   /* ficha modal */
   .pov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:80;display:flex;align-items:flex-start;justify-content:center;padding:24px 14px;overflow-y:auto;}
@@ -131,7 +133,7 @@
   .fm .fk{font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);}
   .fm .fv{font-family:Instrument Serif,Georgia,serif;font-size:22px;color:var(--negro);line-height:1.1;margin-top:2px;}
   .fm .fv small{font-size:11px;color:var(--piedra);}
-  .fm .fsub{font-size:10px;color:var(--oro);margin-top:2px;line-height:1.2;}
+  .fm .fsub{font-size:10px;color:var(--oro-texto);margin-top:2px;line-height:1.2;}
   .fm.nd .fv{color:var(--piedra);font-size:15px;}
   .pfrow{padding:11px 16px;border-top:1px solid var(--linea);font-size:12px;color:var(--carbon);}
   .pfrow b{color:var(--negro);}
@@ -140,10 +142,10 @@
   .decision{background:linear-gradient(135deg,var(--sup),var(--crema));border:1px solid var(--oro);border-left:4px solid var(--oro);border-radius:8px;padding:14px 18px;margin-bottom:10px;}
   .decision .dl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--piedra);}
   .decision .dm{font-family:Instrument Serif,Georgia,serif;font-size:clamp(15px,2.2vw,19px);color:var(--negro);margin-top:3px;line-height:1.4;}
-  .decision .dm b{color:#B98B3C;}
+  .decision .dm b{color:var(--oro-texto);}
   .leadgap{display:flex;gap:11px;align-items:flex-start;background:rgba(224,96,90,.14);border:1px solid var(--rojo);border-left:4px solid var(--rojo);border-radius:8px;padding:12px 16px;margin-bottom:14px;}
   .leadgap .li{font-size:18px;line-height:1.2;flex:none;}
-  .leadgap .lt{font-size:13px;color:#e6c1be;line-height:1.45;}
+  .leadgap .lt{font-size:13px;color:var(--carbon);line-height:1.45;}
   .leadgap .lt b{color:var(--rojo);}
   /* KPIs de referencia (de-enfatizados) */
   .kref{display:flex;flex-wrap:wrap;gap:5px 16px;font-size:12.5px;color:var(--piedra);margin-bottom:13px;padding:9px 13px;background:var(--sup);border:1px solid var(--linea);border-radius:6px;align-items:center;}
@@ -167,9 +169,9 @@
   .chip .cv{font-weight:600;color:var(--negro);font-variant-numeric:tabular-nums;}
   .chip .cl{color:var(--piedra);font-size:11px;}
   .chip.nd{opacity:.6;} .chip.nd .cv{color:var(--piedra);font-weight:400;}
-  .pang{font-size:10px;color:#B98B3C;background:rgba(185,139,60,.14);border-radius:20px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .pgo{font-size:11px;color:#B98B3C;font-weight:600;flex:none;}
-  .pmore{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#B98B3C;border:1px solid var(--oro);border-radius:20px;padding:8px 16px;cursor:pointer;background:var(--sup);}
+  .pang{font-size:10px;color:var(--carbon);background:rgba(185,139,60,.14);border-radius:20px;padding:2px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pgo{font-size:11px;color:var(--carbon);font-weight:600;flex:none;}
+  .pmore{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--carbon);border:1px solid var(--oro);border-radius:20px;padding:8px 16px;cursor:pointer;background:var(--sup);}
   .pcount{font-size:11.5px;color:var(--piedra);margin:10px 0 2px;}
   /* ficha: hero + bloques + tiles legibles */
   .pfhead img{width:128px;height:160px;}
@@ -184,28 +186,28 @@
   .secnav::-webkit-scrollbar{display:none;}
   @media(min-width:700px){.secnav{position:sticky;top:55px;z-index:40;background:linear-gradient(var(--crema) 78%,rgba(10,10,12,0));}}
   .secnav a{flex:none;display:inline-flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:1px;color:var(--carbon);border:1px solid var(--linea);background:var(--sup);border-radius:9px;padding:6px 13px;text-decoration:none;}
-  .secnav a:hover{border-color:var(--oro);color:var(--oro);background:rgba(35,29,20,.05);}
+  .secnav a:hover{border-color:var(--oro);color:var(--oro-texto);background:rgba(35,29,20,.05);}
   .num .sub{font-size:10.5px;margin-top:3px;color:var(--piedra);line-height:1.35;}
   .accion{display:flex;gap:11px;align-items:flex-start;background:var(--sup);border:1px solid var(--linea);border-left:4px solid var(--oro);border-radius:6px;padding:12px 15px;margin-bottom:7px;font-size:13.5px;line-height:1.5;color:var(--carbon);}
-  .accion b{color:var(--negro);} .accion a{color:var(--oro);}
-  .accion .an{font-family:Instrument Serif,Georgia,serif;color:var(--oro);font-size:19px;line-height:1.1;min-width:15px;}
+  .accion b{color:var(--negro);} .accion a{color:var(--oro-texto);}
+  .accion .an{font-family:Instrument Serif,Georgia,serif;color:var(--oro-texto);font-size:19px;line-height:1.1;min-width:15px;}
   .accion.rojo{border-left-color:var(--rojo);} .accion.rojo .an{color:var(--rojo);}
   .est{display:inline-block;font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;border-radius:20px;padding:2px 9px;border:1px solid var(--linea);color:var(--carbon);white-space:nowrap;}
-  .est.nuevo{color:var(--crema);background:var(--amar);border-color:var(--amar);}
-  .est.agendada{color:var(--crema);background:var(--verde);border-color:var(--verde);}
-  .est.cliente{color:var(--crema);background:var(--oro);border-color:var(--oro);}
+  .est.nuevo{color:var(--sobre-estado);background:var(--amar);border-color:var(--amar);}
+  .est.agendada{color:var(--sobre-estado);background:var(--verde);border-color:var(--verde);}
+  .est.cliente{color:var(--sobre-fill);background:var(--oro-fill);border-color:var(--oro-fill);}
   .est.descartado{opacity:.5;}
   .magchip{font-size:9px;letter-spacing:.6px;text-transform:uppercase;color:var(--piedra);border:1px solid var(--linea);border-radius:4px;padding:2px 6px;white-space:nowrap;}
   .toolbox{background:linear-gradient(135deg,var(--sup),var(--crema));border:1px solid rgba(185,139,60,.35);border-left:4px solid rgba(185,139,60,.55);border-radius:8px;padding:13px 16px;margin-bottom:14px;}
-  .toolbox .tt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--oro);margin-bottom:4px;}
+  .toolbox .tt{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--oro-texto);margin-bottom:4px;}
   .toolbox .tx{font-size:13px;color:var(--carbon);line-height:1.5;display:block;}
   .toolbox b{color:var(--negro);}
   /* --- review Chris Do + UX (jul-11): estados, presupuesto de oro, dinámica --- */
   :root{--oro-tenue:rgba(185,139,60,.4);}
   /* presupuesto de acento: links y controles secundarios dejan el oro sólido */
   .link-meta{color:var(--carbon);border-bottom:1px solid var(--linea);}
-  .link-meta:hover{color:var(--oro);border-bottom-color:var(--oro-tenue);}
-  .chipbtn.on{background:transparent;color:var(--oro);border-color:var(--oro);}
+  .link-meta:hover{color:var(--oro-texto);border-bottom-color:var(--oro-tenue);}
+  .chipbtn.on{background:transparent;color:var(--oro-texto);border-color:var(--oro);}
   .pgo{color:var(--carbon);} .pmore{color:var(--carbon);border-color:var(--linea);}
   .pang{color:var(--carbon);background:rgba(35,29,20,.04);}
   /* semáforo por tarjeta: el ESTADO decide el énfasis */
@@ -248,16 +250,16 @@
   .chip{cursor:pointer;}
   .chip svg{width:13px;height:13px;vertical-align:-2px;opacity:.85;}
   .lectura{font-family:Instrument Serif,Georgia,serif;font-size:19px;line-height:1.35;color:var(--negro);}
-  .lectura b{color:var(--oro);font-weight:normal;}
+  .lectura b{color:var(--oro-texto);font-weight:normal;}
 
 /* ===== MODO OSCURO (portero setea data-tema=oscuro; solo cubre 'claro'). Marca YoD: #17140F/#F1EDE3/#B98B3C ===== */
-[data-tema="oscuro"]{--negro:#F1EDE3;--crema:#17140F;--arena:#231d14;--sup:#211b12;--piedra:#8a7f6d;--carbon:#b3a892;--linea:rgba(241,237,227,.12);--oro:#B98B3C;--tinta:#F1EDE3;--verde:#8FBF8B;--amar:#D9A45B;--rojo:#E0605A;}
+[data-tema="oscuro"]{--negro:#F1EDE3;--crema:#17140F;--arena:#231d14;--sup:#211b12;--piedra:#9A9182;--carbon:#b3a892;--linea:rgba(241,237,227,.12);--oro:#B98B3C;--tinta:#F1EDE3;--verde:#8FBF8B;--amar:#D9A45B;--rojo:#E0605A;--oro-texto:#B98B3C;--sobre-estado:#17140F;}
 [data-tema="oscuro"] body{background:var(--crema)!important;color:var(--negro);color-scheme:dark;}
 </style>
 <link rel="stylesheet" href="https://alexpueblag.github.io/yod-portal/os/shell.css">
 <style id="yod-metamorf">
 /* Métricas con la cara YOD OS: header y contenido dentro del lienzo crema */
-.yod-canvas{padding:0 30px}
+.yod-canvas{padding:0 30px;background:var(--crema);color:var(--negro)}
 header{background:transparent;position:static;border-bottom:1px solid var(--linea);padding:16px 0;box-shadow:none}
 .logo-img{filter:brightness(0) opacity(.85)}
 main{padding-top:14px}
@@ -272,7 +274,7 @@ body{padding-top:env(safe-area-inset-top)}
 @media(max-width:700px){input,select,textarea{font-size:16px}}
 
 /* ===== MODO OSCURO (portero setea data-tema=oscuro; solo cubre 'claro'). Marca YoD: #17140F/#F1EDE3/#B98B3C ===== */
-[data-tema="oscuro"]{--negro:#F1EDE3;--crema:#17140F;--arena:#231d14;--sup:#211b12;--piedra:#8a7f6d;--carbon:#b3a892;--linea:rgba(241,237,227,.12);--oro:#B98B3C;--tinta:#F1EDE3;--verde:#8FBF8B;--amar:#D9A45B;--rojo:#E0605A;}
+[data-tema="oscuro"]{--negro:#F1EDE3;--crema:#17140F;--arena:#231d14;--sup:#211b12;--piedra:#9A9182;--carbon:#b3a892;--linea:rgba(241,237,227,.12);--oro:#B98B3C;--tinta:#F1EDE3;--verde:#8FBF8B;--amar:#D9A45B;--rojo:#E0605A;--oro-texto:#B98B3C;--sobre-estado:#17140F;}
 [data-tema="oscuro"] body{background:var(--crema)!important;color:var(--negro);color-scheme:dark;}
 </style>
 </head>
@@ -310,7 +312,7 @@ body{padding-top:env(safe-area-inset-top)}
   function credencial(){ try{return window.__PYOD_BOOT||localStorage.getItem(PORTERO_LSK)||"";}catch(e){return window.__PYOD_BOOT||"";} }
   var PYOD_EXEC="https://script.google.com/macros/s/AKfycbwlDDCWWzOWYZsUpBU9uqsQ7aenQ469PF6s6FkNlBFS1_cJSU5njG9oQmuyELy5zlqzFg/exec";
   function _pyodCerrar(){ var n=0; try{n=parseInt(sessionStorage.getItem("pyod_recargas")||"0",10)||0;}catch(e){} try{localStorage.removeItem(PORTERO_LSK);sessionStorage.removeItem("pyod_rol");}catch(e){} if(n>=1)return; /* tope anti-bucle: máximo 1 recarga por sesión */ try{sessionStorage.setItem("pyod_recargas",String(n+1));}catch(e){} location.reload(); }
-  function _pyodAviso(){ if(document.getElementById("pyodAviso"))return; var d=document.createElement("div");d.id="pyodAviso";d.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:2147483000;max-width:min(560px,92vw);background:#221E17;color:#F1EDE3;border:1px solid rgba(255,255,255,.14);border-left:3px solid #B98B3C;border-radius:12px;padding:14px 16px;font-family:'Instrument Sans',system-ui,sans-serif;font-size:13px;line-height:1.5;box-shadow:0 18px 48px rgba(0,0,0,.5)";d.innerHTML='<b style=\"color:#B98B3C\">Tu sesión es válida.</b> Este tablero no validó tu acceso: su backend (Apps Script) necesita re-desplegarse. Tu sesión NO se cerró. <a href=\"https://alexpueblag.github.io/yod-portal/os/\" style=\"color:#B98B3C\">Volver a YOD OS</a> · <button id=\"pyodAvX\" style=\"background:none;border:0;color:#8A8272;cursor:pointer;text-decoration:underline;font:inherit\">Ocultar</button>';document.body.appendChild(d);var x=document.getElementById("pyodAvX");if(x)x.onclick=function(){d.remove();}; }
+  function _pyodAviso(){ if(document.getElementById("pyodAviso"))return; var d=document.createElement("div");d.id="pyodAviso";d.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:2147483000;max-width:min(560px,92vw);background:#221E17;color:#F1EDE3;border:1px solid rgba(255,255,255,.14);border-left:3px solid #B98B3C;border-radius:12px;padding:14px 16px;font-family:'Instrument Sans',system-ui,sans-serif;font-size:13px;line-height:1.5;box-shadow:0 18px 48px rgba(0,0,0,.5)";d.innerHTML='<b style=\"color:#B98B3C\">Tu sesión es válida.</b> Este tablero no validó tu acceso: su backend (Apps Script) necesita re-desplegarse. Tu sesión NO se cerró. <a href=\"https://alexpueblag.github.io/yod-portal/os/\" style=\"color:#B98B3C\">Volver a YOD OS</a> · <button id=\"pyodAvX\" style=\"background:none;border:0;color:#9A9182;cursor:pointer;text-decoration:underline;font:inherit\">Ocultar</button>';document.body.appendChild(d);var x=document.getElementById("pyodAvX");if(x)x.onclick=function(){d.remove();}; }
   function credencialRechazada(){ var k=""; try{k=localStorage.getItem(PORTERO_LSK)||"";}catch(e){} if(!k){ return; } /* sin token: NO recargar; portero.js muestra el gate */ fetch(PYOD_EXEC+"?recurso=canje&t="+encodeURIComponent(k),{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){ if(j&&j.ok){_pyodAviso();} else {_pyodCerrar();} }).catch(function(){_pyodAviso();}); }
   var QKEY="aurum_board_q_v1";
   var DATA=null, LAST=null, METRICS=null, DATA_POT=null;
@@ -543,7 +545,7 @@ body{padding-top:env(safe-area-inset-top)}
     if(d.meta&&d.meta.sin_lectura){
       html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;"><b style="color:var(--negro)">No se pudieron leer los números de Arquitectura de Autor.</b> Esto <b style="color:var(--negro)">no</b> quiere decir que estén en cero: quiere decir que el tablero no pudo preguntar. Vuelve a entrar desde YOD OS (tu acceso pudo caducar) o dale a <b style="color:var(--negro)">Actualizar</b>.</div>';
     } else if(_semVacia && !(d.meta&&d.meta.es_snapshot)){
-      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;">Semana en blanco para <b style="color:var(--negro)">Experiencia Aurum</b> — el imán está activo y midiendo, pero todavía no hay publicaciones de arquitectura mandándole gente con liga medible. <a href="#sec-pubs" style="color:var(--oro)">Genera la liga ↓</a></div>';
+      html+='<div class="card" style="padding:13px 16px;font-size:13px;color:var(--carbon);line-height:1.55;">Semana en blanco para <b style="color:var(--negro)">Experiencia Aurum</b> — el imán está activo y midiendo, pero todavía no hay publicaciones de arquitectura mandándole gente con liga medible. <a href="#sec-pubs" style="color:var(--oro-texto)">Genera la liga ↓</a></div>';
     } else {
       html+='<div class="nums">';
       html+=numHTML("Gasto Meta (semana)", money(g.semana_actual), "", false, "histórico "+money(g.total));
@@ -600,7 +602,7 @@ body{padding-top:env(safe-area-inset-top)}
     /* --- por fuente (compacta cuando solo hay "(directo)": una tabla de 1 fila no dice nada) --- */
     var _pf=(_magSer==='pot'&&DATA_POT)?(DATA_POT.por_fuente||[]):(d.por_fuente||[]);
     if(_pf.length===1 && (!_pf[0].fuente || _pf[0].fuente==='(directo)')){
-      html+='<div class="kref" style="margin-top:14px;"><span class="kt">Fuente de los leads</span><span>Todos llegan como <b>(directo)</b> — aún sin links etiquetados · el generador está en <a href="#sec-pubs" style="color:var(--oro)">Publicaciones ↓</a></span></div>';
+      html+='<div class="kref" style="margin-top:14px;"><span class="kt">Fuente de los leads</span><span>Todos llegan como <b>(directo)</b> — aún sin links etiquetados · el generador está en <a href="#sec-pubs" style="color:var(--oro-texto)">Publicaciones ↓</a></span></div>';
     } else if(_pf.length){
       var _cl=(_magSer==='pot'?'Agendadas':'Citas'), _al=(_magSer==='pot'?'agenda':'cita');
       html+='<h2 class="sec">Por fuente / campaña'+(_magSer==='pot'?' · Plan de Potencial':'')+'</h2><table><tr><th>Fuente</th><th class="r">Leads</th><th class="r">'+_cl+'</th><th class="r">% a '+_al+'</th></tr>';
@@ -617,7 +619,7 @@ body{padding-top:env(safe-area-inset-top)}
           var row=(d.por_dia||[]).filter(function(x){return (x.dia||"").toLowerCase().indexOf(dia.toLowerCase().slice(0,3))===0;})[0]||{};
           var n=num(row.leads); if(n>0){ _chips+='<span>'+dia+' <b>'+n+'</b></span>'; if(!_mejor||n>_mejor.n)_mejor={d:dia,n:n}; }
         });
-        html+='<div class="kref"><span class="kt">Leads por día</span>'+_chips+(_mejor?'<span style="color:var(--oro)">· mejor día: '+_mejor.d+'</span>':'')+'</div>';
+        html+='<div class="kref"><span class="kt">Leads por día</span>'+_chips+(_mejor?'<span style="color:var(--oro-texto)">· mejor día: '+_mejor.d+'</span>':'')+'</div>';
       } else if(_pdTot>=12){
         html+='<h2 class="sec">Por día de la semana</h2><div class="bars">';
         ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(dia){
@@ -734,7 +736,7 @@ body{padding-top:env(safe-area-inset-top)}
       pot:{titulo:'Plan de Potencial',fuenteSuf:'(medido directo en el servidor · no se pierde con bloqueadores de iPhone)',abren:'que abren el formulario (portada)',empiezan:'empiezan a contestar (1er paso)',entrada:'El embudo arranca en el <b>1er paso</b> (Objetivo = la entrada) y cada barra es un paso del formulario; la portada y las visitas van arriba.',verUrl:'https://alexpueblag.github.io/plan-potencial/',verTxt:'Ver el formulario →'}
     };
     var cfg=MAGCFG[mag]||MAGCFG.arq;
-    function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro)':'#16161a')+';color:'+(on?'#17140F':'var(--carbon)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
+    function magTab(id,lbl,sub){ var on=mag===id; return '<button onclick="embSet(&#39;mag&#39;,&#39;'+id+'&#39;)" style="flex:1;min-width:160px;text-align:left;cursor:pointer;border:1px solid '+(on?'var(--oro)':'var(--linea)')+';background:'+(on?'var(--oro-fill)':'#16161a')+';color:'+(on?'var(--sobre-fill)':'var(--crema-fija)')+';border-radius:9px;padding:9px 14px;transition:.12s;">'+
       '<div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;opacity:.72;">'+sub+'</div>'+
       '<div style="font-family:Instrument Serif,Georgia,serif;font-size:15px;line-height:1.2;margin-top:1px;">'+lbl+'</div></button>'; }
     var sel='<h2 class="sec" id="sec-trafico" style="margin-bottom:4px;">Tráfico a los formularios <span style="color:var(--piedra);font-weight:400;text-transform:none;letter-spacing:0;">· detalle técnico</span></h2><p class="hint" style="margin:0 0 10px;">¿Qué imán mides?</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">'+magTab('arq','Arquitectura de Autor','Lead magnet 1 · Experiencia Aurum')+magTab('pot','Plan de Potencial','Lead magnet 2 · co-desarrollo')+'</div>'+
@@ -803,9 +805,9 @@ body{padding-top:env(safe-area-inset-top)}
           '<div style="font-family:Instrument Serif,Georgia,serif;font-size:40px;line-height:1;margin-top:3px;">'+num(K.agendadas)+'</div>'+
           '<div style="font-size:10.5px;opacity:.82;margin-top:3px;">de '+num(K.leads)+' leads en el CRM · '+num(K.clientes)+' clientes</div></div>'+
         '<div style="flex:1;min-width:120px;background:#16161a;border:1px solid var(--linea);border-radius:8px;padding:11px 13px;align-self:center;">'+
-          '<div style="font-size:8.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--piedra);">Otra forma (interés)</div>'+
-          '<div style="font-family:Instrument Serif,Georgia,serif;font-size:20px;line-height:1.05;margin-top:1px;color:var(--carbon);">'+num(K.interes)+'</div>'+
-          '<div style="font-size:9.5px;color:var(--piedra);margin-top:1px;">audiencia aparte · no es del embudo de terreno</div></div>'+
+          '<div style="font-size:8.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--apagado-osc);">Otra forma (interés)</div>'+
+          '<div style="font-family:Instrument Serif,Georgia,serif;font-size:20px;line-height:1.05;margin-top:1px;color:var(--crema-fija);">'+num(K.interes)+'</div>'+
+          '<div style="font-size:9.5px;color:var(--apagado-osc);margin-top:1px;">audiencia aparte · no es del embudo de terreno</div></div>'+
       '</div>';
     }
     /* lo clave en chips escaneables — la prosa metodológica vive colapsada al final de la sección */
@@ -823,9 +825,9 @@ body{padding-top:env(safe-area-inset-top)}
         '<button onclick="embMonth(1)" class="iconbtn" aria-label="Mes siguiente"><i class="ti ti-chevron-right"></i></button>'+
         '<span style="flex:1"></span>'+
         '<span style="font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--piedra);">Ver por</span>'+
-        '<button onclick="embSet(&#39;dim&#39;,&#39;simple&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='simple'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='simple'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Simple</button>'+
-        '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Hora</button>'+
-        '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Día de semana</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;simple&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='simple'?'var(--oro-texto)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='simple'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Simple</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;hora&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='hora'?'var(--oro-texto)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='hora'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Hora</button>'+
+        '<button onclick="embSet(&#39;dim&#39;,&#39;dia&#39;)" style="border:none;background:none;cursor:pointer;font-size:12px;color:'+(F.dim==='dia'?'var(--oro-texto)':'var(--piedra)')+';border-bottom:2px solid '+(F.dim==='dia'?'var(--oro)':'transparent')+';padding:11px 4px;min-height:44px;">Día de semana</button>'+
       '</div>';
       if(F.dim==='hora'){
         h+='<div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--piedra);margin-bottom:8px;"><span>madrugada</span><span style="height:8px;width:110px;border-radius:2px;background:linear-gradient(90deg,'+HRAMP.join(',')+')"></span><span>noche</span><span style="margin-left:4px">(color = hora de entrada)</span></div>';
@@ -834,7 +836,7 @@ body{padding-top:env(safe-area-inset-top)}
         var wdTot=[0,0,0,0,0,0,0]; scope.forEach(function(x){wdTot[x._wd]+=num(x.visitas);});
         var topWd=wdTot.indexOf(Math.max.apply(null,wdTot));
         h+='<div class="diachips">';
-        DIAS7.forEach(function(dn,kk){ h+='<button onclick="embSet(&#39;diaSel&#39;,'+(F.diaSel===kk?-1:kk)+')" style="background:'+WRAMP[kk]+';opacity:'+((F.diaSel<0||F.diaSel===kk)?1:.35)+';'+(F.diaSel===kk?'outline:2px solid var(--negro);':'')+'">'+dn+'</button>'; });
+        DIAS7.forEach(function(dn,kk){ h+='<button onclick="embSet(&#39;diaSel&#39;,'+(F.diaSel===kk?-1:kk)+')" style="background:'+WRAMP[kk]+';color:'+(kk>=5?'#17140F':'#F1EDE3')+';opacity:'+((F.diaSel<0||F.diaSel===kk)?1:.35)+';'+(F.diaSel===kk?'outline:2px solid var(--negro);':'')+'">'+dn+'</button>'; });
         h+='<span style="font-size:11px;color:var(--piedra);margin-left:4px;">toca un día para aislarlo'+(wdTot[topWd]>0?' · la mayoría llegó en <b style="color:var(--carbon)">'+DIAS7[topWd]+'</b>':'')+'</span></div>';
       }
     }
@@ -847,7 +849,7 @@ body{padding-top:env(safe-area-inset-top)}
       if(segmentar){ var seg=segOf(i), ss=seg.reduce(function(a,b){return a+b;},0)||1; seg.forEach(function(v,k){ if(v<=0)return; var dimSeg=(F.dim==='dia'&&F.diaSel>=0&&F.diaSel!==k); bars+='<div style="height:100%;flex-basis:'+(v/ss*100)+'%;background:'+C[k]+';'+(dimSeg?'opacity:.18;':'')+'"></div>'; }); }
       else bars='<div style="height:100%;flex-basis:100%;background:linear-gradient(180deg,#e0c590,#B98B3C);"></div>';
       h+='<div '+(hasSeg?'class="embrow" onclick="embEtapa('+i+')" title="Ver detalle por fecha y hora" ':'')+'style="display:grid;grid-template-columns:92px 1fr 100px;align-items:center;gap:8px;margin-bottom:'+(i<NL-1?'5px':'0')+';">'+
-        '<div style="font-size:11.5px;color:'+(oro?'var(--oro)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
+        '<div style="font-size:11.5px;color:'+(oro?'var(--oro-texto)':'var(--carbon)')+';text-align:right;">'+esc(labelsE[i])+(i===1?' <span style="color:var(--piedra);font-size:9px;">· entrada</span>':'')+'</div>'+
         '<div style="display:flex;justify-content:center;"><div class="grow" style="--i:'+i+';height:26px;border-radius:5px;width:'+w+'%;min-width:28px;display:flex;overflow:hidden;">'+bars+'</div></div>'+
         '<div style="font-size:11px;color:var(--piedra);"><span style="font-family:Instrument Serif,Georgia,serif;font-size:15px;color:var(--negro);">'+n+'</span> '+(i>1&&drops[i]>0?'<span style="color:'+(i===mi?'var(--rojo)':'var(--piedra)')+';font-weight:'+(i===mi?'600':'400')+';">−'+drops[i]+'%</span>':'')+(oro?' <span style="color:'+((mag==='pot'&&i===NL-1)?'var(--amar)':'var(--verde)')+';font-size:10px;">'+(i===NL-2?'lead':(mag==='pot'?'clic':'cita'))+'</span>':'')+'</div>'+
       '</div>';
@@ -936,7 +938,7 @@ body{padding-top:env(safe-area-inset-top)}
       '</div>';
     });
     h+='</div></div>';
-    h+='<p class="hint">Cada barra = un día (alto = más visitas). <span style="color:#B98B3C;font-weight:600">Oro</span> = día pico · <span style="color:var(--verde);font-weight:600">verde</span> = día con lead (con el número arriba). Pasa el dedo/mouse para ver el detalle. El número es el día del mes.</p>';
+    h+='<p class="hint">Cada barra = un día (alto = más visitas). <span style="color:var(--oro-texto);font-weight:600">Oro</span> = día pico · <span style="color:var(--verde);font-weight:600">verde</span> = día con lead (con el número arriba). Pasa el dedo/mouse para ver el detalle. El número es el día del mes.</p>';
     /* horas del día */
     var hrs={}; s.forEach(function(x){ var H=x.horas||{}; Object.keys(H).forEach(function(k){ var hk=String(parseInt(k,10)); if(hk!=="NaN") hrs[hk]=(hrs[hk]||0)+num(H[k]); }); });
     if(Object.keys(hrs).length){
@@ -947,7 +949,7 @@ body{padding-top:env(safe-area-inset-top)}
       h+='<div data-scrub="horas" style="display:flex;align-items:flex-end;gap:2px;height:64px;touch-action:pan-y;">';
       arrH.forEach(function(c,H){
         var hh=Math.round(c/maxH*52);
-        h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;"><div style="width:100%;height:'+Math.max(hh,2)+'px;background:'+(H===peakH&&c>0?'var(--oro)':'var(--arena)')+';border-radius:2px 2px 0 0;"></div><span style="font-size:8px;color:var(--piedra);">'+(H%3===0?H:'')+'</span></div>';
+        h+='<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;height:100%;"><div style="width:100%;height:'+Math.max(hh,2)+'px;background:'+(H===peakH&&c>0?'var(--oro)':'var(--linea)')+';border-radius:2px 2px 0 0;"></div><span style="font-size:8px;color:var(--piedra);">'+(H%3===0?H:'')+'</span></div>';
       });
       h+='</div><p class="hint">Hora del día (0–23 h) en que entran tus visitas — <b>desliza el dedo sobre las barras</b> para ver cada hora. Pico: <b>'+peakH+':00</b>. Úsalo para programar publicaciones y dar seguimiento cuando están activos.</p>';
     }
@@ -1108,7 +1110,7 @@ body{padding-top:env(safe-area-inset-top)}
           '<option value="pot">Plan de Potencial</option><option value="cuest">Cuestionario</option>'+
         '</select>'+
         '<input id="lgPieza" oninput="genLinkFB()" placeholder="pieza (ej. semana-ppp-pub1)" style="min-width:170px;padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:12px;background:var(--crema);color:var(--negro);">'+
-        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:11.5px;background:#0f0f12;color:var(--carbon);font-family:JetBrains Mono,monospace;">'+
+        '<input id="lgUrl" readonly onclick="this.select()" style="flex:1;min-width:220px;padding:8px 10px;border:1px solid var(--linea);border-radius:9px;font-size:11.5px;background:#0f0f12;color:var(--apagado-osc);font-family:JetBrains Mono,monospace;">'+
         '<button class="chipbtn on" onclick="copiarLinkFB()" style="min-height:36px;">Copiar</button>'+
       '</div>'+
       '<div style="font-size:11px;color:var(--piedra);margin-top:6px;">Genera el link el mismo día que publicas (la fecha va dentro de la campaña); para un post ya publicado usa el generador dentro de su ficha. La <b>pieza</b> es opcional y sirve para distinguir publicaciones de una misma serie. Los leads pueden tardar hasta 48 h en aparecer.</div>'+
@@ -1159,7 +1161,7 @@ body{padding-top:env(safe-area-inset-top)}
          '<div class="ph"><div class="pt"><span>'+esc(tipoLabel(p.tipo))+
            /* con dos cuentas conectadas, la galeria las junta pero cada portada dice
               de quien es: si no, no se puede leer si algo lo trajo Aurum o Yo Desarrollo */
-           ((METRICS.cuentas||[]).length>1 && p.cuenta_nombre ? ' <span style="color:var(--oro);font-size:9px;letter-spacing:.5px;text-transform:uppercase;">· '+esc(p.cuenta_nombre.split(" ")[0])+'</span>' : '')+
+           ((METRICS.cuentas||[]).length>1 && p.cuenta_nombre ? ' <span style="color:var(--oro-texto);font-size:9px;letter-spacing:.5px;text-transform:uppercase;">· '+esc(p.cuenta_nombre.split(" ")[0])+'</span>' : '')+
          '</span><span>'+esc((p.fecha||"").slice(5))+'</span></div>'+
          cardChips(p)+
          '<div class="pfoot">'+(ang?'<span class="pang">'+esc(ang)+'</span>':'<span></span>')+'<span class="pgo">ver →</span></div>'+
@@ -1183,14 +1185,14 @@ body{padding-top:env(safe-area-inset-top)}
     if(mx===mn) return '';
     var w=220,hh=38;
     var pts=vals.map(function(v,i){var x=i/(vals.length-1)*w; var y=hh-((v-mn)/(mx-mn))*(hh-6)-3; return x.toFixed(1)+','+y.toFixed(1);}).join(' ');
-    return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'"><polyline points="'+pts+'" fill="none" stroke="#B98B3C" stroke-width="2"/></svg>';
+    return '<svg class="spark" width="'+w+'" height="'+hh+'" viewBox="0 0 '+w+' '+hh+'"><polyline points="'+pts+'" fill="none" stroke="var(--oro)" stroke-width="2"/></svg>';
   }
   function fichaHTML(p,ctx){
     var isIG=p.red==="IG", reel=(/reel|video/i.test(p.tipo||'')||num(p.views)>0);
     var cov = p.cover ? '<img src="'+esc(p.cover)+'" alt="">' : '<div class="pcov-ph">'+esc((p.titulo||"").slice(0,40))+'</div>';
     var net = isIG?"Instagram":"Facebook", ang=anguloDe(p), miss=[];
     var h='<div class="pficha">';
-    h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+tipoLabel(p.tipo)+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:#B98B3C">NUEVO</span>':'')+(ang?' · '+esc(ang):'')+'</div>'+
+    h+='<div class="pfhead">'+cov+'<div class="pfx"><div class="pftipo">'+esc(net+" · "+tipoLabel(p.tipo)+" · "+p.fecha)+(ageDays(p)<=10?' · <span style="color:var(--oro-texto)">NUEVO</span>':'')+(ang?' · '+esc(ang):'')+'</div>'+
        '<div class="pftit">'+esc(p.titulo||"(sin texto)")+'</div>'+
        (p.permalink?'<a class="link-meta" href="'+esc(p.permalink)+'" target="_blank" rel="noopener">Abrir en '+net+' →</a>':'')+'</div>'+
        '<button class="pfclose" onclick="cerrarFicha()" aria-label="Cerrar"><i class="ti ti-x"></i></button></div>';
