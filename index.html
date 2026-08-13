@@ -313,7 +313,10 @@ body{padding-top:env(safe-area-inset-top)}
   var PYOD_EXEC="https://script.google.com/macros/s/AKfycbwlDDCWWzOWYZsUpBU9uqsQ7aenQ469PF6s6FkNlBFS1_cJSU5njG9oQmuyELy5zlqzFg/exec";
   function _pyodCerrar(){ var n=0; try{n=parseInt(sessionStorage.getItem("pyod_recargas")||"0",10)||0;}catch(e){} try{localStorage.removeItem(PORTERO_LSK);sessionStorage.removeItem("pyod_rol");}catch(e){} if(n>=1)return; /* tope anti-bucle: máximo 1 recarga por sesión */ try{sessionStorage.setItem("pyod_recargas",String(n+1));}catch(e){} location.reload(); }
   function _pyodAviso(){ if(document.getElementById("pyodAviso"))return; var d=document.createElement("div");d.id="pyodAviso";d.style.cssText="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:2147483000;max-width:min(560px,92vw);background:#221E17;color:#F1EDE3;border:1px solid rgba(255,255,255,.14);border-left:3px solid #B98B3C;border-radius:12px;padding:14px 16px;font-family:'Instrument Sans',system-ui,sans-serif;font-size:13px;line-height:1.5;box-shadow:0 18px 48px rgba(0,0,0,.5)";d.innerHTML='<b style=\"color:#B98B3C\">Tu sesión es válida.</b> Este tablero no validó tu acceso: su backend (Apps Script) necesita re-desplegarse. Tu sesión NO se cerró. <a href=\"https://alexpueblag.github.io/yod-portal/os/\" style=\"color:#B98B3C\">Volver a YOD OS</a> · <button id=\"pyodAvX\" style=\"background:none;border:0;color:#9A9182;cursor:pointer;text-decoration:underline;font:inherit\">Ocultar</button>';document.body.appendChild(d);var x=document.getElementById("pyodAvX");if(x)x.onclick=function(){d.remove();}; }
-  function credencialRechazada(){ var k=""; try{k=localStorage.getItem(PORTERO_LSK)||"";}catch(e){} if(!k){ return; } /* sin token: NO recargar; portero.js muestra el gate */ fetch(PYOD_EXEC+"?recurso=canje&t="+encodeURIComponent(k),{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){ if(j&&j.ok){_pyodAviso();} else {_pyodCerrar();} }).catch(function(){_pyodAviso();}); }
+  /* ANTI-LOOP (agosto 2026): el dominio suspendido contesta "liga" a la clave del
+     portero de respaldo aunque la sesión sea válida. Ya no se recarga ni se cierra
+     la sesión por eso: solo se avisa, y actualizarTodo cae al respaldo local. */
+  function credencialRechazada(){ _pyodAviso(); }
   var QKEY="aurum_board_q_v1";
   var DATA=null, LAST=null, METRICS=null, DATA_POT=null;
 
@@ -442,7 +445,15 @@ body{padding-top:env(safe-area-inset-top)}
     var b=$("badge"); if(b)b.disabled=true;
     return Promise.all([fetchData(manual),fetchMetrics(),fetchPot()]).then(function(resultados){
       var bien=resultados.filter(function(r){return r&&r.ok;}).length;
-      if(!DATA){ DATA=PAUSA; render(); }   /* no se pudo leer: ceros y letrero — nunca el SNAP de ejemplo */
+      if(!DATA){
+        /* Respaldo empacado (agosto 2026): en vez de ceros, la última foto real
+           del Sheet (datos.json). Solo lectura; al reactivar Google el vivo manda. */
+        return fetch("datos.json?cb="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(dj){
+          if(dj&&dj.kpis){ DATA=dj; render(); setBadge("partial"); }
+          else { DATA=PAUSA; render(); setBadge(bien?"partial":"error"); }
+          return resultados;
+        }).catch(function(){ DATA=PAUSA; render(); setBadge(bien?"partial":"error"); return resultados; });
+      }
       setBadge(bien===resultados.length?"live":(bien?"partial":"error"));
       if(manual){
         if(bien===resultados.length) toast("Anuncios, leads y métricas actualizados desde internet");
