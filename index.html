@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Se mudó &middot; aurum-board</title>
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://tableros.yodesarrollo.mx/aurum-board/">
+<meta http-equiv="refresh" content="0;url=https://tableros.yodesarrollo.mx/aurum-board/">
+<script>
+(function(){
+  var destino = "https://tableros.yodesarrollo.mx/aurum-board/" + location.search + location.hash;
+  location.replace(destino);
+})();
+</script>
+<style>
+  :root{
+    --ypaper:#f6f3ed; --ycard:#fff; --ytext:#231d14; --yink:#17140f;
+    --ymuted:#5f594e; --yline:#e1dacb; --yg:#9a7b3f; --yg-hi:#b07c2e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ypaper:#0a0a0c; --ycard:#16161a; --ytext:#ece7db; --yink:#f4f1ea;
+      --ymuted:#8a8780; --yline:rgba(255,255,255,.10); --yg:#c9a227; --yg-hi:#e0b950;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; background:var(--ypaper); color:var(--ytext);
+    font-family:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:32px 20px;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{width:100%; max-width:460px}
+  .marca{font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--yg); font-weight:600; margin:0 0 18px}
+  h1{font-family:'Instrument Serif',Georgia,'Times New Roman',serif; font-weight:400;
+    font-size:clamp(30px,6vw,42px); line-height:1.1; letter-spacing:-.01em;
+    margin:0 0 12px; color:var(--yink)}
+  h1 em{font-style:italic; color:var(--yg-hi)}
+  p{margin:0 0 24px; color:var(--ymuted); font-size:15px; line-height:1.6}
+  a.btn{display:inline-block; text-decoration:none; padding:12px 20px;
+    border-radius:10px; font-size:15px; font-weight:500;
+    background:var(--yg); border:1px solid var(--yg); color:#fff}
+  @media (prefers-color-scheme: dark){ a.btn{color:#0a0a0c} }
+  a.btn:hover{background:var(--yg-hi); border-color:var(--yg-hi)}
+</style>
+</head>
+<body>
+<main>
+  <p class="marca">Yo Desarrollo</p>
+  <h1>Esta dirección <em>se mudó</em>.</h1>
+  <p>Te estamos llevando a la nueva casa de los tableros. Si no avanza sola, usa el botón.</p>
+  <p><a class="btn" id="ir" href="https://tableros.yodesarrollo.mx/aurum-board/">Continuar &rarr;</a></p>
+</main>
+<script>
+(function(){
+  var a = document.getElementById("ir");
+  if (a) a.href = "https://tableros.yodesarrollo.mx/aurum-board/" + location.search + location.hash;
+})();
+</script>
+</body>
+</html>
